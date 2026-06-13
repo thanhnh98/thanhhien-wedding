@@ -1,0 +1,17 @@
+#!/bin/bash
+
+PORT=8000
+
+echo "Kiểm tra port $PORT..."
+PID=$(lsof -t -i:$PORT)
+
+if [ ! -z "$PID" ]; then
+  echo "Port $PORT đang được sử dụng bởi PID: $PID. Đang tắt tiến trình cũ..."
+  kill -9 $PID
+  sleep 1
+else
+  echo "Port $PORT trống."
+fi
+
+echo "Đang khởi động máy chủ tại port $PORT..."
+python3 -m http.server $PORT
