@@ -11,8 +11,16 @@ import React, { useState } from 'react';
  * @param {string} guestName - Custom guest greeting (e.g., "Kính gửi Anh Minh").
  * @param {Function} onOpen - Optional callback triggered after the envelope open animation finishes (after 1000ms).
  */
-export default function WeddingInvitationOpening({ guestName = 'TRÂN TRỌNG KÍNH MỜI', onOpen }) {
+export default function WeddingInvitationOpening({ 
+  guestName = 'Quý khách', 
+  invitePrefix = 'TRÂN TRỌNG KÍNH MỜI', 
+  onOpen 
+}) {
   const [isOpening, setIsOpening] = useState(false);
+  const [cardPulled, setCardPulled] = useState(false);
+  const [cardFront, setCardFront] = useState(false);
+  const [cardZoomed, setCardZoomed] = useState(false);
+  const [isFadingOut, setIsFadingOut] = useState(false);
   const [isHidden, setIsHidden] = useState(false);
 
   React.useEffect(() => {
@@ -28,23 +36,43 @@ export default function WeddingInvitationOpening({ guestName = 'TRÂN TRỌNG K�
     if (isOpening) return;
     setIsOpening(true);
 
-    // Trigger onOpen callback after flap finishes opening (approx 1000ms)
+    // Trigger onOpen callback when the card starts zooming into the main page.
     if (onOpen) {
       setTimeout(() => {
         onOpen();
-      }, 1000);
+      }, 5900);
     }
 
-    // Remove scroll lock after flap finishes opening
+    // 1. Pull card after the flap opens.
+    setTimeout(() => {
+      setCardPulled(true);
+    }, 650);
+
+    // 2. Slide card down, expand 10%, then hold it like a revealed invitation.
+    setTimeout(() => {
+      setCardFront(true);
+    }, 1750);
+
+    // 3. Zoom card forward after a 3s hold to transition into the main page.
+    setTimeout(() => {
+      setCardZoomed(true);
+    }, 5900);
+
+    // Remove scroll lock after the zoom starts.
     setTimeout(() => {
       document.body.classList.remove('envelope-active');
       document.documentElement.classList.remove('envelope-active');
-    }, 1500);
+    }, 6500);
 
-    // Hide from DOM completely after fade out completes (3000ms)
+    // Start fade out transition after the zoom starts.
+    setTimeout(() => {
+      setIsFadingOut(true);
+    }, 6500);
+
+    // Hide from DOM completely after animation completes.
     setTimeout(() => {
       setIsHidden(true);
-    }, 3000);
+    }, 7800);
   };
 
   if (isHidden) return null;
@@ -367,7 +395,7 @@ export default function WeddingInvitationOpening({ guestName = 'TRÂN TRỌNG K�
           box-shadow: inset 0 -1px 0 rgba(0,0,0,0.22);
           transform: rotateX(0deg);
           transition: transform 900ms cubic-bezier(0.2, 0.8, 0.2, 1);
-          backface-visibility: hidden;
+          backface-visibility: visible;
         }
 
         .envelope-flap-left {
@@ -402,6 +430,106 @@ export default function WeddingInvitationOpening({ guestName = 'TRÂN TRỌNG K�
           clip-path: polygon(0 100%, 50% 0, 100% 100%);
           z-index: 5;
           box-shadow: inset 0 1px 0 rgba(255,255,255,0.08);
+        }
+
+        /* Envelope Card (Inside Ruột thiệp) */
+        .envelope-card {
+          position: absolute;
+          left: 3%;
+          top: 5%;
+          width: 94%;
+          height: 90%;
+          background: #FFFFFF;
+          border-radius: 4px;
+          box-shadow: inset 0 0 0 1px rgba(201,164,106,0.3), 0 2px 8px rgba(0,0,0,0.15);
+          z-index: 2;
+          transform: translate3d(0, 0, 0);
+          transform-origin: center center;
+          backface-visibility: hidden;
+          will-change: transform, opacity;
+          transition: transform 1100ms cubic-bezier(0.18, 0.88, 0.25, 1), box-shadow 1100ms ease;
+          box-sizing: border-box;
+          padding: 12px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+
+        .card-inner {
+          border: 1px solid rgba(201,164,106,0.25);
+          border-radius: 3px;
+          width: 100%;
+          height: 100%;
+          box-sizing: border-box;
+          padding: 8px 12px;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          position: relative;
+          background: #FCFAF7; /* Premium off-white card face */
+        }
+
+        /* Card typography */
+        .card-monogram-gold {
+          font-family: "Great Vibes", "Allura", cursive;
+          font-size: clamp(20px, 3.5vh, 28px);
+          color: var(--champagne-gold);
+          line-height: 1;
+          margin-bottom: 2px;
+        }
+
+        .card-save-the-date {
+          font-family: "Pinyon Script", "Great Vibes", cursive;
+          font-size: clamp(24px, 4vh, 32px);
+          color: var(--name-gold);
+          line-height: 1;
+          margin-bottom: 4px;
+        }
+
+        .card-divider-line {
+          width: 50px;
+          height: 1px;
+          background: linear-gradient(90deg, transparent, var(--champagne-gold), transparent);
+          margin: 4px 0 8px;
+        }
+
+        .card-guest-prefix {
+          font-family: "Montserrat", sans-serif;
+          font-size: clamp(8px, 1.2vh, 10px);
+          font-weight: 500;
+          letter-spacing: 2px;
+          color: var(--label-text);
+          margin: 0;
+          text-transform: uppercase;
+        }
+
+        .card-guest-name {
+          font-family: "Cormorant Garamond", serif;
+          font-size: clamp(15px, 2.2vh, 20px);
+          font-weight: 600;
+          color: var(--text-main);
+          margin: 3px 0 6px;
+          text-align: center;
+        }
+
+        .card-couple-names {
+          font-family: "Cormorant Garamond", serif;
+          font-size: clamp(14px, 2vh, 18px);
+          font-weight: 500;
+          font-style: italic;
+          color: var(--name-gold);
+          margin: 4px 0;
+          text-align: center;
+        }
+
+        .card-date {
+          font-family: "Montserrat", sans-serif;
+          font-size: clamp(8px, 1.2vh, 9px);
+          font-weight: 400;
+          letter-spacing: 1.5px;
+          color: var(--text-muted);
+          margin-top: 6px;
         }
 
         /* Wax Seal (Image asset) */
@@ -487,13 +615,6 @@ export default function WeddingInvitationOpening({ guestName = 'TRÂN TRỌNG K�
         }
 
         /* Opening Interaction Styles */
-        .wedding-opening.is-opening {
-          opacity: 0;
-          visibility: hidden;
-          pointer-events: none;
-          transition: opacity 1.2s ease 1.5s, visibility 1.2s ease 1.5s;
-        }
-
         .wedding-opening.is-opening .wax-seal {
           opacity: 0;
           transform: translate3d(-50%, -50%, 15px) scale(0.55);
@@ -515,6 +636,57 @@ export default function WeddingInvitationOpening({ guestName = 'TRÂN TRỌNG K�
 
         .wedding-opening.is-opening .envelope-glow {
           animation: openGlow 900ms ease-out both;
+        }
+
+        /* Card Animation Phases */
+        /* 1. Pull card out of envelope (Upward translation) */
+        .wedding-opening.card-pulled .envelope-card {
+          transform: translate3d(0, -72%, 12px);
+          box-shadow: 0 10px 24px rgba(90,61,30,0.18);
+        }
+
+        /* 2. Slide card down and expand 10% so it feels lifted out of the envelope */
+        .wedding-opening.card-front .envelope-card {
+          transform: translate3d(0, -10%, 36px) scale(1.1);
+          box-shadow: 0 25px 50px rgba(90,61,30,0.26);
+          z-index: 10 !important;
+          transition: transform 1150ms cubic-bezier(0.18, 0.88, 0.25, 1), box-shadow 1150ms ease;
+        }
+
+        /* Envelope shell fades out completely when card is in front */
+        .wedding-opening.card-front .envelope-back,
+        .wedding-opening.card-front .envelope-flap-top,
+        .wedding-opening.card-front .envelope-flap-left,
+        .wedding-opening.card-front .envelope-flap-right,
+        .wedding-opening.card-front .envelope-flap-bottom {
+          opacity: 0;
+          transition: opacity 800ms ease;
+        }
+
+        /* Outer decorative texts and labels fade out completely to draw focus to the card */
+        .wedding-opening.card-front .monogram,
+        .wedding-opening.card-front .invite-label,
+        .wedding-opening.card-front .gold-divider,
+        .wedding-opening.card-front .couple-name,
+        .wedding-opening.card-front .opening-subtitle {
+          opacity: 0;
+          pointer-events: none;
+          transition: opacity 800ms ease;
+        }
+
+        /* 3. Card zooms in (scales up) and fades out to transition to the main page */
+        .wedding-opening.card-zoomed .envelope-card {
+          transform: translate3d(0, -10%, 180px) scale(2.65);
+          opacity: 0;
+          box-shadow: none;
+          z-index: 10 !important;
+          transition: transform 1300ms cubic-bezier(0.18, 0.88, 0.25, 1), opacity 1000ms ease 180ms;
+        }
+
+        .wedding-opening.is-hidden {
+          opacity: 0;
+          visibility: hidden;
+          pointer-events: none;
         }
 
         /* Responsive Styles */
@@ -652,7 +824,7 @@ export default function WeddingInvitationOpening({ guestName = 'TRÂN TRỌNG K�
 
       {/* Opening Screen Markup */}
       <section 
-        className={`wedding-opening ${isOpening ? 'is-opening' : ''}`}
+        className={`wedding-opening ${isOpening ? 'is-opening' : ''} ${cardPulled ? 'card-pulled' : ''} ${cardFront ? 'card-front' : ''} ${cardZoomed ? 'card-zoomed' : ''} ${isFadingOut ? 'is-hidden' : ''}`}
         role="dialog"
         aria-modal="true"
         aria-label="Bìa thiệp cưới"
@@ -673,7 +845,7 @@ export default function WeddingInvitationOpening({ guestName = 'TRÂN TRỌNG K�
         <div className="opening-content">
           <div className="monogram">HT</div>
 
-          <p className="invite-label">{guestName}</p>
+          <p className="invite-label">TRÂN TRỌNG KÍNH MỜI</p>
           <div className="gold-divider" aria-hidden="true"></div>
 
           <h1 className="couple-name">
@@ -682,20 +854,36 @@ export default function WeddingInvitationOpening({ guestName = 'TRÂN TRỌNG K�
 
           <div className="envelope-wrapper">
             <div className="envelope-glow" aria-hidden="true"></div>
-            <button 
+            <div 
               className="envelope" 
-              type="button" 
+              role="button" 
+              tabIndex={isOpening ? -1 : 0}
               onClick={handleOpen}
-              disabled={isOpening}
+              onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleOpen(); } }}
+              style={{ pointerEvents: isOpening ? 'none' : 'auto' }}
               aria-label="Mở thiệp cưới"
             >
               <span className="envelope-back"></span>
+              
+              {/* Thiệp giấy bên trong phong bì */}
+              <div className="envelope-card" id="envelopeCard">
+                <div className="card-inner">
+                  <div className="card-monogram-gold">HT</div>
+                  <div className="card-save-the-date">Save the Date</div>
+                  <div className="card-divider-line"></div>
+                  <p className="card-guest-prefix">{invitePrefix}</p>
+                  <h3 className="card-guest-name" id="envelopeGuestName">{guestName}</h3>
+                  <p className="card-couple-names">Hoài Thanh &amp; Thanh Hiền</p>
+                  <p className="card-date">15 . 06 . 2025</p>
+                </div>
+              </div>
+
               <span className="envelope-flap envelope-flap-top"></span>
               <span className="envelope-flap envelope-flap-left"></span>
               <span className="envelope-flap envelope-flap-right"></span>
               <span className="envelope-flap envelope-flap-bottom"></span>
               <img className="wax-seal" id="openInvitationBtn" src="/assets/decor/wax-seal.png" alt="Mở thiệp cưới" />
-            </button>
+            </div>
           </div>
 
           <div className="gold-divider small" aria-hidden="true"></div>

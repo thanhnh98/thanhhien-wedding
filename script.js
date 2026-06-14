@@ -457,26 +457,42 @@ function initEnvelopeOpening() {
     // Add opening class to trigger 3D flip animation
     overlay.classList.add('is-opening');
 
-    // Disable button to prevent double click
-    envelope.disabled = true;
+    // Disable clicks to prevent double trigger
+    envelope.style.pointerEvents = 'none';
+    envelope.removeAttribute('tabindex');
 
-    // Fade in Hero page behind the opening envelope
+    // 1. Pull card out of envelope after the flap opens.
+    window.setTimeout(() => {
+      overlay.classList.add('card-pulled');
+    }, 650);
+
+    // 2. Slide card down, expand 10%, then hold it like a revealed invitation.
+    window.setTimeout(() => {
+      overlay.classList.add('card-front');
+    }, 1750);
+
+    // 3. Zoom card forward after a 3s hold to transition into the main page.
+    window.setTimeout(() => {
+      overlay.classList.add('card-zoomed');
+    }, 5900);
+
+    // Fade in Hero page behind the zooming card.
     window.setTimeout(() => {
       document.body.classList.add('invitation-active');
-    }, 1000);
+    }, 5900);
 
-    // Fade overlay out
+    // Fade overlay out after the zoom starts.
     window.setTimeout(() => {
       overlay.classList.add('is-hidden');
       document.body.classList.remove('envelope-active');
       document.documentElement.classList.remove('envelope-active');
-    }, 1500);
+    }, 6500);
 
-    // Remove from DOM completely after animation completes
+    // Remove from DOM completely after animation completes.
     window.setTimeout(() => {
       overlay.style.display = 'none';
       overlay.remove();
-    }, 3000);
+    }, 7800);
   });
 }
 

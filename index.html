@@ -31,7 +31,7 @@
       <div class="opening-content">
         <div class="monogram">HT</div>
 
-        <p class="invite-label" id="envelopeGuestName">TRÂN TRỌNG KÍNH MỜI</p>
+        <p class="invite-label">TRÂN TRỌNG KÍNH MỜI</p>
         <div class="gold-divider" aria-hidden="true"></div>
 
         <h1 class="couple-name">
@@ -40,14 +40,28 @@
 
         <div class="envelope-wrapper">
           <div class="envelope-glow" aria-hidden="true"></div>
-          <button class="envelope" id="envelope" type="button" aria-label="Mở thiệp cưới">
+          <div class="envelope" id="envelope" role="button" tabindex="0" aria-label="Mở thiệp cưới">
             <span class="envelope-back"></span>
+            
+            <!-- Thiệp giấy bên trong phong bì -->
+            <div class="envelope-card" id="envelopeCard">
+              <div class="card-inner">
+                <div class="card-monogram-gold">HT</div>
+                <div class="card-save-the-date">Save the Date</div>
+                <div class="card-divider-line"></div>
+                <p class="card-guest-prefix">WEDDING INVITATION</p>
+                <h3 class="card-guest-name" id="envelopeGuestName">Trân trọng kính mời Quý khách</h3>
+                <p class="card-couple-names">Hoài Thanh &amp; Thanh Hiền</p>
+                <p class="card-date">15 . 06 . 2025</p>
+              </div>
+            </div>
+
             <span class="envelope-flap envelope-flap-top"></span>
             <span class="envelope-flap envelope-flap-left"></span>
             <span class="envelope-flap envelope-flap-right"></span>
             <span class="envelope-flap envelope-flap-bottom"></span>
             <img class="wax-seal" id="openInvitationBtn" src="/assets/decor/wax-seal.png" alt="Mở thiệp cưới">
-          </button>
+          </div>
         </div>
 
         <div class="gold-divider small" aria-hidden="true"></div>

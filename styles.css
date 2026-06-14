@@ -44,6 +44,23 @@
   --name-gold: #B89157;
   --label-text: #5F554C;
   --seal-text: #5A3D1E;
+
+  /* Envelope Card Layout Variables */
+  --card-padding-outer: 12px;
+  --card-padding-inner: 8px 12px;
+  --card-font-monogram: clamp(20px, 3.5vh, 28px);
+  --card-margin-monogram: 2px;
+  --card-font-std: clamp(24px, 4vh, 32px);
+  --card-margin-std: 4px;
+  --card-margin-divider: 4px 0 8px;
+  --card-width-divider: 50px;
+  --card-font-prefix: clamp(8px, 1.2vh, 10px);
+  --card-font-guest: clamp(15px, 2.2vh, 20px);
+  --card-margin-guest: 3px 0 6px;
+  --card-font-couple: clamp(14px, 2vh, 18px);
+  --card-margin-couple: 4px 0;
+  --card-font-date: clamp(8px, 1.2vh, 9px);
+  --card-margin-date: 6px;
 }
 
 * { box-sizing: border-box; }
@@ -1354,7 +1371,7 @@ html.envelope-active {
   box-shadow: inset 0 -1px 0 rgba(0,0,0,0.22);
   transform: rotateX(0deg);
   transition: transform 900ms cubic-bezier(0.2, 0.8, 0.2, 1);
-  backface-visibility: hidden;
+  backface-visibility: visible;
 }
 
 .envelope-flap-left {
@@ -1389,6 +1406,107 @@ html.envelope-active {
   clip-path: polygon(0 100%, 50% 0, 100% 100%);
   z-index: 5;
   box-shadow: inset 0 1px 0 rgba(255,255,255,0.08);
+}
+
+/* Envelope Card (Inside Ruột thiệp) */
+.envelope-card {
+  position: absolute;
+  left: 3%;
+  top: 5%;
+  width: 94%;
+  height: 90%;
+  background: #FFFFFF;
+  border-radius: 4px;
+  box-shadow: inset 0 0 0 1px rgba(201,164,106,0.3), 0 2px 8px rgba(0,0,0,0.15);
+  z-index: 2;
+  transform: translate3d(0, 0, 0);
+  transform-origin: center center;
+  backface-visibility: hidden;
+  will-change: transform, opacity;
+  transition: transform 1100ms cubic-bezier(0.18, 0.88, 0.25, 1), box-shadow 1100ms ease;
+  box-sizing: border-box;
+  padding: var(--card-padding-outer);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden; /* Prevent text bleeding outside the card */
+}
+
+.card-inner {
+  border: 1px solid rgba(201,164,106,0.25);
+  border-radius: 3px;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  padding: var(--card-padding-inner);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  background: #FCFAF7; /* Premium off-white card face */
+}
+
+/* Card typography */
+.card-monogram-gold {
+  font-family: "Great Vibes", "Allura", cursive;
+  font-size: var(--card-font-monogram);
+  color: var(--champagne-gold);
+  line-height: 1;
+  margin-bottom: var(--card-margin-monogram);
+}
+
+.card-save-the-date {
+  font-family: "Pinyon Script", "Great Vibes", cursive;
+  font-size: var(--card-font-std);
+  color: var(--name-gold);
+  line-height: 1;
+  margin-bottom: var(--card-margin-std);
+}
+
+.card-divider-line {
+  width: var(--card-width-divider);
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--champagne-gold), transparent);
+  margin: var(--card-margin-divider);
+}
+
+.card-guest-prefix {
+  font-family: "Montserrat", sans-serif;
+  font-size: var(--card-font-prefix);
+  font-weight: 500;
+  letter-spacing: 2px;
+  color: var(--label-text);
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.card-guest-name {
+  font-family: "Cormorant Garamond", serif;
+  font-size: var(--card-font-guest);
+  font-weight: 600;
+  color: var(--text-main);
+  margin: var(--card-margin-guest);
+  text-align: center;
+}
+
+.card-couple-names {
+  font-family: "Cormorant Garamond", serif;
+  font-size: var(--card-font-couple);
+  font-weight: 500;
+  font-style: italic;
+  color: var(--name-gold);
+  margin: var(--card-margin-couple);
+  text-align: center;
+}
+
+.card-date {
+  font-family: "Montserrat", sans-serif;
+  font-size: var(--card-font-date);
+  font-weight: 400;
+  letter-spacing: 1.5px;
+  color: var(--text-muted);
+  margin-top: var(--card-margin-date);
 }
 
 /* Wax Seal */
@@ -1498,6 +1616,52 @@ html.envelope-active {
   animation: openGlow 900ms ease-out both;
 }
 
+/* Card Animation Phases */
+/* 1. Pull card out of envelope (Upward translation) */
+.wedding-opening.card-pulled .envelope-card {
+  transform: translate3d(0, -72%, 12px);
+  box-shadow: 0 10px 24px rgba(90,61,30,0.18);
+}
+
+/* 2. Slide card down and expand 10% so it feels lifted out of the envelope */
+.wedding-opening.card-front .envelope-card {
+  transform: translate3d(0, -10%, 36px) scale(1.1);
+  box-shadow: 0 25px 50px rgba(90,61,30,0.26);
+  z-index: 10 !important;
+  transition: transform 1150ms cubic-bezier(0.18, 0.88, 0.25, 1), box-shadow 1150ms ease;
+}
+
+/* Envelope shell fades out completely when card is in front */
+.wedding-opening.card-front .envelope-back,
+.wedding-opening.card-front .envelope-flap-top,
+.wedding-opening.card-front .envelope-flap-left,
+.wedding-opening.card-front .envelope-flap-right,
+.wedding-opening.card-front .envelope-flap-bottom {
+  opacity: 0;
+  transition: opacity 800ms ease;
+}
+
+/* Outer decorative texts and labels fade out completely to draw focus to the card */
+.wedding-opening.card-front .monogram,
+.wedding-opening.card-front .invite-label,
+.wedding-opening.card-front .gold-divider,
+.wedding-opening.card-front .couple-name,
+.wedding-opening.card-front .opening-subtitle {
+  opacity: 0 !important;
+  pointer-events: none;
+  animation: none !important;
+  transition: opacity 800ms ease;
+}
+
+/* 3. Card zooms in (scales up) and fades out to transition to the main page */
+.wedding-opening.card-zoomed .envelope-card {
+  transform: translate3d(0, -10%, 180px) scale(2.65);
+  opacity: 0;
+  box-shadow: none;
+  z-index: 10 !important;
+  transition: transform 1300ms cubic-bezier(0.18, 0.88, 0.25, 1), opacity 1000ms ease 180ms;
+}
+
 .wedding-opening.is-hidden {
   opacity: 0;
   visibility: hidden;
@@ -1523,6 +1687,23 @@ body:not(.invitation-active) .hero-portrait {
   .invite-label {
     letter-spacing: 2.5px;
     font-size: 11px;
+  }
+  :root {
+    --card-padding-outer: 6px;
+    --card-padding-inner: 4px 6px;
+    --card-font-monogram: 16px;
+    --card-margin-monogram: 0px;
+    --card-font-std: 18px;
+    --card-margin-std: 2px;
+    --card-margin-divider: 2px 0 4px;
+    --card-width-divider: 35px;
+    --card-font-prefix: 7px;
+    --card-font-guest: 12px;
+    --card-margin-guest: 1px 0 2px;
+    --card-font-couple: 11px;
+    --card-margin-couple: 2px 0;
+    --card-font-date: 7px;
+    --card-margin-date: 2px;
   }
   .envelope-wrapper {
     width: min(76vw, 306px);
@@ -1564,6 +1745,14 @@ body:not(.invitation-active) .hero-portrait {
     margin-top: 10px;
     margin-bottom: 18px;
   }
+  :root {
+    --card-padding-outer: 8px;
+    --card-padding-inner: 6px 8px;
+    --card-font-monogram: clamp(16px, 2.8vh, 22px);
+    --card-font-std: clamp(18px, 3.2vh, 26px);
+    --card-font-guest: clamp(12px, 1.8vh, 16px);
+    --card-font-couple: clamp(11px, 1.6vh, 14px);
+  }
   .envelope-wrapper {
     width: clamp(220px, 30vh, 380px);
     margin-top: 18px;
@@ -1599,6 +1788,23 @@ body:not(.invitation-active) .hero-portrait {
     font-size: clamp(28px, 5vh, 48px);
     margin-top: 6px;
     margin-bottom: 10px;
+  }
+  :root {
+    --card-padding-outer: 4px;
+    --card-padding-inner: 3px 4px;
+    --card-font-monogram: clamp(14px, 2.4vh, 18px);
+    --card-margin-monogram: 0px;
+    --card-font-std: clamp(15px, 2.6vh, 20px);
+    --card-margin-std: 1px;
+    --card-margin-divider: 1px 0 2px;
+    --card-width-divider: 30px;
+    --card-font-prefix: 6px;
+    --card-font-guest: clamp(10px, 1.5vh, 12px);
+    --card-margin-guest: 1px 0;
+    --card-font-couple: clamp(9px, 1.4vh, 11px);
+    --card-margin-couple: 1px 0;
+    --card-font-date: 6px;
+    --card-margin-date: 1px;
   }
   .envelope-wrapper {
     width: clamp(180px, 24vh, 260px);
