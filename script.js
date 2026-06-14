@@ -438,14 +438,13 @@ function initPersonalization() {
 function initEnvelopeOpening() {
   const overlay = document.querySelector('#envelopeOverlay');
   const envelope = document.querySelector('#envelope');
-  const card = envelope ? envelope.querySelector('.envelope-card') : null;
-  const openBtn = document.querySelector('#openInvitationBtn');
 
-  if (!overlay || !envelope || !openBtn || !card) return;
+  if (!overlay || !envelope) return;
 
   document.body.classList.add('envelope-active');
+  document.documentElement.classList.add('envelope-active');
 
-  openBtn.addEventListener('click', () => {
+  envelope.addEventListener('click', () => {
     // Switch to wedding music
     if (music) {
       music.pause();
@@ -455,36 +454,29 @@ function initEnvelopeOpening() {
     // Play main music
     playMusic({ muted: false, userChoice: true });
 
-    // Open top flap
-    envelope.classList.add('open');
+    // Add opening class to trigger 3D flip animation
+    overlay.classList.add('is-opening');
 
-    // Slide up card (after top flap opened)
-    window.setTimeout(() => {
-      card.classList.add('slide-up');
-    }, 1400);
+    // Disable button to prevent double click
+    envelope.disabled = true;
 
-    // Zoom card to fullscreen
-    window.setTimeout(() => {
-      overlay.classList.add('zoom-card');
-      card.classList.add('fullscreen-card');
-    }, 3000);
-
-    // Fade in Hero page behind the zooming card
+    // Fade in Hero page behind the opening envelope
     window.setTimeout(() => {
       document.body.classList.add('invitation-active');
-    }, 4000);
+    }, 1000);
 
     // Fade overlay out
     window.setTimeout(() => {
       overlay.classList.add('is-hidden');
       document.body.classList.remove('envelope-active');
-    }, 4800);
+      document.documentElement.classList.remove('envelope-active');
+    }, 1500);
 
     // Remove from DOM completely after animation completes
     window.setTimeout(() => {
       overlay.style.display = 'none';
       overlay.remove();
-    }, 6600);
+    }, 3000);
   });
 }
 

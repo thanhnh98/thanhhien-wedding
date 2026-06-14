@@ -8,48 +8,59 @@
     <title>Hoài Thanh & Thanh Hiền | Thiệp Cưới</title>
     <link rel="preload" as="image" href="/assets/hero/hero-main.jpg">
     <link rel="preload" as="image" href="/assets/hero/hero-bg.jpg">
-    <link rel="stylesheet" href="styles.css?v=2">
+    <link rel="stylesheet" href="styles.css?v=3">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Pinyon+Script&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&family=Montserrat:wght@100..900&display=swap" rel="stylesheet">
   </head>
   <body>
-    <!-- Bìa thiệp dạng phong bì 3D cá nhân hóa -->
-    <div class="envelope-overlay" id="envelopeOverlay" role="dialog" aria-modal="true" aria-label="Bìa thiệp cưới">
-      <div class="envelope-wrapper">
-        <div class="envelope" id="envelope">
-          <!-- Cánh thư mặt sau -->
-          <div class="envelope-back"></div>
-          
-          <!-- Thiệp giấy bên trong phong bì -->
-          <div class="envelope-card">
-            <img class="card-monogram" src="/assets/logo/monogram.png" alt="Monogram" onerror="this.style.display='none'">
-            <p class="card-kicker">Wedding Invitation</p>
-            <h2 class="card-guest-title" id="envelopeGuestName">Trân trọng kính mời</h2>
-            <p class="card-note">Sự hiện diện của Quý khách là niềm vinh hạnh lớn cho chúng tôi.</p>
-          </div>
-          
-          <!-- Các cánh gấp phong bì -->
-          <div class="envelope-flap flap-left"></div>
-          <div class="envelope-flap flap-right"></div>
-          <div class="envelope-flap flap-bottom"></div>
-          <div class="envelope-flap flap-top">
-            <div class="flap-top-inner"></div>
-          </div>
-          
-          <!-- Dấu sáp niêm phong mặt trước -->
-          <button class="wax-seal" id="openInvitationBtn" type="button" aria-label="Mở thiệp cưới">
-            <span class="wax-seal-text">Mở</span>
-            <div class="wax-seal-sparkles" aria-hidden="true"></div>
+    <!-- Bìa thiệp dạng phong bì 3D mở đầu thiệp cưới -->
+    <section class="wedding-opening" id="envelopeOverlay" role="dialog" aria-modal="true" aria-label="Bìa thiệp cưới">
+      <div class="floral-background" aria-hidden="true"></div>
+      <div class="petals-layer" aria-hidden="true">
+        <div class="petal petal-1"></div>
+        <div class="petal petal-2"></div>
+        <div class="petal petal-3"></div>
+        <div class="petal petal-4"></div>
+        <div class="petal petal-5"></div>
+        <div class="petal petal-6"></div>
+        <div class="petal petal-7"></div>
+        <div class="petal petal-8"></div>
+      </div>
+
+      <div class="opening-content">
+        <div class="monogram">HT</div>
+
+        <p class="invite-label" id="envelopeGuestName">TRÂN TRỌNG KÍNH MỜI</p>
+        <div class="gold-divider" aria-hidden="true"></div>
+
+        <h1 class="couple-name">
+          Hoài Thanh <span class="ampersand">&amp;</span> Thanh Hiền
+        </h1>
+
+        <div class="envelope-wrapper">
+          <div class="envelope-glow" aria-hidden="true"></div>
+          <button class="envelope" id="envelope" type="button" aria-label="Mở thiệp cưới">
+            <span class="envelope-back"></span>
+            <span class="envelope-flap envelope-flap-top"></span>
+            <span class="envelope-flap envelope-flap-left"></span>
+            <span class="envelope-flap envelope-flap-right"></span>
+            <span class="envelope-flap envelope-flap-bottom"></span>
+            <img class="wax-seal" id="openInvitationBtn" src="/assets/decor/wax-seal.png" alt="Mở thiệp cưới">
           </button>
         </div>
+
+        <div class="gold-divider small" aria-hidden="true"></div>
+        <p class="opening-subtitle">
+          Nhấn để mở lời mời thân thương từ chúng tôi
+        </p>
       </div>
-    </div>
+    </section>
 
     <div class="scroll-progress" aria-hidden="true"></div>
     <div class="heart-layer" id="heartLayer" aria-hidden="true"></div>
 
-    <!-- contract asset placeholder: /assets/music/wedding-music.mp3 -->
+    <!-- contract asset placeholders: /assets/music/wedding-music.mp3 /assets/logo/monogram.png -->
     <audio id="onboardingMusic" src="/audio/onboarding_music.mp3" preload="auto" loop></audio>
     <audio id="weddingMusic" src="/audio/main_music.mp3" preload="auto" loop></audio>
     <button class="music-toggle" id="musicToggle" type="button" aria-label="Bật hoặc tắt nhạc nền" data-state="paused">
@@ -59,7 +70,7 @@
 
     <header class="header">
       <div class="header-container">
-        <a href="#" class="header-logo">TH</a>
+        <a href="#" class="header-logo">HT</a>
         <nav class="header-nav">
           <a href="#hero" class="nav-link active">TRANG CHỦ</a>
           <a href="#couple" class="nav-link">THIỆP MỜI</a>
@@ -333,6 +344,6 @@
       <button class="lightbox-nav lightbox-next" type="button" aria-label="Ảnh sau">›</button>
     </div>
 
-    <script src="script.js?v=2"></script>
+    <script src="script.js?v=3"></script>
   </body>
 </html>
