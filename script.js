@@ -393,15 +393,6 @@ updateCountdown();
 primeMusic();
 window.setInterval(updateCountdown, 1000);
 
-if (!prefersReducedMotion) {
-  const mobile = window.matchMedia('(max-width: 767px)').matches;
-  const interval = mobile ? 1250 : 820;
-  window.setInterval(createHeart, interval);
-  for (let i = 0; i < (mobile ? 5 : 9); i++) {
-    window.setTimeout(createHeart, i * 240);
-  }
-}
-
 // 3D Envelope Wax Seal & Personalization logic
 function initPersonalization() {
   const params = new URLSearchParams(window.location.search);
