@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="styles.css?v=3">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Pinyon+Script&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&family=Montserrat:wght@100..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Pinyon+Script&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&family=Montserrat:wght@100..900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   </head>
   <body>
     <!-- Bìa thiệp dạng phong bì 3D mở đầu thiệp cưới -->
@@ -29,14 +29,16 @@
       </div>
 
       <div class="opening-content">
-        <div class="monogram">HT</div>
+        <div class="opening-header">
+          <div class="monogram">HT</div>
 
-        <p class="invite-label">TRÂN TRỌNG KÍNH MỜI</p>
-        <div class="gold-divider" aria-hidden="true"></div>
+          <p class="invite-label">TRÂN TRỌNG KÍNH MỜI</p>
+          <div class="gold-divider" aria-hidden="true"></div>
 
-        <h1 class="couple-name">
-          Hoài Thanh <span class="ampersand">&amp;</span> Thanh Hiền
-        </h1>
+          <h1 class="couple-name">
+            Hoài Thanh <span class="ampersand">&amp;</span> Thanh Hiền
+          </h1>
+        </div>
 
         <div class="envelope-wrapper">
           <div class="envelope-glow" aria-hidden="true"></div>
@@ -64,10 +66,12 @@
           </div>
         </div>
 
-        <div class="gold-divider small" aria-hidden="true"></div>
-        <p class="opening-subtitle">
-          Nhấn để mở lời mời thân thương từ chúng tôi
-        </p>
+        <div class="opening-footer">
+          <div class="gold-divider small" aria-hidden="true"></div>
+          <p class="opening-subtitle">
+            Nhấn để mở lời mời thân thương từ chúng tôi
+          </p>
+        </div>
       </div>
     </section>
 
@@ -79,7 +83,7 @@
     <audio id="weddingMusic" src="/audio/main_music.mp3" preload="auto" loop></audio>
     <button class="music-toggle" id="musicToggle" type="button" aria-label="Bật hoặc tắt nhạc nền" data-state="paused">
       <span class="music-icon" aria-hidden="true">♪</span>
-      <span class="music-state">Nhạc</span>
+      <span class="music-state">Tạm dừng</span>
     </button>
 
     <header class="header">
@@ -93,7 +97,6 @@
           <a href="#gallery" class="nav-link">ALBUM ẢNH</a>
           <a href="#rsvp" class="nav-link">LỜI CHÚC</a>
         </nav>
-        <a href="#rsvp" class="btn btn-primary header-cta">CHÚNG TÔI CƯỚI</a>
       </div>
     </header>
 

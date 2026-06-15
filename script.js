@@ -137,7 +137,7 @@ function prevImage() {
 function updateMusicState(state) {
   musicToggle?.setAttribute('data-state', state);
   const label = musicToggle?.querySelector('.music-state');
-  if (label) label.textContent = state === 'playing' ? 'Đang phát' : state === 'muted' ? 'Tắt tiếng' : 'Nhạc';
+  if (label) label.textContent = state === 'playing' ? 'Đang phát' : state === 'muted' ? 'Tắt tiếng' : 'Tạm dừng';
 }
 
 async function playMusic({ muted = false, userChoice = false } = {}) {
@@ -393,6 +393,16 @@ updateCountdown();
 primeMusic();
 window.setInterval(updateCountdown, 1000);
 
+if (!prefersReducedMotion) {
+  const mobile = window.matchMedia('(max-width: 767px)').matches;
+  const interval = mobile ? 1250 : 820;
+  window.setInterval(createHeart, interval);
+  for (let i = 0; i < (mobile ? 5 : 9); i++) {
+    window.setTimeout(createHeart, i * 240);
+  }
+}
+
+
 // 3D Envelope Wax Seal & Personalization logic
 function initPersonalization() {
   const params = new URLSearchParams(window.location.search);
@@ -465,25 +475,25 @@ function initEnvelopeOpening() {
     // 3. Zoom card forward after a 3s hold to transition into the main page.
     window.setTimeout(() => {
       overlay.classList.add('card-zoomed');
-    }, 5900);
+    }, 4900);
 
     // Fade in Hero page behind the zooming card.
     window.setTimeout(() => {
       document.body.classList.add('invitation-active');
-    }, 5900);
+    }, 4900);
 
     // Fade overlay out after the zoom starts.
     window.setTimeout(() => {
       overlay.classList.add('is-hidden');
       document.body.classList.remove('envelope-active');
       document.documentElement.classList.remove('envelope-active');
-    }, 6500);
+    }, 5500);
 
     // Remove from DOM completely after animation completes.
     window.setTimeout(() => {
       overlay.style.display = 'none';
       overlay.remove();
-    }, 7800);
+    }, 6800);
   });
 }
 
