@@ -1,10 +1,14 @@
 const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-const weddingDate = new Date('2025-06-15T08:00:00+07:00');
+// Ngày cưới nhà gái: 25/07/2026 (Gia Lai)
+const brideDate = new Date('2026-07-25T08:00:00+07:00');
+// Ngày cưới nhà trai: 01/08/2026 (Bình Phước)
+const groomDate = new Date('2026-08-01T08:00:00+07:00');
 
 const progress = document.querySelector('.scroll-progress');
 const timeline = document.querySelector('#storyTimeline');
 const reveals = document.querySelectorAll('.reveal');
-const countdownGrid = document.querySelector('#countdownGrid');
+const countdownGridBride = document.querySelector('#countdownGridBride');
+const countdownGridGroom = document.querySelector('#countdownGridGroom');
 const lightbox = document.querySelector('#lightbox');
 const lightboxImage = lightbox?.querySelector('img');
 const onboardingMusic = document.querySelector('#onboardingMusic');
@@ -40,34 +44,86 @@ function updateScrollProgress() {
   }
 }
 
-function updateCountdown() {
-  if (!countdownGrid) return;
-  const diff = Math.max(weddingDate.getTime() - Date.now(), 0);
+function calcTimeLeft(targetDate) {
+  const diff = Math.max(targetDate.getTime() - Date.now(), 0);
   const day = 24 * 60 * 60 * 1000;
   const hour = 60 * 60 * 1000;
   const minute = 60 * 1000;
-  const values = {
+  return {
     days: Math.floor(diff / day),
     hours: Math.floor((diff % day) / hour),
     minutes: Math.floor((diff % hour) / minute),
     seconds: Math.floor((diff % minute) / 1000)
   };
+}
 
+function updateCountdownGrid(grid, values, prefix) {
+  if (!grid) return;
   Object.entries(values).forEach(([key, value]) => {
-    const node = countdownGrid.querySelector(`[data-count="${key}"]`);
+    const node = grid.querySelector(`[data-count-${prefix}="${key}"]`);
     if (!node) return;
     const next = key === 'days' ? String(value).padStart(3, '0') : String(value).padStart(2, '0');
     if (node.textContent !== next) {
-      node.style.opacity = '.35';
-      node.style.transform = 'translate3d(0, -4px, 0)';
-      window.setTimeout(() => {
-        node.textContent = next;
-        node.style.opacity = '1';
-        node.style.transform = 'translate3d(0, 0, 0)';
-      }, 120);
+      node.textContent = next;
+      node.classList.remove('tick-anim');
+      void node.offsetWidth; // Force reflow
+      node.classList.add('tick-anim');
     }
   });
 }
+
+function updateCountdown() {
+  updateCountdownGrid(countdownGridBride, calcTimeLeft(brideDate), 'bride');
+  updateCountdownGrid(countdownGridGroom, calcTimeLeft(groomDate), 'groom');
+}
+
+// Tab switching for countdown
+function initCountdownTabs() {
+  const tabs = document.querySelectorAll('.countdown-tab');
+  const panels = document.querySelectorAll('.countdown-panel');
+  if (!tabs.length) return;
+
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      const target = tab.dataset.target;
+
+      tabs.forEach(t => {
+        t.classList.remove('is-active');
+        t.setAttribute('aria-selected', 'false');
+      });
+      tab.classList.add('is-active');
+      tab.setAttribute('aria-selected', 'true');
+
+      panels.forEach(panel => {
+        if (panel.id === `countdown-${target}`) {
+          panel.classList.remove('is-hidden');
+          // re-trigger reveal if not yet visible
+          panel.querySelectorAll('.reveal:not(.is-visible)').forEach(el => {
+            el.classList.add('is-visible');
+          });
+        } else {
+          panel.classList.add('is-hidden');
+        }
+      });
+    });
+
+    // Keyboard: arrow keys for tab navigation
+    tab.addEventListener('keydown', e => {
+      const all = [...tabs];
+      const idx = all.indexOf(tab);
+      if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+        e.preventDefault();
+        all[(idx + 1) % all.length].click();
+        all[(idx + 1) % all.length].focus();
+      } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+        e.preventDefault();
+        all[(idx - 1 + all.length) % all.length].click();
+        all[(idx - 1 + all.length) % all.length].focus();
+      }
+    });
+  });
+}
+
 
 function updateLightboxContent(index) {
   if (!lightboxImage || !lightbox) return;
@@ -243,66 +299,58 @@ document.querySelector('.hero-cta')?.addEventListener('click', event => {
   document.querySelector('#couple')?.scrollIntoView({ behavior: prefersReducedMotion ? 'auto' : 'smooth' });
 });
 
-// Load all remaining images dynamically on click "Xem thêm"
+// Toggle gallery expand/collapse
 const loadMoreBtn = document.querySelector('#loadMoreBtn');
-const galleryGrid = document.querySelector('.gallery-grid');
+const galleryExpandContainer = document.querySelector('#galleryExpandContainer');
+const loadMoreText = document.querySelector('#loadMoreText');
 
-function loadAllImages() {
-  if (!galleryGrid) return;
-  const fragment = document.createDocumentFragment();
-  for (let i = 12; i < totalImages; i++) {
-    const imgData = galleryImages[i];
-    const button = document.createElement('button');
-    button.className = 'gallery-item reveal';
-    button.type = 'button';
-    button.setAttribute('data-index', imgData.index);
-    
-    // Add dynamic delay for reveal animation
-    const delayIndex = i % 6;
-    button.style.transitionDelay = `${delayIndex * 70}ms`;
-    
-    const img = document.createElement('img');
-    img.src = imgData.thumb;
-    img.alt = imgData.alt;
-    img.loading = 'lazy';
-    
-    button.appendChild(img);
-    
-    button.addEventListener('click', () => {
-      openLightboxIndex(imgData.index);
-    });
-    
-    fragment.appendChild(button);
-  }
+function toggleGallery() {
+  if (!galleryExpandContainer || !loadMoreBtn) return;
   
-  galleryGrid.appendChild(fragment);
+  const isExpanded = galleryExpandContainer.classList.contains('is-expanded');
   
-  if ('IntersectionObserver' in window && !prefersReducedMotion) {
-    const newReveals = galleryGrid.querySelectorAll('.gallery-item.reveal:not(.is-visible)');
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('is-visible');
-          observer.unobserve(entry.target);
-        }
-      });
-    }, { threshold: .16, rootMargin: '0px 0px -8% 0px' });
+  if (isExpanded) {
+    // Collapse
+    galleryExpandContainer.classList.remove('is-expanded');
+    loadMoreBtn.setAttribute('aria-expanded', 'false');
+    if (loadMoreText) {
+      loadMoreText.textContent = 'Xem thêm ảnh (Còn 29 ảnh)';
+    }
     
-    newReveals.forEach(node => observer.observe(node));
+    // Smooth scroll back to the gallery section heading so the user isn't disoriented
+    const gallerySection = document.querySelector('#gallery');
+    if (gallerySection) {
+      gallerySection.scrollIntoView({ behavior: prefersReducedMotion ? 'auto' : 'smooth' });
+    }
   } else {
-    galleryGrid.querySelectorAll('.gallery-item').forEach(node => node.classList.add('is-visible'));
-  }
-  
-  if (loadMoreBtn) {
-    const parentContainer = loadMoreBtn.closest('.gallery-actions');
-    if (parentContainer) {
-      parentContainer.style.display = 'none';
+    // Expand
+    galleryExpandContainer.classList.add('is-expanded');
+    loadMoreBtn.setAttribute('aria-expanded', 'true');
+    if (loadMoreText) {
+      loadMoreText.textContent = 'Thu gọn ảnh';
+    }
+    
+    // Trigger scroll reveals for the newly shown images
+    if ('IntersectionObserver' in window && !prefersReducedMotion) {
+      const newReveals = galleryExpandContainer.querySelectorAll('.gallery-item.reveal:not(.is-visible)');
+      const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: .1, rootMargin: '0px 0px -5% 0px' });
+      
+      newReveals.forEach(node => observer.observe(node));
+    } else {
+      galleryExpandContainer.querySelectorAll('.gallery-item.reveal').forEach(node => node.classList.add('is-visible'));
     }
   }
 }
 
 if (loadMoreBtn) {
-  loadMoreBtn.addEventListener('click', loadAllImages);
+  loadMoreBtn.addEventListener('click', toggleGallery);
 }
 
 // Initial gallery items click binding
@@ -312,6 +360,14 @@ document.querySelectorAll('.gallery-item').forEach(button => {
     if (!isNaN(idx)) {
       openLightboxIndex(idx);
     }
+  });
+});
+
+// Bento grid items click binding (indices 1–12)
+document.querySelectorAll('.bento-item').forEach(button => {
+  button.addEventListener('click', () => {
+    const idx = parseInt(button.getAttribute('data-index'), 10);
+    if (!isNaN(idx)) openLightboxIndex(idx);
   });
 });
 
@@ -390,6 +446,7 @@ setupReveals();
 setupFallbackImages();
 updateScrollProgress();
 updateCountdown();
+initCountdownTabs();
 primeMusic();
 window.setInterval(updateCountdown, 1000);
 
@@ -410,7 +467,7 @@ function initPersonalization() {
   const prefix = params.get('prefix') || params.get('p') || 'Trân trọng kính mời';
 
   const envelopeGuestName = document.querySelector('#envelopeGuestName');
-  const heroKicker = document.querySelector('.hero-kicker');
+  const invitationGuestName = document.querySelector('#invitationGuestName');
   const rsvpGuestInput = document.querySelector('input[name="guest"]');
 
   if (name) {
@@ -420,8 +477,8 @@ function initPersonalization() {
     if (envelopeGuestName) {
       envelopeGuestName.textContent = `${cleanPrefix} ${cleanName}`;
     }
-    if (heroKicker) {
-      heroKicker.textContent = `${cleanPrefix} ${cleanName}`;
+    if (invitationGuestName) {
+      invitationGuestName.textContent = `${cleanPrefix} ${cleanName}`;
     }
     if (rsvpGuestInput) {
       rsvpGuestInput.value = cleanName;
@@ -430,8 +487,8 @@ function initPersonalization() {
     if (envelopeGuestName) {
       envelopeGuestName.textContent = 'Trân trọng kính mời Quý khách';
     }
-    if (heroKicker) {
-      heroKicker.textContent = 'Trân trọng kính mời Quý khách';
+    if (invitationGuestName) {
+      invitationGuestName.textContent = 'Quý khách';
     }
   }
 }
@@ -487,6 +544,13 @@ function initEnvelopeOpening() {
       overlay.classList.add('is-hidden');
       document.body.classList.remove('envelope-active');
       document.documentElement.classList.remove('envelope-active');
+      
+      // Smoothly scroll to the digital invitation card centered in viewport
+      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      document.querySelector('.invitation-card-wrap')?.scrollIntoView({ 
+        block: 'center', 
+        behavior: prefersReducedMotion ? 'auto' : 'smooth' 
+      });
     }, 5500);
 
     // Remove from DOM completely after animation completes.
@@ -497,5 +561,34 @@ function initEnvelopeOpening() {
   });
 }
 
+// Map tabs initialization
+function initMapTabs() {
+  const tabs = document.querySelectorAll('.map-tab');
+  const panels = document.querySelectorAll('.map-panel');
+  if (!tabs.length) return;
+
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      const target = tab.dataset.target;
+
+      tabs.forEach(t => {
+        t.classList.remove('is-active');
+        t.setAttribute('aria-selected', 'false');
+      });
+      tab.classList.add('is-active');
+      tab.setAttribute('aria-selected', 'true');
+
+      panels.forEach(panel => {
+        if (panel.id === `map-panel-${target}`) {
+          panel.classList.remove('is-hidden');
+        } else {
+          panel.classList.add('is-hidden');
+        }
+      });
+    });
+  });
+}
+
 initPersonalization();
 initEnvelopeOpening();
+initMapTabs();

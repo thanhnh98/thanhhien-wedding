@@ -8,10 +8,16 @@
     <title>Hoài Thanh & Thanh Hiền | Thiệp Cưới</title>
     <link rel="preload" as="image" href="/assets/hero/hero-main.jpg">
     <link rel="preload" as="image" href="/assets/hero/hero-bg.jpg">
-    <link rel="stylesheet" href="styles.css?v=3">
+    <link rel="stylesheet" href="styles.css?v=4">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Pinyon+Script&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&family=Montserrat:wght@100..900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+      if ('scrollRestoration' in history) {
+        history.scrollRestoration = 'manual';
+      }
+      window.scrollTo(0, 0);
+    </script>
   </head>
   <body>
     <!-- Bìa thiệp dạng phong bì 3D mở đầu thiệp cưới -->
@@ -54,7 +60,7 @@
                 <p class="card-guest-prefix">WEDDING INVITATION</p>
                 <h3 class="card-guest-name" id="envelopeGuestName">Trân trọng kính mời Quý khách</h3>
                 <p class="card-couple-names">Hoài Thanh &amp; Thanh Hiền</p>
-                <p class="card-date">15 . 06 . 2025</p>
+                <p class="card-date">25 . 07 . 2026</p>
               </div>
             </div>
 
@@ -93,6 +99,7 @@
           <a href="#hero" class="nav-link active">TRANG CHỦ</a>
           <a href="#couple" class="nav-link">THIỆP MỜI</a>
           <a href="#story" class="nav-link">THÔNG TIN</a>
+          <a href="#calendar" class="nav-link">LỊCH CƯỚI</a>
           <a href="#events" class="nav-link">SỰ KIỆN</a>
           <a href="#gallery" class="nav-link">ALBUM ẢNH</a>
           <a href="#rsvp" class="nav-link">LỜI CHÚC</a>
@@ -125,20 +132,20 @@
           <div class="heart-separator">♥</div>
           <div class="hero-ceremonies" aria-label="Thông tin lễ cưới hai gia đình">
             <div class="hero-ceremony">
-              <p class="ceremony-family">NHÀ GÁI</p>
+              <p class="ceremony-family">LỄ VU QUY</p>
               <time class="ceremony-date" datetime="2026-07-25">25.07.2026</time>
               <p class="ceremony-location">Gia Lai</p>
             </div>
             <span class="ceremony-divider" aria-hidden="true"></span>
             <div class="hero-ceremony">
-              <p class="ceremony-family">NHÀ TRAI</p>
+              <p class="ceremony-family">LỄ THÀNH HÔN</p>
               <time class="ceremony-date" datetime="2026-08-01">01.08.2026</time>
-              <p class="ceremony-location">Bình Phước</p>
+              <p class="ceremony-location">Đồng Nai</p>
             </div>
           </div>
-          <a class="btn btn-outline hero-date-cta" href="#events">
-            <svg class="btn-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
-            XEM NGÀY CƯỚI
+          <a class="btn btn-outline hero-date-cta" href="#couple">
+            <svg class="btn-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+            XEM THIỆP MỜI
           </a>
         </div>
 
@@ -163,6 +170,68 @@
       <section class="couple section-cream" id="couple">
         <img class="flower flower-left" src="/assets/decor/flower-top-left.png" alt="" aria-hidden="true">
         <img class="flower flower-right" src="/assets/decor/flower-top-right.png" alt="" aria-hidden="true">
+
+        <!-- Digital Wedding Invitation Card -->
+        <div class="invitation-card-wrap reveal">
+          <div class="invitation-card">
+            <div class="invitation-border-outer">
+              <div class="invitation-border-inner">
+                <div class="invitation-ornament-top">
+                  <svg viewBox="0 0 100 20" class="ornament-svg">
+                    <path d="M10,10 Q50,0 90,10 Q50,20 10,10 Z" fill="none" stroke="var(--gold)" stroke-width="0.75"/>
+                    <circle cx="50" cy="10" r="3" fill="var(--gold)"/>
+                  </svg>
+                </div>
+                
+                <div class="invitation-monogram">HT</div>
+                
+                <p class="invitation-title">THIỆP MỜI TRÂN TRỌNG</p>
+                <div class="invitation-divider"></div>
+                
+                <p class="invitation-guest-label">Trân trọng kính mời</p>
+                <h3 class="invitation-guest-name" id="invitationGuestName">Quý khách</h3>
+                
+                <p class="invitation-text">
+                  Trân trọng kính báo tin vui và kính mời Quý khách đến dự buổi tiệc chung vui cùng gia đình chúng tôi tại lễ cưới của hai con:
+                </p>
+                
+                <h2 class="invitation-couple-names">Hoài Thanh &amp; Thanh Hiền</h2>
+                
+                <div class="invitation-ceremonies">
+                  <div class="invitation-ceremony">
+                    <h4>LỄ VU QUY</h4>
+                    <p class="invitation-time">11:30 | 25.07.2026</p>
+                    <p class="invitation-lunar">(12.06.2026 Âm lịch)</p>
+                    <div class="invitation-place-wrap">
+                      <p class="invitation-place-name">Nhà hàng Memory An Khê</p>
+                      <p class="invitation-place-addr">An Khê, Gia Lai</p>
+                    </div>
+                  </div>
+                  <div class="invitation-ceremony-divider"></div>
+                  <div class="invitation-ceremony">
+                    <h4>LỄ THÀNH HÔN</h4>
+                    <p class="invitation-time">11:30 | 01.08.2026</p>
+                    <p class="invitation-lunar">(19.06.2026 Âm lịch)</p>
+                    <div class="invitation-place-wrap">
+                      <p class="invitation-place-name">Nhà Văn Hoá Ấp 2</p>
+                      <p class="invitation-place-addr">P. Đồng Phú, TP. Đồng Nai</p>
+                    </div>
+                  </div>
+                </div>
+                
+                <p class="invitation-footer-text">Sự hiện diện của Quý khách là niềm vinh hạnh lớn cho chúng tôi!</p>
+                
+                <div class="invitation-ornament-bottom">
+                  <svg viewBox="0 0 100 20" class="ornament-svg">
+                    <path d="M10,10 Q50,0 90,10 Q50,20 10,10 Z" fill="none" stroke="var(--gold)" stroke-width="0.75"/>
+                    <circle cx="50" cy="10" r="3" fill="var(--gold)"/>
+                  </svg>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <div class="section-heading reveal">
           <p class="eyebrow">Cô dâu & chú rể</p>
           <h2>Hai trái tim, một lời hẹn ước</h2>
@@ -189,6 +258,11 @@
       </section>
 
       <section class="story section-red" id="story">
+        <!-- Ambient orbs for depth -->
+        <div class="story-orb story-orb-1" aria-hidden="true"></div>
+        <div class="story-orb story-orb-2" aria-hidden="true"></div>
+        <div class="story-orb story-orb-3" aria-hidden="true"></div>
+
         <div class="section-heading reveal">
           <p class="eyebrow">Love story</p>
           <h2>Hành trình yêu thương</h2>
@@ -196,36 +270,117 @@
         </div>
         <div class="timeline" id="storyTimeline">
           <span class="timeline-line" aria-hidden="true"></span>
+
           <article class="timeline-card reveal slide-left">
             <span class="timeline-dot"></span>
-            <img src="/assets/story/story-1.jpg" alt="Lần đầu gặp gỡ" loading="lazy">
+            <span class="timeline-step" aria-hidden="true">01</span>
+            <figure class="timeline-img-wrap">
+              <img src="/assets/story/story-1.jpg" alt="Lần đầu gặp gỡ" loading="lazy">
+            </figure>
             <div><time>14.02.2021</time><h3>Lần đầu gặp gỡ</h3><p>Một buổi chiều nhẹ nắng, một câu chào giản dị, và một cảm giác thân quen đến bất ngờ.</p></div>
           </article>
+
           <article class="timeline-card reveal slide-right">
             <span class="timeline-dot"></span>
-            <img src="/assets/story/story-2.jpg" alt="Buổi hẹn đầu tiên" loading="lazy">
+            <span class="timeline-step" aria-hidden="true">02</span>
+            <figure class="timeline-img-wrap">
+              <img src="/assets/story/story-2.jpg" alt="Buổi hẹn đầu tiên" loading="lazy">
+            </figure>
             <div><time>20.03.2021</time><h3>Buổi hẹn đầu tiên</h3><p>Ly cà phê chưa kịp nguội, câu chuyện đã kéo dài qua cả hoàng hôn.</p></div>
           </article>
+
           <article class="timeline-card reveal slide-left">
             <span class="timeline-dot"></span>
-            <img src="/assets/story/story-3.jpg" alt="Chuyến đi đầu" loading="lazy">
+            <span class="timeline-step" aria-hidden="true">03</span>
+            <figure class="timeline-img-wrap">
+              <img src="/assets/story/story-3.jpg" alt="Chuyến đi đầu" loading="lazy">
+            </figure>
             <div><time>08.08.2022</time><h3>Chuyến đi đầu</h3><p>Chúng mình học cách nắm tay nhau qua những cung đường mới, bình yên và rực rỡ.</p></div>
           </article>
+
           <article class="timeline-card reveal slide-right">
             <span class="timeline-dot"></span>
-            <img src="/assets/story/story-4.jpg" alt="Lời tỏ tình" loading="lazy">
+            <span class="timeline-step" aria-hidden="true">04</span>
+            <figure class="timeline-img-wrap">
+              <img src="/assets/story/story-4.jpg" alt="Lời tỏ tình" loading="lazy">
+            </figure>
             <div><time>24.12.2023</time><h3>Lời tỏ tình</h3><p>Một lời nói thật khẽ, nhưng đủ làm trái tim cả hai sáng lên như mùa lễ hội.</p></div>
           </article>
+
           <article class="timeline-card reveal slide-left">
             <span class="timeline-dot"></span>
-            <img src="/assets/story/story-5.jpg" alt="Cầu hôn" loading="lazy">
+            <span class="timeline-step" aria-hidden="true">05</span>
+            <figure class="timeline-img-wrap">
+              <img src="/assets/story/story-5.jpg" alt="Cầu hôn" loading="lazy">
+            </figure>
             <div><time>18.05.2025</time><h3>Ngày cầu hôn</h3><p>Giữa ánh đèn vàng và những cánh hoa, câu trả lời là điều chúng mình đã luôn biết.</p></div>
           </article>
+
           <article class="timeline-card reveal slide-right">
             <span class="timeline-dot"></span>
-            <img src="/assets/story/story-6.jpg" alt="Ảnh cưới" loading="lazy">
+            <span class="timeline-step" aria-hidden="true">06</span>
+            <figure class="timeline-img-wrap">
+              <img src="/assets/story/story-6.jpg" alt="Ảnh cưới" loading="lazy">
+            </figure>
             <div><time>25.07.2026 - 01.08.2026</time><h3>Về chung một nhà</h3><p>Ngày chúng mình mời những người thương yêu nhất cùng chứng kiến lời hẹn trọn đời.</p></div>
           </article>
+
+        </div>
+      </section>
+
+      <!-- Wedding Calendar Section -->
+      <section class="calendar section-blush" id="calendar">
+        <div class="section-heading reveal">
+          <p class="eyebrow">Save the Date</p>
+          <h2>Lịch đám cưới</h2>
+          <p>Hai ngày vui trọn vẹn của chúng mình, kính mời bạn cùng lưu lại lịch để chung vui.</p>
+        </div>
+        <div class="calendar-container reveal">
+          <!-- July 2026: Lễ Vu Quy -->
+          <div class="calendar-box">
+            <div class="calendar-header-box">
+              <h3>Tháng 7 / 2026</h3>
+              <p class="calendar-note">♥ Lễ Vu Quy &mdash; 25.07.2026</p>
+            </div>
+            <div class="calendar-grid-header">
+              <span>CN</span><span>T2</span><span>T3</span><span>T4</span><span>T5</span><span>T6</span><span>T7</span>
+            </div>
+            <div class="calendar-grid-days">
+              <span class="empty"></span><span class="empty"></span><span class="empty"></span>
+              <span>1</span><span>2</span><span>3</span><span>4</span>
+              <span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>10</span><span>11</span>
+              <span>12</span><span>13</span><span>14</span><span>15</span><span>16</span><span>17</span><span>18</span>
+              <span>19</span><span>20</span><span>21</span><span>22</span><span>23</span><span>24</span>
+              <span class="special-day highlight-bride" data-tooltip="Lễ Vu Quy">
+                25
+                <span class="special-pulse"></span>
+              </span>
+              <span>26</span><span>27</span><span>28</span><span>29</span><span>30</span><span>31</span>
+            </div>
+          </div>
+
+          <!-- August 2026: Lễ Thành Hôn -->
+          <div class="calendar-box">
+            <div class="calendar-header-box">
+              <h3>Tháng 8 / 2026</h3>
+              <p class="calendar-note">♥ Lễ Thành Hôn &mdash; 01.08.2026</p>
+            </div>
+            <div class="calendar-grid-header">
+              <span>CN</span><span>T2</span><span>T3</span><span>T4</span><span>T5</span><span>T6</span><span>T7</span>
+            </div>
+            <div class="calendar-grid-days">
+              <span class="empty"></span><span class="empty"></span><span class="empty"></span><span class="empty"></span><span class="empty"></span><span class="empty"></span>
+              <span class="special-day highlight-groom" data-tooltip="Lễ Thành Hôn">
+                1
+                <span class="special-pulse"></span>
+              </span>
+              <span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span>
+              <span>8</span><span>9</span><span>10</span><span>11</span><span>12</span><span>13</span><span>14</span>
+              <span>15</span><span>16</span><span>17</span><span>18</span><span>19</span><span>20</span><span>21</span>
+              <span>22</span><span>23</span><span>24</span><span>25</span><span>26</span><span>27</span><span>28</span>
+              <span>29</span><span>30</span><span>31</span>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -238,21 +393,74 @@
         </div>
         <div class="event-grid">
           <article class="event-card reveal">
-            <img src="/assets/events/vuquy.jpg" alt="Đám hỏi nhà gái" loading="lazy">
-            <div><p class="role">Nhà gái</p><h3>Đám Hỏi</h3><p class="event-time">25.07.2026 | 12.06.2026 ÂL</p><p>Gia đình nhà gái trân trọng kính mời quý khách đến chung vui trong ngày đám hỏi của Hoài Thanh và Thanh Hiền.</p><a class="btn btn-outline" href="https://maps.google.com" target="_blank" rel="noreferrer">Xem bản đồ</a></div>
+            <img src="/assets/events/vuquy.jpg" alt="Đám hỏi - Lễ Vu Quy" loading="lazy">
+            <div>
+              <p class="role">Lễ Vu Quy</p>
+              <h3>Đám Hỏi</h3>
+              <p class="event-time">25.07.2026 | 12.06.2026 ÂL</p>
+              <p>Gia đình nhà gái trân trọng kính mời quý khách đến chung vui trong ngày đám hỏi của Hoài Thanh và Thanh Hiền tại tư gia nhà gái (Gia Lai).</p>
+              <a class="btn btn-outline" href="#maps-section">Xem bản đồ</a>
+            </div>
           </article>
           <article class="event-card reveal">
-            <img src="/assets/events/thanhhon.jpg" alt="Tiệc cưới nhà gái" loading="lazy">
-            <div><p class="role">Nhà gái</p><h3>Tiệc Cưới Nhà Gái</h3><p class="event-time">25.07.2026 | 12.06.2026 ÂL</p><p>Thân mời quý khách dùng bữa tiệc thân mật cùng gia đình nhà gái trong ngày vui của đôi uyên ương.</p><a class="btn btn-outline" href="https://maps.google.com" target="_blank" rel="noreferrer">Xem bản đồ</a></div>
+            <img src="/assets/events/thanhhon.jpg" alt="Tiệc cưới Lễ Vu Quy" loading="lazy">
+            <div>
+              <p class="role">Lễ Vu Quy</p>
+              <h3>Tiệc Cưới Lễ Vu Quy</h3>
+              <p class="event-time">25.07.2026 | 12.06.2026 ÂL</p>
+              <p>Thân mời quý khách dùng bữa tiệc thân mật cùng gia đình tại Nhà hàng Memory An Khê, Gia Lai để chung vui cùng Lễ Vu Quy của đôi uyên ương.</p>
+              <a class="btn btn-outline" href="#maps-section">Xem bản đồ</a>
+            </div>
           </article>
           <article class="event-card reveal">
-            <img src="/assets/events/tieccuoi.jpg" alt="Rước dâu và tiệc cưới nhà trai" loading="lazy">
-            <div><p class="role">Nhà trai</p><h3>Rước Dâu & Tiệc Cưới Nhà Trai</h3><p class="event-time">01.08.2026 | 19.06.2026 ÂL</p><p>Gia đình nhà trai trân trọng kính mời quý khách đến dự lễ rước dâu và chung vui trong tiệc cưới.</p><a class="btn btn-outline" href="https://maps.google.com" target="_blank" rel="noreferrer">Xem bản đồ</a></div>
+            <img src="/assets/events/tieccuoi.jpg" alt="Rước dâu và tiệc cưới Lễ Thành Hôn" loading="lazy">
+            <div>
+              <p class="role">Lễ Thành Hôn</p>
+              <h3>Rước Dâu &amp; Tiệc Cưới</h3>
+              <p class="event-time">01.08.2026 | 19.06.2026 ÂL</p>
+              <p>Gia đình nhà trai trân trọng kính mời quý khách đến dự lễ rước dâu và chung vui trong tiệc cưới Lễ Thành Hôn tại Nhà Văn Hoá Ấp 2, Phường Đồng Phú, TP. Đồng Nai.</p>
+              <a class="btn btn-outline" href="#maps-section">Xem bản đồ</a>
+            </div>
           </article>
         </div>
+
+        <!-- Interactive Map Section -->
+        <div class="maps-section reveal" id="maps-section">
+          <div class="maps-tabs" role="tablist" aria-label="Chọn bản đồ đường đi">
+            <button class="map-tab is-active" role="tab" aria-selected="true" aria-controls="map-panel-bride" data-target="bride" type="button">
+              📍 Bản đồ Lễ Vu Quy (Gia Lai)
+            </button>
+            <button class="map-tab" role="tab" aria-selected="false" aria-controls="map-panel-groom" data-target="groom" type="button">
+              📍 Bản đồ Lễ Thành Hôn (Đồng Nai)
+            </button>
+          </div>
+          
+          <div class="map-panels">
+            <!-- Map Bride: Nhà hàng Memory An Khê Gia Lai -->
+            <div class="map-panel" id="map-panel-bride" role="tabpanel">
+              <p class="map-address"><strong>Địa điểm:</strong> Nhà hàng Memory An Khê, Gia Lai</p>
+              <div class="iframe-container">
+                <iframe src="https://maps.google.com/maps?q=Nh%C3%A0%20h%C3%A0ng%20Memory%20An%20Kh%C3%AA%20Gia%20Lai&t=&z=15&ie=UTF8&iwloc=&output=embed" width="100%" height="380" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+              </div>
+            </div>
+            
+            <!-- Map Groom: Nhà Văn Hoá Ấp 2, Phường Đồng Phú, TP. Đồng Nai -->
+            <div class="map-panel is-hidden" id="map-panel-groom" role="tabpanel">
+              <p class="map-address"><strong>Địa điểm:</strong> Nhà Văn Hoá Ấp 2, Phường Đồng Phú, TP. Đồng Nai</p>
+              <div class="iframe-container">
+                <iframe src="https://maps.google.com/maps?q=Nh%C3%A0%20V%C4%83n%20Ho%C3%A1%20%E1%BA%A4p%202%2C%20Ph%C6%B0%E1%BB%9Dng%20%C4%90%E1%BB%93ng%20Ph%C3%BA%2C%20TP.%20%C4%90%E1%BB%93ng%20Nai&t=&z=15&ie=UTF8&iwloc=&output=embed" width="100%" height="380" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <div class="venue-card reveal">
           <img src="/assets/events/venue.jpg" alt="Không gian tiệc cưới" loading="lazy">
-          <div><p class="eyebrow">Địa điểm</p><h3>Nhà gái & Nhà trai</h3><p>Hai gia đình hân hoan chuẩn bị ngày đám hỏi, lễ rước dâu và tiệc cưới để đón chào những người thân yêu.</p></div>
+          <div>
+            <p class="eyebrow">Địa điểm</p>
+            <h3>Lễ Vu Quy &amp; Lễ Thành Hôn</h3>
+            <p>Hai gia đình hân hoan chuẩn bị ngày đám hỏi, lễ rước dâu và tiệc cưới tại Gia Lai và Đồng Nai để đón chào những người thân yêu.</p>
+          </div>
           <img class="qr-location" src="/assets/qr/qr-location.png" alt="QR vị trí tiệc cưới">
         </div>
       </section>
@@ -262,13 +470,70 @@
           <p class="eyebrow">Đếm ngược</p>
           <h2>Đến ngày chung đôi</h2>
         </div>
-        <div class="countdown-wrap reveal">
-          <div class="heart-pulse" aria-hidden="true"></div>
-          <div class="countdown-grid" id="countdownGrid" aria-live="polite">
-            <div><strong data-count="days">000</strong><span>Ngày</span></div>
-            <div><strong data-count="hours">00</strong><span>Giờ</span></div>
-            <div><strong data-count="minutes">00</strong><span>Phút</span></div>
-            <div><strong data-count="seconds">00</strong><span>Giây</span></div>
+
+        <!-- Tab switcher -->
+        <div class="countdown-tabs reveal" role="tablist" aria-label="Chọn đám cưới">
+          <button
+            class="countdown-tab is-active"
+            id="tab-bride"
+            role="tab"
+            aria-controls="countdown-bride"
+            aria-selected="true"
+            data-target="bride"
+            type="button"
+          >
+            <span class="tab-family">♥ Lễ Vu Quy</span>
+            <span class="tab-date">25.07.2026</span>
+            <span class="tab-lunar">12.06 Âm lịch</span>
+          </button>
+          <button
+            class="countdown-tab"
+            id="tab-groom"
+            role="tab"
+            aria-controls="countdown-groom"
+            aria-selected="false"
+            data-target="groom"
+            type="button"
+          >
+            <span class="tab-family">♥ Lễ Thành Hôn</span>
+            <span class="tab-date">01.08.2026</span>
+            <span class="tab-lunar">19.06 Âm lịch</span>
+          </button>
+        </div>
+
+        <!-- Bride countdown -->
+        <div class="countdown-panel" id="countdown-bride" role="tabpanel" aria-labelledby="tab-bride">
+          <div class="countdown-wrap reveal">
+            <div class="heart-pulse-wrap" aria-hidden="true">
+              <svg class="heart-pulse-svg" viewBox="0 0 24 24">
+                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+              </svg>
+            </div>
+            <div class="countdown-grid" id="countdownGridBride" aria-live="polite">
+              <div><strong data-count-bride="days">000</strong><span>Ngày</span></div>
+              <div><strong data-count-bride="hours">00</strong><span>Giờ</span></div>
+              <div><strong data-count-bride="minutes">00</strong><span>Phút</span></div>
+              <div><strong data-count-bride="seconds">00</strong><span>Giây</span></div>
+            </div>
+            <p class="countdown-event-label">Tiệc cưới Lễ Vu Quy &mdash; Gia Lai &mdash; 25.07.2026</p>
+          </div>
+        </div>
+
+        <!-- Groom countdown -->
+        <div class="countdown-panel is-hidden" id="countdown-groom" role="tabpanel" aria-labelledby="tab-groom">
+          <div class="countdown-wrap reveal">
+            <div class="heart-pulse-wrap" aria-hidden="true">
+              <svg class="heart-pulse-svg" viewBox="0 0 24 24">
+                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+              </svg>
+            </div>
+            <div class="countdown-grid" id="countdownGridGroom" aria-live="polite">
+              <div><strong data-count-groom="days">000</strong><span>Ngày</span></div>
+              <div><strong data-count-groom="hours">00</strong><span>Giờ</span></div>
+              <div><strong data-count-groom="minutes">00</strong><span>Phút</span></div>
+              <div><strong data-count-groom="seconds">00</strong><span>Giây</span></div>
+            </div>
+            <p class="countdown-event-label">Tiệc cưới Lễ Thành Hôn &mdash; Đồng Nai &mdash; 01.08.2026</p>
           </div>
         </div>
       </section>
@@ -276,24 +541,162 @@
       <section class="gallery section-cream" id="gallery">
         <div class="section-heading reveal">
           <p class="eyebrow">Wedding album</p>
-          <h2>Khoảnh khắc của chúng mình</h2>
+          <h2>Kho&#7843;nh kh&#7855;c c&#7911;a ch&#250;ng m&#236;nh</h2>
+          <p>M&#7895;i t&#7845;m &#7843;nh l&#224; m&#7897;t kho&#7843;nh kh&#7855;c y&#234;u th&#432;&#417;ng &#273;&#432;&#7907;c gi&#7919; l&#7841;i m&#227;i m&#227;i.</p>
         </div>
-        <div class="gallery-grid">
-          <button class="gallery-item reveal" type="button" data-index="1"><img src="/assets/gallery/gallery-01-thumb.jpg" alt="Ảnh cưới Hoài Thanh & Thanh Hiền 01" loading="lazy"></button>
-          <button class="gallery-item reveal" type="button" data-index="2"><img src="/assets/gallery/gallery-02-thumb.jpg" alt="Ảnh cưới Hoài Thanh & Thanh Hiền 02" loading="lazy"></button>
-          <button class="gallery-item reveal" type="button" data-index="3"><img src="/assets/gallery/gallery-03-thumb.jpg" alt="Ảnh cưới Hoài Thanh & Thanh Hiền 03" loading="lazy"></button>
-          <button class="gallery-item reveal" type="button" data-index="4"><img src="/assets/gallery/gallery-04-thumb.jpg" alt="Ảnh cưới Hoài Thanh & Thanh Hiền 04" loading="lazy"></button>
-          <button class="gallery-item reveal" type="button" data-index="5"><img src="/assets/gallery/gallery-05-thumb.jpg" alt="Ảnh cưới Hoài Thanh & Thanh Hiền 05" loading="lazy"></button>
-          <button class="gallery-item reveal" type="button" data-index="6"><img src="/assets/gallery/gallery-06-thumb.jpg" alt="Ảnh cưới Hoài Thanh & Thanh Hiền 06" loading="lazy"></button>
-          <button class="gallery-item reveal" type="button" data-index="7"><img src="/assets/gallery/gallery-07-thumb.jpg" alt="Ảnh cưới Hoài Thanh & Thanh Hiền 07" loading="lazy"></button>
-          <button class="gallery-item reveal" type="button" data-index="8"><img src="/assets/gallery/gallery-08-thumb.jpg" alt="Ảnh cưới Hoài Thanh & Thanh Hiền 08" loading="lazy"></button>
-          <button class="gallery-item reveal" type="button" data-index="9"><img src="/assets/gallery/gallery-09-thumb.jpg" alt="Ảnh cưới Hoài Thanh & Thanh Hiền 09" loading="lazy"></button>
-          <button class="gallery-item reveal" type="button" data-index="10"><img src="/assets/gallery/gallery-10-thumb.jpg" alt="Ảnh cưới Hoài Thanh & Thanh Hiền 10" loading="lazy"></button>
-          <button class="gallery-item reveal" type="button" data-index="11"><img src="/assets/gallery/gallery-11-thumb.jpg" alt="Ảnh cưới Hoài Thanh & Thanh Hiền 11" loading="lazy"></button>
-          <button class="gallery-item reveal" type="button" data-index="12"><img src="/assets/gallery/gallery-12-thumb.jpg" alt="Ảnh cưới Hoài Thanh & Thanh Hiền 12" loading="lazy"></button>
+
+        <!-- Bento grid: 8 photos, exactly 3 rows (curated from 3 concepts) -->
+        <div class="bento-grid">
+          <!-- HERO 1 (2col×2row): img-12 (Outdoor Concept) -->
+          <button class="bento-item bento-hero" type="button" data-index="12">
+            <img src="/assets/gallery/gallery-12-thumb.jpg" alt="&#7842;nh c&#432;&#417;i Ho&#224;i Thanh &amp; Thanh Hi&#7873;n 12" loading="lazy">
+            <span class="bento-overlay"><span class="bento-num">12</span></span>
+          </button>
+          
+          <!-- Row 1, Col 3: img-22 (Indoor Concept) -->
+          <button class="bento-item" type="button" data-index="22">
+            <img src="/assets/gallery/gallery-22-thumb.jpg" alt="&#7842;nh c&#432;&#417;i 22" loading="lazy">
+            <span class="bento-overlay"><span class="bento-num">22</span></span>
+          </button>
+          
+          <!-- Row 1, Col 4: img-25 (Traditional Attire Concept) -->
+          <button class="bento-item" type="button" data-index="25">
+            <img src="/assets/gallery/gallery-25-thumb.jpg" alt="&#7842;nh c&#432;&#417;i 25" loading="lazy">
+            <span class="bento-overlay"><span class="bento-num">25</span></span>
+          </button>
+
+          <!-- Row 2, Col 3: img-23 (Indoor Concept) -->
+          <button class="bento-item" type="button" data-index="23">
+            <img src="/assets/gallery/gallery-23-thumb.jpg" alt="&#7842;nh c&#432;&#417;i 23" loading="lazy">
+            <span class="bento-overlay"><span class="bento-num">23</span></span>
+          </button>
+          
+          <!-- Row 2, Col 4: img-26 (Traditional Attire Concept) -->
+          <button class="bento-item" type="button" data-index="26">
+            <img src="/assets/gallery/gallery-26-thumb.jpg" alt="&#7842;nh c&#432;&#417;i 26" loading="lazy">
+            <span class="bento-overlay"><span class="bento-num">26</span></span>
+          </button>
+
+          <!-- Row 3, Col 1-2: img-07 (Outdoor Concept - WIDE) -->
+          <button class="bento-item bento-wide" type="button" data-index="7">
+            <img src="/assets/gallery/gallery-07-thumb.jpg" alt="&#7842;nh c&#432;&#417;i 07" loading="lazy">
+            <span class="bento-overlay"><span class="bento-num">07</span></span>
+          </button>
+
+          <!-- Row 3, Col 3: img-24 (Indoor Concept) -->
+          <button class="bento-item" type="button" data-index="24">
+            <img src="/assets/gallery/gallery-24-thumb.jpg" alt="&#7842;nh c&#432;&#417;i 24" loading="lazy">
+            <span class="bento-overlay"><span class="bento-num">24</span></span>
+          </button>
+          
+          <!-- Row 3, Col 4: img-33 (Traditional Attire Concept) -->
+          <button class="bento-item" type="button" data-index="33">
+            <img src="/assets/gallery/gallery-33-thumb.jpg" alt="&#7842;nh c&#432;&#417;i 33" loading="lazy">
+            <span class="bento-overlay"><span class="bento-num">33</span></span>
+          </button>
         </div>
+
+        <!-- Smooth transition wrapper for expandable masonry content -->
+        <div class="gallery-expand-container" id="galleryExpandContainer">
+          <div class="gallery-expand-inner">
+            <div class="gallery-grid" id="galleryMoreGrid">
+              <!-- Remaining 29 images (concepts mixed or ordered by category) -->
+              <button class="gallery-item reveal" type="button" data-index="1">
+                <img src="/assets/gallery/gallery-01-thumb.jpg" alt="&#7842;nh c&#432;&#417;i 01" loading="lazy">
+              </button>
+              <button class="gallery-item reveal" type="button" data-index="2">
+                <img src="/assets/gallery/gallery-02-thumb.jpg" alt="&#7842;nh c&#432;&#417;i 02" loading="lazy">
+              </button>
+              <button class="gallery-item reveal" type="button" data-index="3">
+                <img src="/assets/gallery/gallery-03-thumb.jpg" alt="&#7842;nh c&#432;&#417;i 03" loading="lazy">
+              </button>
+              <button class="gallery-item reveal" type="button" data-index="4">
+                <img src="/assets/gallery/gallery-04-thumb.jpg" alt="&#7842;nh c&#432;&#417;i 04" loading="lazy">
+              </button>
+              <button class="gallery-item reveal" type="button" data-index="5">
+                <img src="/assets/gallery/gallery-05-thumb.jpg" alt="&#7842;nh c&#432;&#417;i 05" loading="lazy">
+              </button>
+              <button class="gallery-item reveal" type="button" data-index="6">
+                <img src="/assets/gallery/gallery-06-thumb.jpg" alt="&#7842;nh c&#432;&#417;i 06" loading="lazy">
+              </button>
+              <button class="gallery-item reveal" type="button" data-index="8">
+                <img src="/assets/gallery/gallery-08-thumb.jpg" alt="&#7842;nh c&#432;&#417;i 08" loading="lazy">
+              </button>
+              <button class="gallery-item reveal" type="button" data-index="9">
+                <img src="/assets/gallery/gallery-09-thumb.jpg" alt="&#7842;nh c&#432;&#417;i 09" loading="lazy">
+              </button>
+              <button class="gallery-item reveal" type="button" data-index="10">
+                <img src="/assets/gallery/gallery-10-thumb.jpg" alt="&#7842;nh c&#432;&#417;i 10" loading="lazy">
+              </button>
+              <button class="gallery-item reveal" type="button" data-index="11">
+                <img src="/assets/gallery/gallery-11-thumb.jpg" alt="&#7842;nh c&#432;&#417;i 11" loading="lazy">
+              </button>
+              <button class="gallery-item reveal" type="button" data-index="13">
+                <img src="/assets/gallery/gallery-13-thumb.jpg" alt="&#7842;nh c&#432;&#417;i 13" loading="lazy">
+              </button>
+              <button class="gallery-item reveal" type="button" data-index="14">
+                <img src="/assets/gallery/gallery-14-thumb.jpg" alt="&#7842;nh c&#432;&#417;i 14" loading="lazy">
+              </button>
+              <button class="gallery-item reveal" type="button" data-index="15">
+                <img src="/assets/gallery/gallery-15-thumb.jpg" alt="&#7842;nh c&#432;&#417;i 15" loading="lazy">
+              </button>
+              <button class="gallery-item reveal" type="button" data-index="16">
+                <img src="/assets/gallery/gallery-16-thumb.jpg" alt="&#7842;nh c&#432;&#417;i 16" loading="lazy">
+              </button>
+              <button class="gallery-item reveal" type="button" data-index="17">
+                <img src="/assets/gallery/gallery-17-thumb.jpg" alt="&#7842;nh c&#432;&#417;i 17" loading="lazy">
+              </button>
+              <button class="gallery-item reveal" type="button" data-index="18">
+                <img src="/assets/gallery/gallery-18-thumb.jpg" alt="&#7842;nh c&#432;&#417;i 18" loading="lazy">
+              </button>
+              <button class="gallery-item reveal" type="button" data-index="19">
+                <img src="/assets/gallery/gallery-19-thumb.jpg" alt="&#7842;nh c&#432;&#417;i 19" loading="lazy">
+              </button>
+              <button class="gallery-item reveal" type="button" data-index="20">
+                <img src="/assets/gallery/gallery-20-thumb.jpg" alt="&#7842;nh c&#432;&#417;i 20" loading="lazy">
+              </button>
+              <button class="gallery-item reveal" type="button" data-index="21">
+                <img src="/assets/gallery/gallery-21-thumb.jpg" alt="&#7842;nh c&#432;&#417;i 21" loading="lazy">
+              </button>
+              <button class="gallery-item reveal" type="button" data-index="27">
+                <img src="/assets/gallery/gallery-27-thumb.jpg" alt="&#7842;nh c&#432;&#417;i 27" loading="lazy">
+              </button>
+              <button class="gallery-item reveal" type="button" data-index="28">
+                <img src="/assets/gallery/gallery-28-thumb.jpg" alt="&#7842;nh c&#432;&#417;i 28" loading="lazy">
+              </button>
+              <button class="gallery-item reveal" type="button" data-index="29">
+                <img src="/assets/gallery/gallery-29-thumb.jpg" alt="&#7842;nh c&#432;&#417;i 29" loading="lazy">
+              </button>
+              <button class="gallery-item reveal" type="button" data-index="30">
+                <img src="/assets/gallery/gallery-30-thumb.jpg" alt="&#7842;nh c&#432;&#417;i 30" loading="lazy">
+              </button>
+              <button class="gallery-item reveal" type="button" data-index="31">
+                <img src="/assets/gallery/gallery-31-thumb.jpg" alt="&#7842;nh c&#432;&#417;i 31" loading="lazy">
+              </button>
+              <button class="gallery-item reveal" type="button" data-index="32">
+                <img src="/assets/gallery/gallery-32-thumb.jpg" alt="&#7842;nh c&#432;&#417;i 32" loading="lazy">
+              </button>
+              <button class="gallery-item reveal" type="button" data-index="34">
+                <img src="/assets/gallery/gallery-34-thumb.jpg" alt="&#7842;nh c&#432;&#417;i 34" loading="lazy">
+              </button>
+              <button class="gallery-item reveal" type="button" data-index="35">
+                <img src="/assets/gallery/gallery-35-thumb.jpg" alt="&#7842;nh c&#432;&#417;i 35" loading="lazy">
+              </button>
+              <button class="gallery-item reveal" type="button" data-index="36">
+                <img src="/assets/gallery/gallery-36-thumb.jpg" alt="&#7842;nh c&#432;&#417;i 36" loading="lazy">
+              </button>
+              <button class="gallery-item reveal" type="button" data-index="37">
+                <img src="/assets/gallery/gallery-37-thumb.jpg" alt="&#7842;nh c&#432;&#417;i 37" loading="lazy">
+              </button>
+            </div>
+          </div>
+        </div>
+
         <div class="gallery-actions reveal">
-          <button class="btn btn-outline" id="loadMoreBtn" type="button">Xem thêm ảnh</button>
+          <button class="btn btn-outline" id="loadMoreBtn" type="button" aria-expanded="false" aria-controls="galleryExpandContainer">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+            <span id="loadMoreText">Xem th&#234;m &#7843;nh (C&#242;n 29 &#7843;nh)</span>
+          </button>
         </div>
       </section>
 
@@ -360,6 +763,6 @@
       <button class="lightbox-nav lightbox-next" type="button" aria-label="Ảnh sau">›</button>
     </div>
 
-    <script src="script.js?v=3"></script>
+    <script src="script.js?v=4"></script>
   </body>
 </html>
