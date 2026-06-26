@@ -64,13 +64,19 @@
 }
 
 * { box-sizing: border-box; }
-html { scroll-behavior: smooth; }
+html {
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+  width: 100%;
+}
 body {
   margin: 0;
   color: var(--ink);
   background: var(--cream-100);
   font-family: "Inter", "Segoe UI", Arial, sans-serif;
   overflow-x: hidden;
+  width: 100%;
+  max-width: 100%;
 }
 
 body::before {
@@ -350,6 +356,7 @@ body:not(.invitation-active) .header {
    HERO SECTION REDESIGN
    ========================================== */
 .hero {
+  height: 100svh;
   min-height: 100svh;
   display: flex;
   flex-direction: column;
@@ -480,26 +487,77 @@ body:not(.invitation-active) .header {
   font-style: italic;
   line-height: 1;
 }
-.hero-date-cta {
-  font-size: 0.7rem;
+.hero-chips-group {
+  position: absolute;
+  bottom: clamp(18px, 3vw, 32px);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 6;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  width: max-content;
+  max-width: 90vw;
+}
+.hero-chip-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.72rem;
   font-weight: 700;
-  letter-spacing: 0.15em;
+  letter-spacing: 0.12em;
   color: var(--soft-taupe);
   border: 1px solid var(--gold-pale);
-  background: transparent;
+  background: rgba(255, 255, 255, 0.55);
   padding: 10px 22px;
   border-radius: 999px;
-  margin: 0;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: all 0.35s var(--ease);
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
 }
-.hero-date-cta:hover {
+.hero-chip-btn .heart-icon {
+  color: var(--gold-champagne);
+  font-size: 0.82rem;
+  line-height: 1;
+  transition: transform 0.35s var(--ease), color 0.35s var(--ease);
+}
+.hero-chip-btn:hover {
   background: var(--cream-warm);
   color: var(--charcoal-brown);
   border-color: var(--gold-champagne);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(184, 145, 87, 0.15);
+}
+.hero-chip-btn:hover .heart-icon {
+  transform: scale(1.3);
+  color: var(--red-700);
+}
+@media (max-width: 480px) {
+  .hero-chips-group {
+    gap: 8px;
+    bottom: 16px;
+    max-width: 95vw;
+  }
+  .hero-chip-btn {
+    padding: 8px 14px;
+    font-size: 0.65rem;
+    gap: 6px;
+  }
+  .hero-chip-btn .heart-icon {
+    font-size: 0.75rem;
+  }
 }
 .hero-portrait {
   z-index: 2;
   width: 100%;
-  aspect-ratio: 1 / 1;
+  flex: 1;
+  min-height: 0;
   margin: 0;
   border-radius: 0;
   border: none;
@@ -955,142 +1013,229 @@ body.invitation-active .hero-bottom-fabric {
 .qr-location { width: 152px; padding: 12px; border-radius: 18px; background: #fff; justify-self: center; }
 
 /* ══════════════════════════════════════════════
-   COUNTDOWN — Dual tab (Nhà Gái / Nhà Trai)
+   COUNTDOWN — Redesigned Premium
    ══════════════════════════════════════════════ */
+
+/* Section background */
+.countdown {
+  background: linear-gradient(160deg, #f8f0e3 0%, #f2e8d5 40%, #ede0c8 100%) !important;
+  position: relative;
+  overflow: hidden;
+}
+.countdown::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 70% 60% at 15% 20%, rgba(214,168,79,.08) 0%, transparent 70%),
+    radial-gradient(ellipse 60% 50% at 85% 80%, rgba(201,164,106,.07) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+/* Tab row — pill chips */
 .countdown-tabs {
   display: flex;
-  gap: 14px;
+  gap: 12px;
   justify-content: center;
   flex-wrap: wrap;
-  margin: 0 auto 36px;
+  margin: 0 auto 48px;
 }
 .countdown-tab {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
-  gap: 4px;
-  min-width: 180px;
-  padding: 18px 28px;
-  border: 1.5px solid rgba(201,164,106,.38);
-  border-radius: 20px;
-  background: rgba(255,246,232,.06);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  gap: 10px;
+  padding: 10px 24px;
+  border: 1.5px solid rgba(201,164,106,.3);
+  border-radius: 100px;
+  background: rgba(255,252,245,.55);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   color: var(--soft-taupe);
   cursor: pointer;
   font-family: inherit;
   transition:
-    background .35s var(--ease),
-    border-color .35s var(--ease),
-    transform .35s var(--ease),
-    box-shadow .35s var(--ease),
-    color .35s var(--ease);
+    background .3s ease,
+    border-color .3s ease,
+    box-shadow .3s ease,
+    color .3s ease;
   position: relative;
-  overflow: hidden;
+  white-space: nowrap;
 }
-.countdown-tab::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(135deg, rgba(214,168,79,.18), rgba(214,168,79,.04));
-  opacity: 0;
-  transition: opacity .35s var(--ease);
+.countdown-tab-icon {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: rgba(201,164,106,.12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  transition: background .3s ease;
 }
-.countdown-tab:hover::before,
-.countdown-tab.is-active::before { opacity: 1; }
+.countdown-tab-info {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  text-align: left;
+}
 .countdown-tab:hover {
-  border-color: rgba(201,164,106,.65);
-  transform: translateY(-3px);
-  box-shadow: 0 12px 32px rgba(0,0,0,.18);
+  border-color: rgba(201,164,106,.6);
+  background: rgba(255,252,245,.85);
+  box-shadow: 0 4px 20px rgba(201,164,106,.15);
 }
 .countdown-tab.is-active {
-  border-color: rgba(214,168,79,.75);
-  color: var(--gold-champagne);
+  border-color: var(--gold-champagne);
+  background: rgba(255,252,245,.95);
+  color: #7a5c1e;
   box-shadow:
-    0 0 0 1px rgba(214,168,79,.35),
-    0 16px 40px rgba(0,0,0,.22),
-    0 0 28px rgba(214,168,79,.18);
-  transform: translateY(-4px);
+    0 0 0 1px rgba(214,168,79,.25),
+    0 8px 28px rgba(201,164,106,.2);
+}
+.countdown-tab.is-active .countdown-tab-icon {
+  background: rgba(214,168,79,.22);
 }
 .tab-family {
   font-family: "Cormorant Garamond", Georgia, serif;
-  font-size: clamp(1.1rem, 3vw, 1.5rem);
-  font-weight: 600;
+  font-size: 1rem;
+  font-weight: 700;
   line-height: 1;
-  letter-spacing: .04em;
+  letter-spacing: .02em;
 }
 .tab-date {
-  font-size: .88rem;
-  font-weight: 800;
-  letter-spacing: .1em;
-  color: inherit;
-  opacity: .9;
-}
-.tab-lunar {
-  font-size: .68rem;
-  letter-spacing: .1em;
-  opacity: .6;
+  font-size: .72rem;
   font-weight: 600;
-  text-transform: uppercase;
+  letter-spacing: .08em;
+  opacity: .75;
 }
+.tab-lunar { display: none; }
 
 /* Panels */
 .countdown-panel {
   opacity: 1;
   transform: translateY(0);
-  transition: opacity .4s var(--ease), transform .4s var(--ease);
+  transition: opacity .4s ease, transform .4s ease;
 }
-.countdown-panel.is-hidden {
-  display: none;
-}
+.countdown-panel.is-hidden { display: none; }
 
-/* Event label beneath grid */
-.countdown-event-label {
-  text-align: center;
-  margin: 20px 0 0;
-  font-size: .75rem;
-  font-weight: 700;
-  letter-spacing: .14em;
-  text-transform: uppercase;
-  color: var(--gold);
-  opacity: .7;
-}
-
+/* Wrap */
 .countdown-wrap {
-  width: min(850px, 100%);
+  width: min(860px, 100%);
   margin: 0 auto;
   position: relative;
-  padding: 24px;
+  padding: 0 16px 8px;
 }
-.heart-pulse {
-  position: absolute;
-  inset: 50% auto auto 50%;
-  width: 220px;
-  height: 220px;
-  transform: translate(-50%, -50%) rotate(45deg);
-  border-radius: 46px;
-  background: rgba(255,122,174,.16);
-  animation: pulseHeart 2.8s ease-in-out infinite;
-}
+
+/* ── The big number strip ── */
 .countdown-grid {
   position: relative;
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 14px;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+  background: rgba(255,250,242,.7);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(201,164,106,.22);
+  border-radius: 28px;
+  box-shadow:
+    0 2px 0 0 rgba(255,255,255,.85) inset,
+    0 -1px 0 0 rgba(201,164,106,.12) inset,
+    0 24px 60px rgba(170,130,60,.1),
+    0 4px 16px rgba(170,130,60,.06);
+  overflow: hidden;
 }
 .countdown-grid div {
-  min-height: 132px;
-  display: grid;
-  place-items: center;
-  padding: 18px;
-  border-radius: 24px;
-  color: var(--red-700);
-  background: rgba(255,246,232,.82);
-  border: 1px solid rgba(214,168,79,.42);
-  box-shadow: 0 16px 42px rgba(158,27,27,.12);
+  min-height: 150px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 32px 12px 24px;
+  position: relative;
+  background: transparent;
+  border-radius: 0;
+  box-shadow: none;
+  border: none;
+  color: #3d2c0f;
 }
-.countdown-grid strong { font-family: "Cormorant Garamond", "Playfair Display", Georgia, serif; font-size: clamp(2.3rem, 12vw, 5.8rem); line-height: .9; text-shadow: 0 0 24px rgba(214,168,79,.26); }
-.countdown-grid span { color: var(--muted); font-weight: 800; }
+/* vertical separator between columns */
+.countdown-grid div:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  top: 20%;
+  height: 60%;
+  width: 1px;
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    rgba(201,164,106,.35) 30%,
+    rgba(201,164,106,.35) 70%,
+    transparent
+  );
+}
+.countdown-grid strong {
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: clamp(3.2rem, 9vw, 7rem);
+  font-weight: 300;
+  font-style: italic;
+  line-height: .85;
+  letter-spacing: -.01em;
+  color: #6b4a14;
+  text-shadow:
+    0 2px 8px rgba(107,74,20,.08),
+    0 0 40px rgba(214,168,79,.15);
+  display: block;
+}
+.countdown-grid span {
+  font-family: "Inter", sans-serif;
+  font-size: .6rem;
+  font-weight: 700;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: rgba(107,74,20,.5);
+  display: block;
+}
+
+/* Event label */
+.countdown-event-label {
+  text-align: center;
+  margin: 22px 0 0;
+  font-size: .7rem;
+  font-weight: 700;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--gold-champagne);
+  opacity: .8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+.countdown-event-label::before,
+.countdown-event-label::after {
+  content: "";
+  width: 32px;
+  height: 1px;
+  background: linear-gradient(to right, transparent, rgba(201,164,106,.5), transparent);
+}
+
+/* Heart decoration */
+.heart-pulse-wrap {
+  display: none;
+}
+
+/* Decorative ornament above the number strip */
+.countdown-wrap::before {
+  content: "✦";
+  display: block;
+  text-align: center;
+  font-size: .9rem;
+  color: rgba(201,164,106,.45);
+  margin-bottom: 20px;
+  letter-spacing: .3em;
+}
 
 
 /* ══════════════════════════════════════════════
@@ -1616,7 +1761,8 @@ body.invitation-active .hero-bottom-fabric {
   .couple-grid, .event-grid, .wish-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px; }
   .event-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .venue-card { grid-template-columns: 1.2fr 1fr auto; }
-  .countdown-grid { grid-template-columns: repeat(4, 1fr); }
+  .countdown-grid { grid-template-columns: repeat(4, 1fr); gap: 0; }
+  .countdown-tab { border-radius: 100px; flex-direction: row; }
   .gallery-grid { columns: 3; column-gap: 10px; }
   .bento-grid { grid-auto-rows: 220px; }
 
@@ -2467,98 +2613,48 @@ body:not(.invitation-active) .hero-portrait {
    DIGITAL WEDDING INVITATION CARD
    ══════════════════════════════════════════════ */
 .invitation-card-wrap {
-  width: min(800px, 100%);
+  width: min(540px, 100%);
   margin: 0 auto 56px;
   padding: 0 16px;
 }
-.invitation-card {
-  background: var(--cream-100);
-  border-radius: 24px;
-  box-shadow: 0 24px 64px rgba(58, 51, 44, 0.12);
-  border: 1px solid rgba(214, 168, 79, 0.25);
+.invitation-image-container {
   position: relative;
-  overflow: hidden;
-  padding: 16px;
-}
-.invitation-border-outer {
-  border: 1px solid rgba(214, 168, 79, 0.35);
+  width: 100%;
+  box-shadow: 0 24px 64px rgba(58, 51, 44, 0.16);
   border-radius: 18px;
-  padding: 8px;
+  overflow: hidden;
+  border: 1px solid rgba(214, 168, 79, 0.35);
+  aspect-ratio: 9 / 16;
+  background-color: var(--ivory);
 }
-.invitation-border-inner {
-  border: 2px solid rgba(214, 168, 79, 0.6);
-  border-radius: 12px;
-  padding: 40px 24px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  background-image: radial-gradient(circle at center, rgba(255, 246, 232, 0.8) 0%, rgba(255, 255, 255, 0) 70%);
-}
-.invitation-ornament-top,
-.invitation-ornament-bottom {
-  width: 120px;
-  height: 24px;
-  margin: 0 auto;
-  opacity: 0.7;
-}
-.ornament-svg {
+.invitation-card-img {
   width: 100%;
   height: 100%;
+  object-fit: cover;
+  display: block;
 }
-.invitation-monogram {
-  font-family: "Great Vibes", cursive;
-  font-size: 2.8rem;
-  color: var(--gold-champagne);
-  margin-bottom: 8px;
-  text-shadow: 0 1px 4px rgba(0,0,0,0.05);
+.invitation-dynamic-name-overlay {
+  position: absolute;
+  top: 42.8%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 70%;
+  height: 5%;
+  background-color: var(--ivory);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-.invitation-title {
-  font-size: 0.88rem;
-  font-weight: 800;
-  letter-spacing: 0.22em;
-  color: var(--gold-champagne);
-  margin: 0;
-  text-transform: uppercase;
+#invitationGuestName {
+  font-family: "Great Vibes", "Pinyon Script", cursive;
+  font-size: clamp(1.8rem, 5.5vw, 2.5rem);
+  color: #B89157;
+  font-weight: 500;
+  text-align: center;
+  line-height: 1.1;
+  white-space: nowrap;
 }
-.invitation-divider {
-  width: 48px;
-  height: 2px;
-  background: linear-gradient(90deg, transparent, var(--gold-champagne), transparent);
-  margin: 16px 0 28px;
-}
-.invitation-guest-label {
-  font-size: 0.82rem;
-  font-weight: 700;
-  color: var(--muted);
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  margin-bottom: 8px;
-}
-.invitation-guest-name {
-  font-family: "Cormorant Garamond", Georgia, serif;
-  font-size: clamp(2rem, 5.5vw, 3rem);
-  font-weight: 700;
-  color: var(--red-700);
-  margin: 0 0 20px;
-  text-shadow: 0 1px 2px rgba(158, 27, 27, 0.05);
-}
-.invitation-text {
-  font-size: clamp(0.9rem, 2.5vw, 1.05rem);
-  line-height: 1.6;
-  max-width: 520px;
-  color: var(--soft-taupe);
-  margin: 0 auto 24px;
-}
-.invitation-couple-names {
-  font-family: "Playfair Display", Georgia, serif;
-  font-size: clamp(1.8rem, 5vw, 2.6rem);
-  font-weight: 700;
-  color: var(--red-800);
-  letter-spacing: -0.01em;
-  margin: 0 0 36px;
-  position: relative;
-}
+
 .invitation-ceremonies {
   display: flex;
   justify-content: center;
@@ -2857,91 +2953,33 @@ body:not(.invitation-active) .hero-portrait {
 }
 
 /* ══════════════════════════════════════════════
-   UPGRADED COUNTDOWN STYLING & ANIMATIONS
+   COUNTDOWN — Tick animation only
    ══════════════════════════════════════════════ */
-.countdown-grid div {
-  background: rgba(255, 255, 255, 0.55) !important;
-  backdrop-filter: blur(20px) !important;
-  -webkit-backdrop-filter: blur(20px) !important;
-  border: 1px solid rgba(201, 164, 106, 0.25) !important;
-  box-shadow: 
-    0 16px 36px rgba(201, 164, 106, 0.08), 
-    inset 0 0 20px rgba(255, 255, 255, 0.7) !important;
-  transition: transform 0.4s var(--ease), box-shadow 0.4s var(--ease), border-color 0.4s var(--ease);
-}
-.countdown-grid div:hover {
-  transform: translateY(-4px);
-  box-shadow: 
-    0 24px 48px rgba(201, 164, 106, 0.15), 
-    inset 0 0 20px rgba(255, 255, 255, 0.9) !important;
-  border-color: rgba(201, 164, 106, 0.6) !important;
-}
-
-.countdown-grid strong {
-  font-family: "Cormorant Garamond", serif !important;
-  font-weight: 300 !important;
-  text-shadow: 0 4px 16px rgba(214, 168, 79, 0.15) !important;
-}
-
-.countdown-grid span {
-  font-family: "Inter", sans-serif !important;
-  font-size: 0.72rem !important;
-  font-weight: 600 !important;
-  text-transform: uppercase !important;
-  letter-spacing: 0.15em !important;
-  color: var(--gold-champagne) !important;
-  margin-top: 8px !important;
-  display: block;
-}
-
-/* Ticking slide-in animation */
 @keyframes tick-slide-in {
-  0% {
-    opacity: 0.2;
-    transform: translateY(6px) scale(0.96);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
+  0%   { opacity: 0; transform: translateY(5px) scale(0.97); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
 }
 .tick-anim {
-  animation: tick-slide-in 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: tick-slide-in 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-/* Heart SVG pulse styling */
-.heart-pulse-wrap {
-  position: absolute;
-  inset: 50% auto auto 50%;
-  width: 250px;
-  height: 250px;
-  transform: translate(-50%, -50%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  pointer-events: none;
-}
-.heart-pulse-svg {
-  width: 100%;
-  height: 100%;
-  fill: rgba(158, 27, 27, 0.035);
-  animation: pulseHeartSvg 2.5s ease-in-out infinite;
-}
-
-@keyframes pulseHeartSvg {
-  0% { transform: scale(0.92); opacity: 0.6; }
-  50% { transform: scale(1.08); opacity: 1; }
-  100% { transform: scale(0.92); opacity: 0.6; }
-}
-
-@media (max-width: 480px) {
+@media (max-width: 640px) {
   .countdown-grid {
-    gap: 10px !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    border-radius: 20px !important;
+  }
+  .countdown-grid div:nth-child(2)::after {
+    display: none !important;
   }
   .countdown-grid div {
-    padding: 12px !important;
-    min-height: 100px !important;
-    border-radius: 16px !important;
+    min-height: 110px !important;
+    padding: 22px 8px 18px !important;
+  }
+  .countdown-grid strong {
+    font-size: clamp(2.6rem, 16vw, 4rem) !important;
+  }
+  .countdown-tab {
+    padding: 8px 16px !important;
   }
 }
 
@@ -2975,3 +3013,114 @@ body:not(.invitation-active) .hero-portrait {
     animation: none !important;
   }
 }
+
+/* ══════════════════════════════════════════════
+   HERO SCROLL INDICATOR HOVER
+   ══════════════════════════════════════════════ */
+.hero-scroll-indicator {
+  cursor: pointer;
+  transition: transform 0.35s var(--ease), color 0.35s var(--ease);
+}
+.hero-scroll-indicator:hover {
+  transform: translate(-50%, -4px);
+}
+.hero-scroll-indicator:hover .mouse-scroll-icon {
+  border-color: var(--gold-champagne);
+  box-shadow: 0 0 10px rgba(214, 168, 79, 0.2);
+}
+.hero-scroll-indicator:hover .mouse-scroll-text {
+  color: var(--gold-champagne);
+  letter-spacing: 0.28em;
+}
+
+/* ══════════════════════════════════════════════
+   VERTICAL FLOATING NAVIGATION
+   ══════════════════════════════════════════════ */
+.vertical-nav {
+  position: fixed;
+  left: 28px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+.vertical-nav.is-visible {
+  pointer-events: auto;
+  opacity: 1;
+  visibility: visible;
+}
+.vertical-nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.vertical-nav-link {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-decoration: none;
+  color: var(--soft-taupe);
+  transition: all 0.35s var(--ease);
+  cursor: pointer;
+}
+.vertical-nav-link .nav-icon {
+  width: 24px;
+  height: 24px;
+  stroke: var(--gold-champagne);
+  stroke-width: 1.25;
+  fill: none;
+  transition: transform 0.35s var(--ease), fill 0.35s var(--ease), stroke-width 0.35s var(--ease), stroke 0.35s var(--ease);
+}
+.vertical-nav-link .nav-label {
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--charcoal-brown);
+  margin-top: 6px;
+  letter-spacing: 0.05em;
+  opacity: 0.75;
+  transition: all 0.35s var(--ease);
+}
+.vertical-nav-link:hover .nav-icon, .vertical-nav-link.active .nav-icon {
+  transform: scale(1.18);
+  fill: rgba(214, 168, 79, 0.12);
+  stroke-width: 1.75;
+  stroke: var(--red-700);
+}
+.vertical-nav-link:hover .nav-label, .vertical-nav-link.active .nav-label {
+  color: var(--red-700);
+  opacity: 1;
+  font-weight: 700;
+}
+.vertical-nav-separator {
+  width: 1px;
+  height: 36px;
+  background: var(--gold-pale);
+  margin: 10px 0;
+  opacity: 0.5;
+}
+
+/* Responsive adjustments for vertical navigation on small screens */
+@media (max-width: 768px) {
+  .vertical-nav {
+    left: 12px;
+  }
+  .vertical-nav-link .nav-label {
+    display: none; /* Hide labels on mobile to keep it ultra compact */
+  }
+  .vertical-nav-separator {
+    height: 22px;
+    margin: 6px 0;
+  }
+  .vertical-nav-link .nav-icon {
+    width: 20px;
+    height: 20px;
+  }
+}
+

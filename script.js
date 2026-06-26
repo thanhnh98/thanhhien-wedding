@@ -1,8 +1,8 @@
 const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 // Ngày cưới nhà gái: 25/07/2026 (Gia Lai)
 const brideDate = new Date('2026-07-25T08:00:00+07:00');
-// Ngày cưới nhà trai: 01/08/2026 (Bình Phước)
-const groomDate = new Date('2026-08-01T08:00:00+07:00');
+// Ngày cưới nhà trai: 01/08/2026 (Đồng Nai)
+const groomDate = new Date('2026-08-01T09:00:00+07:00');
 
 const progress = document.querySelector('.scroll-progress');
 const timeline = document.querySelector('#storyTimeline');
@@ -491,6 +491,13 @@ function initPersonalization() {
       invitationGuestName.textContent = 'Quý khách';
     }
   }
+
+  // Set invitation sharing QR code dynamically pointing to the base website URL
+  const qrInvitationImg = document.querySelector('#qr-invitation img');
+  if (qrInvitationImg) {
+    const baseUrl = window.location.origin + window.location.pathname;
+    qrInvitationImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${encodeURIComponent(baseUrl)}`;
+  }
 }
 
 function initEnvelopeOpening() {
@@ -589,6 +596,52 @@ function initMapTabs() {
   });
 }
 
+// Floating Vertical Navigation logic
+function initVerticalNav() {
+  const hero = document.querySelector('#hero');
+  const nav = document.querySelector('#verticalNav');
+  if (!hero || !nav) return;
+
+  // Use intersection observer to show/hide nav when hero is scrolled past
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) {
+        nav.classList.add('is-visible');
+      } else {
+        nav.classList.remove('is-visible');
+      }
+    });
+  }, { threshold: 0.05 });
+
+  observer.observe(hero);
+
+  // Active state highlighting on scroll
+  const sections = ['hero', 'couple', 'events'];
+  const sectionElements = sections.map(id => document.querySelector(`#${id}`)).filter(Boolean);
+  const navLinks = document.querySelectorAll('.vertical-nav-link');
+
+  window.addEventListener('scroll', () => {
+    let currentSectionId = 'hero';
+    const scrollPos = window.scrollY + window.innerHeight / 3;
+
+    sectionElements.forEach(el => {
+      if (el.offsetTop <= scrollPos) {
+        currentSectionId = el.id;
+      }
+    });
+
+    navLinks.forEach(link => {
+      if (link.dataset.section === currentSectionId) {
+        link.classList.add('active');
+      } else {
+        link.classList.remove('active');
+      }
+    });
+  }, { passive: true });
+}
+
 initPersonalization();
 initEnvelopeOpening();
 initMapTabs();
+initVerticalNav();
+
