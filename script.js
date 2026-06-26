@@ -506,6 +506,9 @@ function initEnvelopeOpening() {
 
   if (!overlay || !envelope) return;
 
+  // Capture the initial URL hash before any scrolling or scrollspy replaces it
+  const initialHash = window.location.hash;
+
   document.body.classList.add('envelope-active');
   document.documentElement.classList.add('envelope-active');
 
@@ -552,12 +555,23 @@ function initEnvelopeOpening() {
       document.body.classList.remove('envelope-active');
       document.documentElement.classList.remove('envelope-active');
       
-      // Smoothly scroll to the digital invitation card centered in viewport
-      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      document.querySelector('.invitation-card-wrap')?.scrollIntoView({ 
-        block: 'center', 
-        behavior: prefersReducedMotion ? 'auto' : 'smooth' 
-      });
+      // Smoothly scroll to the destination section (from original URL hash) or default invitation card
+      window.setTimeout(() => {
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        const targetSection = initialHash ? document.querySelector(initialHash) : null;
+        console.log('Scroll-to-hash debug:', { initialHash, hasTargetSection: !!targetSection });
+
+        if (targetSection) {
+          targetSection.scrollIntoView({ 
+            behavior: prefersReducedMotion ? 'auto' : 'smooth' 
+          });
+        } else {
+          document.querySelector('.invitation-card-wrap')?.scrollIntoView({ 
+            block: 'center', 
+            behavior: prefersReducedMotion ? 'auto' : 'smooth' 
+          });
+        }
+      }, 100);
     }, 5500);
 
     // Remove from DOM completely after animation completes.
@@ -615,10 +629,25 @@ function initVerticalNav() {
 
   observer.observe(hero);
 
-  // Active state highlighting on scroll
-  const sections = ['hero', 'couple', 'events'];
+  // Active state highlighting on scroll and URL hash synchronization
+  const sectionToNavMap = {
+    'hero': 'hero',
+    'couple': 'couple',
+    'story': 'couple',
+    'calendar': 'couple',
+    'events': 'events',
+    'countdown': 'events',
+    'gallery': 'gallery',
+    'rsvp': 'rsvp',
+    'wishes': 'rsvp',
+    'qr-invitation': 'rsvp',
+    'video': 'rsvp'
+  };
+
+  const sections = Object.keys(sectionToNavMap);
   const sectionElements = sections.map(id => document.querySelector(`#${id}`)).filter(Boolean);
   const navLinks = document.querySelectorAll('.vertical-nav-link');
+  let lastActiveSectionId = 'hero';
 
   window.addEventListener('scroll', () => {
     let currentSectionId = 'hero';
@@ -630,13 +659,25 @@ function initVerticalNav() {
       }
     });
 
+    const activeNavLinkId = sectionToNavMap[currentSectionId] || 'hero';
+
     navLinks.forEach(link => {
-      if (link.dataset.section === currentSectionId) {
+      if (link.dataset.section === activeNavLinkId) {
         link.classList.add('active');
       } else {
         link.classList.remove('active');
       }
     });
+
+    // Update URL hash without breaking the scroll behavior
+    if (activeNavLinkId !== lastActiveSectionId) {
+      lastActiveSectionId = activeNavLinkId;
+      if (activeNavLinkId === 'hero') {
+        history.replaceState(null, null, ' ');
+      } else {
+        history.replaceState(null, null, `#${activeNavLinkId}`);
+      }
+    }
   }, { passive: true });
 }
 
