@@ -3049,18 +3049,56 @@ body:not(.invitation-active) .hero-portrait {
   opacity: 0;
   visibility: hidden;
   transition: opacity 0.5s ease, visibility 0.5s ease;
+  
+  /* Luxury Premium Glassmorphism styling with dual border & warm shadow */
+  background: linear-gradient(135deg, rgba(255, 248, 237, 0.88) 0%, rgba(253, 243, 228, 0.78) 100%);
+  border: 1px solid rgba(201, 164, 106, 0.45);
+  box-shadow: 
+    0 16px 48px rgba(58, 51, 44, 0.12),
+    0 4px 16px rgba(201, 164, 106, 0.08),
+    0 0 20px rgba(201, 164, 106, 0.12),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.75),
+    inset 0 1px 2px rgba(201, 164, 106, 0.15);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  padding: 20px 14px;
+  border-radius: 40px;
 }
+
+/* Luxury star ornaments at top and bottom of vertical nav */
+.vertical-nav::before {
+  content: '✦';
+  font-size: 10px;
+  color: var(--champagne-gold);
+  margin-bottom: 12px;
+  text-shadow: 0 0 4px rgba(201, 164, 106, 0.6);
+  opacity: 0.85;
+}
+
+.vertical-nav::after {
+  content: '✦';
+  font-size: 10px;
+  color: var(--champagne-gold);
+  margin-top: 12px;
+  text-shadow: 0 0 4px rgba(201, 164, 106, 0.6);
+  opacity: 0.85;
+}
+
 .vertical-nav.is-visible {
   pointer-events: auto;
   opacity: 1;
   visibility: visible;
 }
+
 .vertical-nav-item {
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 100%;
 }
+
 .vertical-nav-link {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -3068,59 +3106,228 @@ body:not(.invitation-active) .hero-portrait {
   color: var(--soft-taupe);
   transition: all 0.35s var(--ease);
   cursor: pointer;
+  width: 100%;
 }
+
+/* Ambient Backlight Aura */
+.vertical-nav-link::before {
+  content: '';
+  position: absolute;
+  top: 12px;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.5);
+  width: 44px;
+  height: 44px;
+  background: radial-gradient(circle, rgba(201, 164, 106, 0.35) 0%, rgba(214, 168, 79, 0.15) 45%, rgba(255, 255, 255, 0) 70%);
+  border-radius: 50%;
+  opacity: 0;
+  transition: all 0.45s var(--ease);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Expanding Ripple Halo */
+.vertical-nav-link::after {
+  content: '';
+  position: absolute;
+  top: 12px;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.6);
+  width: 32px;
+  height: 32px;
+  border: 1px solid rgba(201, 164, 106, 0.85);
+  border-radius: 50%;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+
 .vertical-nav-link .nav-icon {
+  position: relative;
+  z-index: 2;
   width: 24px;
   height: 24px;
   stroke: var(--gold-champagne);
   stroke-width: 1.25;
   fill: none;
-  transition: transform 0.35s var(--ease), fill 0.35s var(--ease), stroke-width 0.35s var(--ease), stroke 0.35s var(--ease);
+  border-radius: 50%;
+  padding: 2px;
+  transition: 
+    transform 0.4s var(--ease), 
+    fill 0.4s var(--ease), 
+    stroke-width 0.4s var(--ease), 
+    stroke 0.4s var(--ease),
+    filter 0.4s var(--ease),
+    background 0.4s var(--ease),
+    box-shadow 0.4s var(--ease);
 }
+
 .vertical-nav-link .nav-label {
   font-family: "Cormorant Garamond", Georgia, serif;
-  font-size: 0.7rem;
+  font-size: 0.72rem;
   font-weight: 600;
   color: var(--charcoal-brown);
   margin-top: 6px;
   letter-spacing: 0.05em;
   opacity: 0.75;
   transition: all 0.35s var(--ease);
+  text-align: center;
+  white-space: nowrap;
 }
-.vertical-nav-link:hover .nav-icon, .vertical-nav-link.active .nav-icon {
-  transform: scale(1.18);
-  fill: rgba(214, 168, 79, 0.12);
-  stroke-width: 1.75;
-  stroke: var(--red-700);
+
+/* Hover State */
+.vertical-nav-link:hover .nav-icon {
+  transform: scale(1.22) rotate(8deg);
+  stroke: var(--red-main) !important;
+  stroke-width: 1.85;
+  background: rgba(255, 255, 255, 0.85);
+  box-shadow: 0 0 10px rgba(201, 164, 106, 0.25);
 }
-.vertical-nav-link:hover .nav-label, .vertical-nav-link.active .nav-label {
-  color: var(--red-700);
+
+.vertical-nav-link:hover::before {
+  opacity: 0.8;
+  transform: translate(-50%, -50%) scale(0.95);
+}
+
+.vertical-nav-link:hover .nav-label {
+  color: var(--red-main);
   opacity: 1;
   font-weight: 700;
 }
+
+/* Active State with luxury glow and pulsing/ripple effects */
+.vertical-nav-link.active::before {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1.1);
+  background: radial-gradient(circle, rgba(214, 168, 79, 0.45) 0%, rgba(163, 25, 27, 0.2) 50%, rgba(255, 255, 255, 0) 75%);
+}
+
+.vertical-nav-link.active::after {
+  animation: navRipple 3s cubic-bezier(0.25, 0, 0, 1) infinite;
+}
+
+.vertical-nav-link.active .nav-icon {
+  transform: scale(1.22);
+  stroke: var(--red-main) !important;
+  stroke-width: 1.85;
+  fill: rgba(201, 164, 106, 0.18);
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: 
+    0 0 12px rgba(201, 164, 106, 0.35),
+    0 0 24px rgba(163, 25, 27, 0.18);
+  filter: 
+    drop-shadow(0 0 4px rgba(201, 164, 106, 0.65))
+    drop-shadow(0 0 8px rgba(163, 25, 27, 0.35));
+  animation: navGlowPulse 2.5s infinite ease-in-out;
+}
+
+.vertical-nav-link.active .nav-label {
+  color: var(--red-main);
+  opacity: 1;
+  font-weight: 700;
+  text-shadow: 0 0 8px rgba(201, 164, 106, 0.15);
+}
+
 .vertical-nav-separator {
-  width: 1px;
-  height: 36px;
-  background: var(--gold-pale);
-  margin: 10px 0;
-  opacity: 0.5;
+  width: 15px;
+  height: 1px;
+  background: linear-gradient(to right, rgba(201, 164, 106, 0.05), rgba(201, 164, 106, 0.4), rgba(201, 164, 106, 0.05));
+  margin: 14px 0;
+  opacity: 0.85;
+}
+
+@keyframes navGlowPulse {
+  0%, 100% {
+    filter: 
+      drop-shadow(0 0 3px rgba(201, 164, 106, 0.65))
+      drop-shadow(0 0 6px rgba(163, 25, 27, 0.25));
+    transform: scale(1.22);
+  }
+  50% {
+    filter: 
+      drop-shadow(0 0 5px rgba(201, 164, 106, 0.85))
+      drop-shadow(0 0 12px rgba(163, 25, 27, 0.45));
+    transform: scale(1.28);
+  }
+}
+
+@keyframes navRipple {
+  0% {
+    transform: translate(-50%, -50%) scale(0.7);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.85;
+  }
+  60% {
+    transform: translate(-50%, -50%) scale(1.6);
+    opacity: 0;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1.6);
+    opacity: 0;
+  }
 }
 
 /* Responsive adjustments for vertical navigation on small screens */
 @media (max-width: 768px) {
   .vertical-nav {
     left: 12px;
+    padding: 16px 8px;
+    border-radius: 30px;
   }
+  
+  .vertical-nav::before, .vertical-nav::after {
+    font-size: 8px;
+    margin-bottom: 8px;
+    margin-top: 8px;
+  }
+  
   .vertical-nav-link .nav-label {
     display: none; /* Hide labels on mobile to keep it ultra compact */
   }
   .vertical-nav-separator {
-    height: 22px;
-    margin: 6px 0;
+    width: 8px;
+    height: 1px;
+    margin: 10px 0;
   }
   .vertical-nav-link .nav-icon {
     width: 20px;
     height: 20px;
+  }
+  
+  /* Adjust pseudo elements for smaller icons on mobile */
+  .vertical-nav-link::before {
+    top: 10px;
+    width: 36px;
+    height: 36px;
+  }
+  .vertical-nav-link::after {
+    top: 10px;
+    width: 26px;
+    height: 26px;
+  }
+  
+  .vertical-nav-link.active::before {
+    transform: translate(-50%, -50%) scale(1.0);
+  }
+  
+  @keyframes navRipple {
+    0% {
+      transform: translate(-50%, -50%) scale(0.7);
+      opacity: 0;
+    }
+    10% {
+      opacity: 0.85;
+    }
+    60% {
+      transform: translate(-50%, -50%) scale(1.5);
+      opacity: 0;
+    }
+    100% {
+      transform: translate(-50%, -50%) scale(1.5);
+      opacity: 0;
+    }
   }
 }
 

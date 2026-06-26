@@ -672,11 +672,8 @@ function initVerticalNav() {
     // Update URL hash without breaking the scroll behavior
     if (activeNavLinkId !== lastActiveSectionId) {
       lastActiveSectionId = activeNavLinkId;
-      if (activeNavLinkId === 'hero') {
-        history.replaceState(null, null, ' ');
-      } else {
-        history.replaceState(null, null, `#${activeNavLinkId}`);
-      }
+      const newHash = activeNavLinkId === 'hero' ? '' : `#${activeNavLinkId}`;
+      history.replaceState(null, null, window.location.pathname + window.location.search + newHash);
     }
   }, { passive: true });
 }

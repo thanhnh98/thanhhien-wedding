@@ -328,28 +328,28 @@
         <!-- Interactive Map Section -->
         <div class="maps-section reveal" id="maps-section" style="margin-top: 2rem;">
           <div class="maps-tabs" role="tablist" aria-label="Chọn bản đồ đường đi">
-            <button class="map-tab is-active" role="tab" aria-selected="true" aria-controls="map-panel-bride" data-target="bride" type="button">
-              📍 Bản đồ Lễ Vu Quy (Gia Lai)
-            </button>
-            <button class="map-tab" role="tab" aria-selected="false" aria-controls="map-panel-groom" data-target="groom" type="button">
+            <button class="map-tab is-active" role="tab" aria-selected="true" aria-controls="map-panel-groom" data-target="groom" type="button">
               📍 Bản đồ Lễ Tân Hôn (Đồng Nai)
+            </button>
+            <button class="map-tab" role="tab" aria-selected="false" aria-controls="map-panel-bride" data-target="bride" type="button">
+              📍 Bản đồ Lễ Vu Quy (Gia Lai)
             </button>
           </div>
           
           <div class="map-panels">
+            <!-- Map Groom: Sân Banh Nông Trường -->
+            <div class="map-panel" id="map-panel-groom" role="tabpanel">
+              <p class="map-address"><strong>Địa điểm:</strong> Tư Gia &amp; Sân Banh Nông Trường (Tổ 18A, Khu Phố 2, Phường Đồng Phú, Thành Phố Đồng Nai)</p>
+              <div class="iframe-container">
+                <iframe src="https://maps.google.com/maps?q=11.395137,106.826227&t=&z=16&ie=UTF8&iwloc=&output=embed" width="100%" height="380" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+              </div>
+            </div>
+
             <!-- Map Bride: Nhà hàng Memory An Khê Gia Lai -->
-            <div class="map-panel" id="map-panel-bride" role="tabpanel">
+            <div class="map-panel is-hidden" id="map-panel-bride" role="tabpanel">
               <p class="map-address"><strong>Địa điểm:</strong> Nhà hàng Memory An Khê, Gia Lai</p>
               <div class="iframe-container">
                 <iframe src="https://maps.google.com/maps?q=Nh%C3%A0%20h%C3%A0ng%20Memory%20An%20Kh%C3%AA%20Gia%20Lai&t=&z=15&ie=UTF8&iwloc=&output=embed" width="100%" height="380" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-              </div>
-            </div>
-            
-            <!-- Map Groom: Nhà Văn Hoá Ấp 2, Phường Đồng Phú, TP. Đồng Nai -->
-            <div class="map-panel is-hidden" id="map-panel-groom" role="tabpanel">
-              <p class="map-address"><strong>Địa điểm:</strong> Tư Gia &amp; Nhà Văn Hoá Ấp 2 (Tổ 18A, Khu Phố 2, Phường Đồng Phú, Thành Phố Đồng Nai)</p>
-              <div class="iframe-container">
-                <iframe src="https://maps.google.com/maps?q=Nh%C3%A0%20V%C4%83n%20Ho%C3%A1%20%E1%BA%A4p%202%2C%20T%E1%BB%95%2018A%2C%20Khu%20Ph%E1%BB%91%202%2C%20Ph%C6%B0%E1%BB%9Dng%20%C4%90%E1%BB%93ng%20Ph%C3%BA%2C%20Th%C3%A0nh%20Ph%E1%BB%91%20%C4%90%E1%BB%93ng%20Nai&t=&z=15&ie=UTF8&iwloc=&output=embed" width="100%" height="380" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
               </div>
             </div>
           </div>
