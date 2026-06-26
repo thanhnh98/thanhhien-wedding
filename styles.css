@@ -2806,31 +2806,31 @@ body:not(.invitation-active) .hero-portrait {
   visibility: hidden;
 }
 .special-day {
-  color: #fff !important;
-  font-weight: 700;
+  color: #D62828 !important; /* Beautiful rich red heart */
+  font-size: 1.35rem;
+  font-weight: normal;
+  line-height: 1;
   z-index: 1;
+  background: transparent !important;
+  box-shadow: none !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-.highlight-bride {
-  background: var(--red-700);
-  box-shadow: 0 4px 12px rgba(158, 27, 27, 0.3);
-}
-.highlight-groom {
-  background: var(--gold-champagne);
-  box-shadow: 0 4px 12px rgba(214, 168, 79, 0.35);
+.highlight-bride, .highlight-groom {
+  background: transparent !important;
+  box-shadow: none !important;
 }
 .special-pulse {
   position: absolute;
-  inset: -4px;
+  inset: 2px;
   border-radius: 50%;
   z-index: -1;
-  border: 1px solid transparent;
+  border: 1.5px solid transparent;
   animation: pulseSpecial 2s infinite;
 }
-.highlight-bride .special-pulse {
-  border-color: var(--red-700);
-}
-.highlight-groom .special-pulse {
-  border-color: var(--gold-champagne);
+.highlight-bride .special-pulse, .highlight-groom .special-pulse {
+  border-color: rgba(214, 40, 40, 0.35);
 }
 @keyframes pulseSpecial {
   0% { transform: scale(1); opacity: 0.9; }
