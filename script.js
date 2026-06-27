@@ -490,6 +490,7 @@ function initPersonalization() {
     if (invitationGuestName) {
       invitationGuestName.textContent = 'Quý khách';
     }
+  }
 }
 
 function initEnvelopeOpening() {
