@@ -1740,11 +1740,15 @@ body.invitation-active .hero-bottom-fabric {
     position: absolute;
     top: 0;
     bottom: 0;
-    right: -3px;
-    width: 120px;
+    right: -20vw;
+    width: calc(120px + 20vw);
     height: 100%;
-    background: linear-gradient(270deg, var(--cream-100) 0px, var(--cream-100) 8px, rgba(250, 247, 241, 0) 100%);
+    background: linear-gradient(270deg, var(--cream-100) 0px, var(--cream-100) calc(8px + 20vw), rgba(250, 247, 241, 0) 100%);
     z-index: 3;
+  }
+  .hero-ceremonies {
+    position: relative;
+    left: 30px;
   }
   .couple-grid, .event-grid, .wish-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px; }
   .event-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
