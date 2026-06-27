@@ -696,263 +696,138 @@ body.invitation-active .hero-bottom-fabric {
 /* ══════════════════════════════════════════════
    TIMELINE — Hành trình yêu thương (revamped)
    ══════════════════════════════════════════════ */
-.timeline {
-  width: min(1120px, 100%);
+
+
+.story-bento {
+  max-width: 1200px;
   margin: 0 auto;
-  position: relative;
-  display: grid;
-  gap: 48px;
-  z-index: 1;
-}
-
-/* Connector line with gradient glow */
-.timeline-line {
-  position: absolute;
-  left: 20px;
-  top: 0;
-  bottom: 0;
-  width: 2px;
-  background: linear-gradient(
-    to bottom,
-    rgba(214,168,79,0) 0%,
-    rgba(214,168,79,.85) 15%,
-    rgba(214,168,79,.55) 60%,
-    rgba(214,168,79,0) 100%
-  );
-  transform-origin: top;
-  transform: scaleY(var(--timeline-progress, .04));
-  transition: transform .05s linear;
-  box-shadow: 0 0 12px rgba(214,168,79,.3);
-}
-
-/* Cards */
-.timeline-card {
-  position: relative;
+  padding: 0 24px;
   display: grid;
   grid-template-columns: 1fr;
-  gap: 0;
-  margin-left: 54px;
-  border-radius: 28px;
-  background: rgba(255, 246, 232, 0.065);
-  border: 1px solid rgba(214, 168, 79, 0.22);
-  box-shadow:
-    0 8px 32px rgba(0,0,0,.22),
-    0 32px 64px rgba(0,0,0,.14),
-    inset 0 1px 0 rgba(255,246,232,.12);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  gap: 24px;
+}
+
+.bento-card {
+  background: rgba(255, 255, 255, 0.65);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 20px;
   overflow: hidden;
-  transition:
-    transform 0.45s var(--ease),
-    box-shadow 0.45s var(--ease);
-}
-
-/* Shimmer sweep on hover */
-.timeline-card::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    115deg,
-    transparent 30%,
-    rgba(214,168,79,.12) 50%,
-    transparent 70%
-  );
-  transform: translateX(-120%);
-  transition: transform 0s;
-  pointer-events: none;
-  z-index: 4;
-}
-.timeline-card:hover::before {
-  transform: translateX(120%);
-  transition: transform .65s ease;
-}
-
-/* Top gold line reveal */
-.timeline-card::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 2px;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(214,168,79,.9) 40%,
-    rgba(255,246,232,.5) 60%,
-    rgba(214,168,79,.9) 75%,
-    transparent
-  );
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 0.7s var(--ease) 0.25s;
-  z-index: 5;
-}
-.timeline-card.is-visible::after {
-  transform: scaleX(1);
-}
-
-.timeline-card:hover {
-  transform: translateY(-8px) scale(1.008);
-  box-shadow:
-    0 16px 48px rgba(0,0,0,.28),
-    0 40px 80px rgba(0,0,0,.18),
-    0 0 0 1px rgba(214,168,79,.38),
-    inset 0 1px 0 rgba(255,246,232,.18);
-}
-
-/* Image wrapper */
-.timeline-img-wrap {
-  margin: 0;
-  overflow: hidden;
-  border-radius: 24px 24px 0 0;
-  position: relative;
-}
-.timeline-img-wrap::after {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 60%;
-  background: linear-gradient(to top, rgba(30,22,14,.55), transparent);
-  pointer-events: none;
-  z-index: 1;
-}
-
-.timeline-card img {
-  position: relative;
-  z-index: 0;
-  width: 100%;
-  aspect-ratio: 16 / 10;
-  object-fit: cover;
-  transform: scale(1.08);
-  filter: blur(6px) brightness(.85);
-  transition:
-    transform 1.6s cubic-bezier(.18, .88, .25, 1),
-    filter 1.3s ease;
-  will-change: transform, filter;
-  display: block;
-}
-.timeline-card.is-visible img {
-  transform: scale(1);
-  filter: blur(0) brightness(1);
-}
-
-/* Text content */
-.timeline-card > div {
-  position: relative;
-  z-index: 2;
-  padding: 22px 26px 26px;
-}
-
-/* Date badge */
-.timeline-card time {
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-  color: var(--gold);
-  font-size: .72rem;
-  font-weight: 800;
-  letter-spacing: .16em;
-  text-transform: uppercase;
-  padding: 4px 12px;
-  background: rgba(214,168,79,.12);
-  border: 1px solid rgba(214,168,79,.28);
-  border-radius: 999px;
-  margin-bottom: 12px;
-}
-.timeline-card time::before {
-  content: "✦";
-  font-size: .55em;
-  opacity: .7;
-}
-.timeline-card h3 {
-  color: var(--cream-100);
-  font-size: clamp(1.4rem, 4vw, 2rem);
-  margin-bottom: 8px;
-}
-.timeline-card p {
-  color: rgba(255,246,232,.72);
-  line-height: 1.82;
-  margin: 0;
-  font-size: .97rem;
-}
-
-/* Step number badge */
-.timeline-step {
-  position: absolute;
-  top: 16px;
-  right: 20px;
-  z-index: 6;
-  font-family: "Cormorant Garamond", Georgia, serif;
-  font-size: 3.8rem;
-  font-weight: 700;
-  line-height: 1;
-  color: rgba(214,168,79,.14);
-  pointer-events: none;
-  user-select: none;
-  transition: color 0.6s ease 0.3s;
-}
-.timeline-card.is-visible .timeline-step {
-  color: rgba(214,168,79,.22);
-}
-
-/* Timeline dot — heart glow */
-.timeline-dot {
-  position: absolute;
-  left: -43px;
-  top: 28px;
-  width: 26px;
-  height: 26px;
-  border-radius: 50%;
-  background: radial-gradient(circle at 35% 35%, rgba(255,246,232,.9), var(--gold) 55%);
-  opacity: 0;
-  transform: scale(.5);
-  box-shadow:
-    0 0 0 0 rgba(214,168,79,0),
-    0 0 0 rgba(214,168,79,0);
-  transition:
-    opacity 0.6s var(--ease),
-    transform 0.6s var(--ease),
-    box-shadow 0.8s var(--ease);
-  z-index: 3;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
   display: flex;
-  align-items: center;
-  justify-content: center;
+  flex-direction: column;
+  transition: transform 0.4s var(--ease), box-shadow 0.4s var(--ease);
 }
-.timeline-dot::before {
-  content: "♥";
-  font-size: .7rem;
-  color: rgba(255,246,232,.9);
-  line-height: 1;
+.bento-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 40px rgba(184, 150, 94, 0.12);
+  border-color: rgba(201, 164, 106, 0.3);
+}
+
+.bento-img-wrap {
   position: relative;
-  z-index: 1;
+  width: 100%;
+  height: 250px;
+  overflow: hidden;
 }
-/* Ring pulse */
-.timeline-dot::after {
-  content: "";
-  position: absolute;
-  inset: -6px;
-  border: 1.5px solid rgba(214,168,79,0);
-  border-radius: 50%;
-  transition: border-color 0.6s ease 0.5s;
+.bento-img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.8s var(--ease);
 }
-.timeline-card.is-visible .timeline-dot {
-  opacity: 1;
-  transform: scale(1);
-  box-shadow:
-    0 0 0 6px rgba(214,168,79,.18),
-    0 0 24px rgba(214,168,79,.7),
-    0 0 48px rgba(214,168,79,.3);
-  animation: dotPulse 2.8s ease-in-out infinite 0.8s;
+.bento-card:hover .bento-img-wrap img {
+  transform: scale(1.06);
 }
-.timeline-card.is-visible .timeline-dot::after {
-  border-color: rgba(214,168,79,.55);
-  animation: slowRotate 18s linear infinite;
+
+.bento-info {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
-@keyframes dotPulse {
+.bento-chapter {
+  font-family: var(--font-display);
+  font-size: 0.8rem;
+  letter-spacing: 0.25em;
+  color: var(--gold-champagne);
+  text-transform: uppercase;
+  font-weight: 700;
+}
+.bento-date {
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: var(--soft-taupe);
+  background: rgba(201, 164, 106, 0.12);
+  padding: 4px 10px;
+  border-radius: 20px;
+  align-self: flex-start;
+  letter-spacing: 0.05em;
+}
+.bento-info h3 {
+  font-size: 1.25rem;
+  color: var(--charcoal-brown);
+  margin: 4px 0 0;
+  font-weight: 700;
+}
+.bento-info p {
+  font-size: 0.82rem;
+  line-height: 1.6;
+  color: var(--medium-gray);
+  margin: 0;
+}
+
+/* Collage style for Chapter 3 */
+.bento-collage {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 12px;
+  background: rgba(255, 255, 255, 0.3);
+}
+.collage-item {
+  position: relative;
+  overflow: hidden;
+  border-radius: 12px;
+}
+.collage-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.8s var(--ease);
+}
+.bento-card:hover .collage-item img {
+  transform: scale(1.05);
+}
+.bento-collage .main-img {
+  height: 240px;
+}
+.bento-collage .collage-side {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+.bento-collage .collage-side .collage-item {
+  height: 80px;
+}
+
+@keyframes floatIndicator {
+  0%, 100% { transform: translateY(0) translateX(-50%); }
+  50% { transform: translateY(-8px) translateX(-50%); }
+}
+
+@keyframes slowRotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes drift {
+  0%, 100% { transform: translate(-50%, -50%); }
+  50% { transform: translate(-40%, -40%); }
+}
+
+@keyframes glow {
   0%, 100% {
     box-shadow:
       0 0 0 6px rgba(214,168,79,.18),
@@ -1786,49 +1661,52 @@ body.invitation-active .hero-bottom-fabric {
   .bento-grid { grid-auto-rows: 280px; }
 
 
-  /* ── Desktop zigzag timeline ─────────────── */
-  .timeline { gap: 56px; }
-  .timeline-line {
-    left: 50%;
-    transform: translateX(-50%) scaleY(var(--timeline-progress, .04));
-    width: 2px;
+  /* ── Bento Love Story Desktop Overrides ─────────────── */
+  .story-bento {
+    grid-template-columns: repeat(6, 1fr);
+    grid-auto-rows: minmax(360px, auto);
+    gap: 28px;
   }
-  .timeline-card {
-    width: calc(50% - 64px);
-    margin-left: 0;
-    grid-template-columns: 1fr;
-    /* Override mobile transition with desktop-specific one */
-    transition:
-      opacity 0.95s var(--ease),
-      transform 0.95s var(--ease),
-      box-shadow 0.45s var(--ease);
+  
+  .bento-ch1 {
+    grid-column: span 3;
   }
-  .timeline-card:nth-of-type(odd) {
-    justify-self: start;
-    opacity: 0;
-    transform: translate3d(-52px, 28px, 0);
+  .bento-ch2 {
+    grid-column: span 3;
   }
-  .timeline-card:nth-of-type(even) {
-    justify-self: end;
-    opacity: 0;
-    transform: translate3d(52px, 28px, 0);
+  .bento-ch3 {
+    grid-column: span 6;
+    flex-direction: row-reverse;
   }
-  .timeline-card:nth-of-type(odd).is-visible,
-  .timeline-card:nth-of-type(even).is-visible {
-    opacity: 1;
-    transform: translate3d(0, 0, 0);
+  .bento-ch3 .bento-collage {
+    width: 60%;
+    flex-shrink: 0;
+    padding: 16px;
   }
-  .timeline-card:nth-of-type(odd) .timeline-dot {
-    left: auto;
-    right: -56px;
+  .bento-ch3 .bento-info {
+    width: 40%;
+    justify-content: center;
+    padding: 40px;
   }
-  .timeline-card:nth-of-type(even) .timeline-dot {
-    left: -56px;
-    right: auto;
+  .bento-collage .main-img {
+    height: 300px;
   }
-  /* Image on right side for even cards on desktop */
-  .timeline-card:nth-of-type(even) .timeline-img-wrap {
-    border-radius: 24px 24px 0 0;
+  .bento-collage .collage-side .collage-item {
+    height: 100px;
+  }
+  
+  .bento-ch4 {
+    grid-column: span 3;
+  }
+  .bento-ch5 {
+    grid-column: span 3;
+  }
+  
+  .bento-card {
+    height: 100%;
+  }
+  .bento-card:not(.bento-ch3) .bento-img-wrap {
+    height: 300px;
   }
 }
 
