@@ -573,11 +573,6 @@ function initEnvelopeOpening() {
           targetSection.scrollIntoView({ 
             behavior: prefersReducedMotion ? 'auto' : 'smooth' 
           });
-        } else {
-          document.querySelector('.invitation-card-wrap')?.scrollIntoView({ 
-            block: 'center', 
-            behavior: prefersReducedMotion ? 'auto' : 'smooth' 
-          });
         }
       }, 100);
     }, 5500);
@@ -641,15 +636,14 @@ function initVerticalNav() {
   const sectionToNavMap = {
     'hero': 'hero',
     'couple': 'couple',
-    'story': 'couple',
-    'calendar': 'couple',
+    'story': 'story',
+    'calendar': 'story',
     'events': 'events',
     'countdown': 'events',
     'gallery': 'gallery',
-    'rsvp': 'rsvp',
-    'wishes': 'rsvp',
-    'qr-invitation': 'rsvp',
-    'video': 'rsvp'
+    'wishes': 'wishes',
+    'qr-invitation': 'wishes',
+    'video': 'wishes'
   };
 
   const sections = Object.keys(sectionToNavMap);
