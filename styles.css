@@ -359,7 +359,7 @@ body:not(.invitation-active) .header {
   height: 100svh;
   min-height: 100svh;
   display: flex;
-  flex-direction: column;
+  flex-direction: column-reverse;
   position: relative;
   background: var(--cream-100);
   overflow: hidden;
@@ -380,7 +380,7 @@ body:not(.invitation-active) .header {
 }
 
 .hero-content {
-  padding: 100px 24px 32px 24px;
+  padding: 32px 24px 80px 24px;
   z-index: 5;
   position: relative;
   display: flex;
@@ -572,11 +572,12 @@ body:not(.invitation-active) .header {
 .hero-portrait::before {
   content: "";
   position: absolute;
-  top: -2px;
+  bottom: -2px;
+  top: auto;
   left: 0;
   right: 0;
-  height: 40px;
-  background: linear-gradient(180deg, #FEF7EE 0px, #FEF7EE 4px, rgba(254, 247, 238, 0) 100%);
+  height: 50px;
+  background: linear-gradient(0deg, #FEF7EE 0px, #FEF7EE 5px, rgba(254, 247, 238, 0) 100%);
   z-index: 3;
 }
 .hero-bottom-fabric {
