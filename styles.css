@@ -576,7 +576,7 @@ body:not(.invitation-active) .header {
   left: 0;
   right: 0;
   height: 40px;
-  background: linear-gradient(180deg, var(--cream-100) 0px, var(--cream-100) 4px, rgba(250, 247, 241, 0) 100%);
+  background: linear-gradient(180deg, #FEF7EE 0px, #FEF7EE 4px, rgba(254, 247, 238, 0) 100%);
   z-index: 3;
 }
 .hero-bottom-fabric {
@@ -638,6 +638,9 @@ body.invitation-active .hero-bottom-fabric {
   flex-direction: column;
   align-items: center;
   gap: 8px;
+  cursor: pointer;
+  transition: color 0.35s var(--ease), transform 0.35s var(--ease);
+  animation: floatIndicator 2s ease-in-out infinite;
 }
 .invitation-scroll-icon {
   width: 28px;
@@ -1489,53 +1492,58 @@ body.invitation-active .hero-bottom-fabric {
   right: 18px;
   bottom: 18px;
   z-index: 19;
-  width: 70px;
-  height: 70px;
+  width: 50px;
+  height: 50px;
   border: 1.5px solid var(--red-700);
   border-radius: 50%;
   color: var(--red-700);
   background: rgba(255, 246, 232, .92);
-  box-shadow: 0 16px 42px rgba(158,27,27,.26);
+  box-shadow: 0 10px 28px rgba(158,27,27,.2);
   cursor: pointer;
   transition: all .3s var(--ease);
+  display: grid;
+  place-items: center;
+  padding: 0;
 }
 .music-toggle:hover {
   transform: scale(1.08);
-  box-shadow: 0 20px 48px rgba(158,27,27,.35);
+  box-shadow: 0 14px 34px rgba(158,27,27,.28);
   background: var(--cream-200);
 }
 .music-toggle:active {
   transform: scale(0.95);
 }
-.music-icon {
-  position: absolute;
-  top: 14px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 1.6rem;
-  line-height: 1;
-  will-change: transform;
-}
-.music-state {
-  position: absolute;
-  bottom: 10px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: .62rem;
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  white-space: nowrap;
+.music-toggle svg {
+  width: 22px;
+  height: 22px;
+  stroke: currentColor;
+  stroke-width: 1.75;
+  fill: none;
+  transition: transform 0.3s ease;
 }
 .music-toggle[data-state="playing"] {
   animation: glowPulse 2.4s ease-in-out infinite;
 }
-.music-toggle[data-state="playing"] .music-icon {
+.music-toggle[data-state="playing"] svg {
   animation: musicPulse 1.6s ease-in-out infinite;
 }
+.music-toggle[data-state="playing"] .music-icon-muted {
+  display: none;
+}
+.music-toggle[data-state="playing"] .music-icon-playing {
+  display: block;
+}
+.music-toggle[data-state="paused"] .music-icon-playing,
+.music-toggle[data-state="muted"] .music-icon-playing {
+  display: none;
+}
+.music-toggle[data-state="paused"] .music-icon-muted,
+.music-toggle[data-state="muted"] .music-icon-muted {
+  display: block;
+}
 @keyframes musicPulse {
-  0%, 100% { transform: translateX(-50%) scale(1); }
-  50% { transform: translateX(-50%) scale(1.18); }
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.15); }
 }
 
 .lightbox {
@@ -1710,6 +1718,17 @@ body.invitation-active .hero-bottom-fabric {
     bottom: -88px;
     height: clamp(168px, 15vw, 260px);
   }
+  .hero::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    width: clamp(100px, 12vw, 240px);
+    background: linear-gradient(270deg, #FEF7EE 0%, #FEF7EE 35%, rgba(254, 247, 238, 0) 100%);
+    z-index: 3;
+    pointer-events: none;
+  }
   .hero-portrait {
     width: 100svh;
     height: 100svh;
@@ -1731,7 +1750,7 @@ body.invitation-active .hero-bottom-fabric {
     right: auto;
     width: 150px;
     height: 100%;
-    background: linear-gradient(90deg, var(--cream-100) 0px, var(--cream-100) 8px, rgba(250, 247, 241, 0) 100%);
+    background: linear-gradient(90deg, #FEF7EE 0px, #FEF7EE 8px, rgba(254, 247, 238, 0) 100%);
     z-index: 3;
   }
   .hero-portrait::after {
@@ -1740,10 +1759,10 @@ body.invitation-active .hero-bottom-fabric {
     position: absolute;
     top: 0;
     bottom: 0;
-    right: -20vw;
-    width: calc(120px + 20vw);
+    right: -3px;
+    width: 120px;
     height: 100%;
-    background: linear-gradient(270deg, var(--cream-100) 0px, var(--cream-100) calc(8px + 20vw), rgba(250, 247, 241, 0) 100%);
+    background: linear-gradient(270deg, #FEF7EE 0px, #FEF7EE 8px, rgba(254, 247, 238, 0) 100%);
     z-index: 3;
   }
   .hero-ceremonies {
@@ -3014,7 +3033,8 @@ body:not(.invitation-active) .hero-portrait {
   transition: transform 0.35s var(--ease), color 0.35s var(--ease);
 }
 .hero-scroll-indicator:hover {
-  transform: translate(-50%, -4px);
+  animation-play-state: paused;
+  transform: translate(-50%, -8px);
 }
 .hero-scroll-indicator:hover .invitation-scroll-icon {
   stroke: var(--gold-champagne);
@@ -3288,6 +3308,15 @@ body:not(.invitation-active) .hero-portrait {
       transform: translate(-50%, -50%) scale(1.5);
       opacity: 0;
     }
+  }
+}
+
+@keyframes floatIndicator {
+  0%, 100% {
+    transform: translate(-50%, 0);
+  }
+  50% {
+    transform: translate(-50%, -6px);
   }
 }
 

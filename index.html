@@ -88,8 +88,19 @@
     <audio id="onboardingMusic" src="/audio/onboarding_music.mp3" preload="auto" loop></audio>
     <audio id="weddingMusic" src="/audio/main_music.mp3" preload="auto" loop></audio>
     <button class="music-toggle" id="musicToggle" type="button" aria-label="Bật hoặc tắt nhạc nền" data-state="paused">
-      <span class="music-icon" aria-hidden="true">♪</span>
-      <span class="music-state">Tạm dừng</span>
+      <!-- Icon nhạc khi đang phát -->
+      <svg class="music-icon-playing" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M9 18V5l12-2v13"></path>
+        <circle cx="6" cy="18" r="3"></circle>
+        <circle cx="18" cy="16" r="3"></circle>
+      </svg>
+      <!-- Icon nhạc gạch chéo khi tạm dừng/tắt tiếng -->
+      <svg class="music-icon-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M9 18V5l12-2v13"></path>
+        <circle cx="6" cy="18" r="3"></circle>
+        <circle cx="18" cy="16" r="3"></circle>
+        <line x1="1" y1="1" x2="23" y2="23"></line>
+      </svg>
     </button>
 
 
