@@ -490,14 +490,6 @@ function initPersonalization() {
     if (invitationGuestName) {
       invitationGuestName.textContent = 'Quý khách';
     }
-  }
-
-  // Set invitation sharing QR code dynamically pointing to the base website URL
-  const qrInvitationImg = document.querySelector('#qr-invitation img');
-  if (qrInvitationImg) {
-    const baseUrl = window.location.origin + window.location.pathname;
-    qrInvitationImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${encodeURIComponent(baseUrl)}`;
-  }
 }
 
 function initEnvelopeOpening() {
@@ -638,11 +630,10 @@ function initVerticalNav() {
     'couple': 'couple',
     'story': 'story',
     'calendar': 'story',
-    'events': 'events',
-    'countdown': 'events',
+    'location': 'location',
+    'countdown': 'location',
     'gallery': 'gallery',
     'wishes': 'wishes',
-    'qr-invitation': 'wishes',
     'video': 'wishes'
   };
 

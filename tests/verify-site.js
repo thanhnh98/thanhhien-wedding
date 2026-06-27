@@ -16,7 +16,7 @@ const html = read('index.html');
 const css = read('styles.css');
 const js = read('script.js');
 
-for (const id of ['hero', 'couple', 'story', 'events', 'countdown', 'gallery', 'rsvp', 'wishes', 'qr-invitation', 'video', 'footer']) {
+for (const id of ['hero', 'couple', 'story', 'location', 'countdown', 'gallery', 'rsvp', 'wishes', 'video', 'footer']) {
   assert(html.includes(`id="${id}"`), `Missing section #${id}`);
 }
 
@@ -27,8 +27,7 @@ for (const asset of [
   '/assets/logo/signature.png',
   '/assets/music/wedding-music.mp3',
   '/assets/video/wedding-highlight.mp4',
-  '/assets/qr/qr-location.png',
-  '/assets/qr/qr-invitation.png'
+  '/assets/qr/qr-location.png'
 ]) {
   assert(html.includes(asset) || css.includes(asset), `Missing asset path ${asset}`);
 }

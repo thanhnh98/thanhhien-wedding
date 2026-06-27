@@ -27,7 +27,7 @@
     <link rel="apple-touch-icon" href="/assets/logo/favicon.png">
     <link rel="preload" as="image" href="/assets/hero/hero-main.jpg">
     <link rel="preload" as="image" href="/assets/hero/hero-bg.jpg">
-    <link rel="stylesheet" href="styles.css?v=5">
+    <link rel="stylesheet" href="styles.css?v=9">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Pinyon+Script&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&family=Montserrat:wght@100..900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -356,10 +356,7 @@
               <span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>10</span><span>11</span>
               <span>12</span><span>13</span><span>14</span><span>15</span><span>16</span><span>17</span><span>18</span>
               <span>19</span><span>20</span><span>21</span><span>22</span><span>23</span><span>24</span>
-              <span class="special-day highlight-bride" data-tooltip="Lễ Vu Quy">
-                ♥
-                <span class="special-pulse"></span>
-              </span>
+              <span class="special-day highlight-bride" data-tooltip="Lễ Vu Quy" aria-label="25 — Lễ Vu Quy"><svg class="special-heart-icon" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg><span class="special-pulse"></span></span>
               <span>26</span><span>27</span><span>28</span><span>29</span><span>30</span><span>31</span>
             </div>
           </div>
@@ -375,10 +372,7 @@
             </div>
             <div class="calendar-grid-days">
               <span class="empty"></span><span class="empty"></span><span class="empty"></span><span class="empty"></span><span class="empty"></span><span class="empty"></span>
-              <span class="special-day highlight-groom" data-tooltip="Lễ Tân Hôn">
-                ♥
-                <span class="special-pulse"></span>
-              </span>
+              <span class="special-day highlight-groom" data-tooltip="Lễ Tân Hôn" aria-label="1 — Lễ Tân Hôn"><svg class="special-heart-icon" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg><span class="special-pulse"></span></span>
               <span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span>
               <span>8</span><span>9</span><span>10</span><span>11</span><span>12</span><span>13</span><span>14</span>
               <span>15</span><span>16</span><span>17</span><span>18</span><span>19</span><span>20</span><span>21</span>
@@ -389,7 +383,7 @@
         </div>
       </section>
 
-      <section class="events section-cream" id="events">
+      <section class="events section-cream" id="location">
         <div class="candle-glow" aria-hidden="true"></div>
         <div class="section-heading reveal">
           <p class="eyebrow">Địa điểm</p>
@@ -398,7 +392,7 @@
         </div>
 
         <!-- Interactive Map Section -->
-        <div class="maps-section reveal" id="maps-section" style="margin-top: 2rem;">
+        <div class="maps-section reveal" id="maps-section">
           <div class="maps-tabs" role="tablist" aria-label="Chọn bản đồ đường đi">
             <button class="map-tab is-active" role="tab" aria-selected="true" aria-controls="map-panel-groom" data-target="groom" type="button">
               📍 Bản đồ Lễ Tân Hôn (Đồng Nai)
@@ -415,6 +409,11 @@
               <div class="iframe-container">
                 <iframe src="https://maps.google.com/maps?q=11.395137,106.826227&t=&z=16&ie=UTF8&iwloc=&output=embed" width="100%" height="380" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
               </div>
+              <div class="map-btn-wrap">
+                <a href="https://www.google.com/maps/search/?api=1&query=11.395137,106.826227" target="_blank" rel="noopener noreferrer" class="btn btn-primary map-btn">
+                  🗺️ Xem trên Google Maps
+                </a>
+              </div>
             </div>
 
             <!-- Map Bride: Nhà hàng Memory An Khê Gia Lai -->
@@ -422,6 +421,11 @@
               <p class="map-address"><strong>Địa điểm:</strong> Nhà hàng Memory An Khê, Gia Lai</p>
               <div class="iframe-container">
                 <iframe src="https://maps.google.com/maps?q=Nh%C3%A0%20h%C3%A0ng%20Memory%20An%20Kh%C3%AA%20Gia%20Lai&t=&z=15&ie=UTF8&iwloc=&output=embed" width="100%" height="380" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+              </div>
+              <div class="map-btn-wrap">
+                <a href="https://www.google.com/maps/search/?api=1&query=Nh%C3%A0%20h%C3%A0ng%20Memory%20An%20Kh%C3%AA%20Gia%20Lai" target="_blank" rel="noopener noreferrer" class="btn btn-primary map-btn">
+                  🗺️ Xem trên Google Maps
+                </a>
               </div>
             </div>
           </div>
@@ -477,10 +481,10 @@
               </svg>
             </div>
             <div class="countdown-grid" id="countdownGridBride" aria-live="polite">
-              <div><strong data-count-bride="days">000</strong><span>Ngày</span></div>
-              <div><strong data-count-bride="hours">00</strong><span>Giờ</span></div>
-              <div><strong data-count-bride="minutes">00</strong><span>Phút</span></div>
-              <div><strong data-count-bride="seconds">00</strong><span>Giây</span></div>
+              <div aria-label="Ngày"><strong data-count-bride="days">000</strong></div>
+              <div aria-label="Giờ"><strong data-count-bride="hours">00</strong></div>
+              <div aria-label="Phút"><strong data-count-bride="minutes">00</strong></div>
+              <div aria-label="Giây"><strong data-count-bride="seconds">00</strong></div>
             </div>
             <p class="countdown-event-label">Tiệc cưới Lễ Vu Quy &mdash; Gia Lai &mdash; 25.07.2026</p>
           </div>
@@ -495,10 +499,10 @@
               </svg>
             </div>
             <div class="countdown-grid" id="countdownGridGroom" aria-live="polite">
-              <div><strong data-count-groom="days">000</strong><span>Ngày</span></div>
-              <div><strong data-count-groom="hours">00</strong><span>Giờ</span></div>
-              <div><strong data-count-groom="minutes">00</strong><span>Phút</span></div>
-              <div><strong data-count-groom="seconds">00</strong><span>Giây</span></div>
+              <div aria-label="Ngày"><strong data-count-groom="days">000</strong></div>
+              <div aria-label="Giờ"><strong data-count-groom="hours">00</strong></div>
+              <div aria-label="Phút"><strong data-count-groom="minutes">00</strong></div>
+              <div aria-label="Giây"><strong data-count-groom="seconds">00</strong></div>
             </div>
             <p class="countdown-event-label">Tiệc cưới Lễ Tân Hôn &mdash; Đồng Nai &mdash; 01.08.2026</p>
           </div>
@@ -679,27 +683,13 @@
         </div>
       </section>
 
-      <section class="qr-section section-cream" id="qr-invitation">
-        <div class="qr-card reveal">
-          <div><p class="eyebrow">Chia sẻ thiệp</p><h2>QR Invitation</h2><p>Quét mã để lưu và gửi thiệp cưới online đến những người thân yêu.</p></div>
-          <figure><img src="/assets/qr/qr-invitation.png" alt="QR chia sẻ thiệp cưới"></figure>
-        </div>
-      </section>
-
       <section class="video-section section-red" id="video">
-        <div class="section-heading reveal">
-          <p class="eyebrow">Wedding film</p>
-          <h2>Thước phim yêu thương</h2>
-        </div>
-        <div class="video-frame reveal">
-          <video src="/assets/video/wedding-highlight.mp4" poster="/assets/hero/hero-main.jpg" controls playsinline preload="metadata"></video>
-        </div>
+        <p class="closing-message reveal">"Cảm ơn vì đã là một phần trong ngày hạnh phúc của chúng mình."</p>
       </section>
     </main>
 
     <footer class="footer" id="footer">
       <img class="footer-ornament" src="/assets/decor/ornament.png" alt="" aria-hidden="true">
-      <p class="reveal">"Cảm ơn vì đã là một phần trong ngày hạnh phúc của chúng mình."</p>
       <img class="signature reveal" src="/assets/logo/signature.png" alt="Chữ ký Hoài Thanh và Thanh Hiền">
       <strong>Hoài Thanh & Thanh Hiền</strong>
     </footer>
@@ -735,7 +725,7 @@
       </div>
       <div class="vertical-nav-separator"></div>
       <div class="vertical-nav-item">
-        <a href="#events" class="vertical-nav-link" data-section="events">
+        <a href="#location" class="vertical-nav-link" data-section="location">
           <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
             <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
             <circle cx="12" cy="10" r="3"></circle>
