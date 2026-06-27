@@ -562,8 +562,6 @@ body:not(.invitation-active) .header {
   position: relative;
   overflow: hidden;
   animation: portraitIn 1.8s var(--ease) both .35s;
-  -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 15%);
-  mask-image: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 15%);
 }
 .hero-portrait img {
   width: 100%;
@@ -572,7 +570,14 @@ body:not(.invitation-active) .header {
   object-position: 54% 42%;
 }
 .hero-portrait::before {
-  display: none !important;
+  content: "";
+  position: absolute;
+  top: -2px;
+  left: 0;
+  right: 0;
+  height: 40px;
+  background: linear-gradient(180deg, var(--cream-100) 0px, var(--cream-100) 4px, rgba(250, 247, 241, 0) 100%);
+  z-index: 3;
 }
 .hero-bottom-fabric {
   position: absolute;
@@ -1714,12 +1719,32 @@ body.invitation-active .hero-bottom-fabric {
     border-radius: 0;
     border: none;
     box-shadow: none;
-    -webkit-mask-image: linear-gradient(to left, rgba(0,0,0,1) 68%, rgba(0,0,0,0) 100%);
-    mask-image: linear-gradient(to left, rgba(0,0,0,1) 68%, rgba(0,0,0,0) 100%);
+    left: -1.5vw;
   }
-  .hero-portrait::before,
+  .hero-portrait::before {
+    display: block !important;
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: -3px;
+    right: auto;
+    width: 150px;
+    height: 100%;
+    background: linear-gradient(90deg, var(--cream-100) 0px, var(--cream-100) 8px, rgba(250, 247, 241, 0) 100%);
+    z-index: 3;
+  }
   .hero-portrait::after {
-    display: none !important;
+    display: block !important;
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: -3px;
+    width: 120px;
+    height: 100%;
+    background: linear-gradient(270deg, var(--cream-100) 0px, var(--cream-100) 8px, rgba(250, 247, 241, 0) 100%);
+    z-index: 3;
   }
   .couple-grid, .event-grid, .wish-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px; }
   .event-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
