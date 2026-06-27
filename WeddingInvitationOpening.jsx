@@ -541,15 +541,6 @@ export default function WeddingInvitationOpening({
           text-align: center;
         }
 
-        .card-date {
-          font-family: "Montserrat", sans-serif;
-          font-size: var(--card-font-date);
-          font-weight: 400;
-          letter-spacing: 1.5px;
-          color: var(--text-muted);
-          margin-top: var(--card-margin-date);
-        }
-
         /* Wax Seal (Image asset) */
         .wax-seal {
           position: absolute;
@@ -951,7 +942,6 @@ export default function WeddingInvitationOpening({
                   <p className="card-guest-prefix">WEDDING INVITATION</p>
                   <h3 className="card-guest-name" id="envelopeGuestName">{guestName}</h3>
                   <p className="card-couple-names">Hoài Thanh &amp; Thanh Hiền</p>
-                  <p className="card-date">25 . 07 . 2026</p>
                 </div>
               </div>
 
