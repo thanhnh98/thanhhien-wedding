@@ -10,7 +10,8 @@ def main():
     os.makedirs(output_dir, exist_ok=True)
     
     # Get and sort original images
-    files = [f for f in os.listdir(album_dir) if f.lower().endswith(('.jpg', '.jpeg', '.png'))]
+    exclude_files = {'chu-re.jpg', 'co-dau.jpg', 'hero.jpg'}
+    files = [f for f in os.listdir(album_dir) if f.lower().endswith(('.jpg', '.jpeg', '.png')) and f.lower() not in exclude_files]
     files.sort()
     
     print(f"Found {len(files)} files to process.")

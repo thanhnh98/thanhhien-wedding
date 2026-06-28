@@ -20,7 +20,7 @@ const rsvpSuccess = document.querySelector('#rsvpSuccess');
 const heartLayer = document.querySelector('#heartLayer');
 
 let currentImageIndex = 1;
-const totalImages = 37;
+const totalImages = 40;
 const galleryImages = Array.from({ length: totalImages }, (_, i) => {
   const n = String(i + 1).padStart(2, '0');
   return {
@@ -168,13 +168,41 @@ function openLightboxIndex(index) {
   document.body.style.overflow = 'hidden';
 }
 
+function openGenericLightbox(src, alt) {
+  if (!lightbox || !lightboxImage) return;
+  lightboxImage.src = src;
+  lightboxImage.alt = alt;
+  lightboxImage.style.opacity = '1';
+  lightboxImage.style.transform = 'scale(1)';
+  
+  const counter = lightbox.querySelector('.lightbox-counter');
+  if (counter) counter.style.display = 'none';
+  
+  const prevBtn = lightbox.querySelector('.lightbox-prev');
+  const nextBtn = lightbox.querySelector('.lightbox-next');
+  if (prevBtn) prevBtn.style.display = 'none';
+  if (nextBtn) nextBtn.style.display = 'none';
+  
+  lightbox.classList.add('is-open');
+  lightbox.setAttribute('aria-hidden', 'false');
+  document.body.style.overflow = 'hidden';
+}
+
 function closeLightbox() {
   if (!lightbox || !lightboxImage) return;
   lightbox.classList.remove('is-open');
   lightbox.setAttribute('aria-hidden', 'true');
   document.body.style.overflow = '';
   window.setTimeout(() => {
-    if (!lightbox.classList.contains('is-open')) lightboxImage.src = '';
+    if (!lightbox.classList.contains('is-open')) {
+      lightboxImage.src = '';
+      const counter = lightbox.querySelector('.lightbox-counter');
+      if (counter) counter.style.display = '';
+      const prevBtn = lightbox.querySelector('.lightbox-prev');
+      const nextBtn = lightbox.querySelector('.lightbox-next');
+      if (prevBtn) prevBtn.style.display = '';
+      if (nextBtn) nextBtn.style.display = '';
+    }
   }, 250);
 }
 
@@ -314,7 +342,7 @@ function toggleGallery() {
     galleryExpandContainer.classList.remove('is-expanded');
     loadMoreBtn.setAttribute('aria-expanded', 'false');
     if (loadMoreText) {
-      loadMoreText.textContent = 'Xem thêm ảnh (Còn 29 ảnh)';
+      loadMoreText.textContent = `Xem thêm ảnh (Còn ${totalImages - 8} ảnh)`;
     }
     
     // Smooth scroll back to the gallery section heading so the user isn't disoriented
@@ -612,13 +640,40 @@ function initVerticalNav() {
   const nav = document.querySelector('#verticalNav');
   if (!hero || !nav) return;
 
+  // Auto-hide on mobile after 1.5s of no scroll
+  let scrollTimeout = null;
+  
+  function triggerMobileScrollHide() {
+    if (window.innerWidth > 768) {
+      nav.classList.remove('nav-dimmed');
+      return;
+    }
+    
+    // Make visible during scrolling
+    nav.classList.remove('nav-dimmed');
+    
+    // Clear previous timeout
+    if (scrollTimeout) {
+      clearTimeout(scrollTimeout);
+    }
+    
+    // Set new timeout to hide after 1.5s
+    scrollTimeout = setTimeout(() => {
+      if (nav.classList.contains('is-visible')) {
+        nav.classList.add('nav-dimmed');
+      }
+    }, 1500);
+  }
+
   // Use intersection observer to show/hide nav when hero is scrolled past
   const observer = new IntersectionObserver(entries => {
     entries.forEach(entry => {
       if (!entry.isIntersecting) {
         nav.classList.add('is-visible');
+        triggerMobileScrollHide();
       } else {
         nav.classList.remove('is-visible');
+        nav.classList.remove('nav-dimmed');
       }
     });
   }, { threshold: 0.05 });
@@ -644,6 +699,8 @@ function initVerticalNav() {
   let lastActiveSectionId = 'hero';
 
   window.addEventListener('scroll', () => {
+    triggerMobileScrollHide();
+
     let currentSectionId = 'hero';
     const scrollPos = window.scrollY + window.innerHeight / 3;
 
@@ -676,4 +733,89 @@ initPersonalization();
 initEnvelopeOpening();
 initMapTabs();
 initVerticalNav();
+
+// Gift Modal Initialization
+function initGiftModal() {
+  const openBtn = document.querySelector('#openGiftModalBtn');
+  const modal = document.querySelector('#giftModal');
+  const closeBtn = document.querySelector('#closeGiftModalBtn');
+  const overlay = document.querySelector('#giftModalOverlay');
+  
+  if (!openBtn || !modal) return;
+
+  // Open modal
+  openBtn.addEventListener('click', () => {
+    modal.classList.add('is-active');
+    document.body.style.overflow = 'hidden';
+  });
+
+  // Close modal functions
+  const closeModal = () => {
+    modal.classList.remove('is-active');
+    document.body.style.overflow = '';
+  };
+
+  closeBtn?.addEventListener('click', closeModal);
+  overlay?.addEventListener('click', closeModal);
+
+  // Switch tabs
+  const tabs = modal.querySelectorAll('.gift-tab');
+  const panels = modal.querySelectorAll('.gift-panel');
+
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      const target = tab.dataset.target;
+
+      tabs.forEach(t => {
+        t.classList.remove('active');
+        t.setAttribute('aria-selected', 'false');
+      });
+      tab.classList.add('active');
+      tab.setAttribute('aria-selected', 'true');
+
+      panels.forEach(panel => {
+        if (panel.id === `gift-panel-${target}`) {
+          panel.classList.add('active');
+        } else {
+          panel.classList.remove('active');
+        }
+      });
+    });
+  });
+
+  // Copy account number
+  const copyButtons = modal.querySelectorAll('.copy-btn');
+  copyButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const textToCopy = btn.dataset.copy;
+      if (!textToCopy) return;
+
+      navigator.clipboard.writeText(textToCopy).then(() => {
+        const originalText = btn.innerHTML;
+        btn.innerHTML = '✅ Đã sao chép!';
+        btn.classList.add('copied');
+        
+        setTimeout(() => {
+          btn.innerHTML = originalText;
+          btn.classList.remove('copied');
+        }, 2000);
+      }).catch(err => {
+        console.error('Lỗi khi sao chép: ', err);
+      });
+    });
+  });
+}
+
+// Story Lightbox Initialization
+function initStoryLightbox() {
+  const storyImages = document.querySelectorAll('#storyTimeline img');
+  storyImages.forEach(img => {
+    img.addEventListener('click', () => {
+      openGenericLightbox(img.src, img.alt || 'Ảnh hành trình');
+    });
+  });
+}
+
+initGiftModal();
+initStoryLightbox();
 

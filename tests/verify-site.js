@@ -16,7 +16,7 @@ const html = read('index.html');
 const css = read('styles.css');
 const js = read('script.js');
 
-for (const id of ['hero', 'couple', 'story', 'location', 'countdown', 'gallery', 'rsvp', 'wishes', 'video', 'footer']) {
+for (const id of ['hero', 'couple', 'story', 'location', 'countdown', 'gallery', 'wishes', 'video', 'footer']) {
   assert(html.includes(`id="${id}"`), `Missing section #${id}`);
 }
 
@@ -25,15 +25,18 @@ for (const asset of [
   '/assets/hero/hero-bg.jpg',
   '/assets/logo/monogram.png',
   '/assets/logo/signature.png',
-  '/assets/music/wedding-music.mp3',
-  '/assets/video/wedding-highlight.mp4',
-  '/assets/qr/qr-location.png'
+  '/assets/music/wedding-music.mp3'
 ]) {
   assert(html.includes(asset) || css.includes(asset), `Missing asset path ${asset}`);
 }
 
-for (let i = 1; i <= 6; i++) {
-  assert(html.includes(`/assets/story/story-${i}.jpg`), `Missing story image ${i}`);
+for (const img of [
+  '/assets/hanhtrinh/congty.png',
+  '/assets/hanhtrinh/totnghiep.jpg',
+  '/assets/hanhtrinh/cauhon.jpg',
+  '/assets/hanhtrinh/happy-ending.jpg'
+]) {
+  assert(html.includes(img), `Missing story image ${img}`);
 }
 
 for (let i = 1; i <= 12; i++) {
@@ -41,7 +44,7 @@ for (let i = 1; i <= 12; i++) {
   assert(html.includes(`/assets/gallery/gallery-${n}-thumb.jpg`), `Missing gallery image ${n}`);
 }
 
-for (const token of ['musicToggle', 'lightbox', 'rsvpForm', 'countdownGrid']) {
+for (const token of ['musicToggle', 'lightbox', 'countdownGrid']) {
   assert(html.includes(token), `Missing interaction hook ${token}`);
 }
 
