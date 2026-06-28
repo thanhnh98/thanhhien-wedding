@@ -647,15 +647,10 @@ function initVerticalNav() {
   const nav = document.querySelector('#verticalNav');
   if (!hero || !nav) return;
 
-  // Auto-hide on mobile after 1.5s of no scroll
+  // Auto-hide navigation after 1.5s of no scroll (both mobile and desktop)
   let scrollTimeout = null;
   
-  function triggerMobileScrollHide() {
-    if (window.innerWidth > 768) {
-      nav.classList.remove('nav-dimmed');
-      return;
-    }
-    
+  function triggerScrollHide() {
     // Make visible during scrolling
     nav.classList.remove('nav-dimmed');
     
@@ -677,7 +672,7 @@ function initVerticalNav() {
     entries.forEach(entry => {
       if (!entry.isIntersecting) {
         nav.classList.add('is-visible');
-        triggerMobileScrollHide();
+        triggerScrollHide();
       } else {
         nav.classList.remove('is-visible');
         nav.classList.remove('nav-dimmed');
@@ -706,7 +701,7 @@ function initVerticalNav() {
   let lastActiveSectionId = 'hero';
 
   window.addEventListener('scroll', () => {
-    triggerMobileScrollHide();
+    triggerScrollHide();
 
     let currentSectionId = 'hero';
     const scrollPos = window.scrollY + window.innerHeight / 3;

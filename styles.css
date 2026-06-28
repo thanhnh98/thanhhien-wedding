@@ -398,13 +398,14 @@ body:not(.invitation-active) .header {
   text-transform: uppercase;
 }
 .hero-names {
-  font-family: Georgia, serif;
-  font-size: clamp(3.2rem, 5.2vw, 4.8rem);
-  line-height: 1.05;
-  color: var(--charcoal-brown);
+  font-family: 'Pinyon Script', cursive;
+  font-size: clamp(3.8rem, 6.2vw, 5.6rem);
+  line-height: 1.35;
+  padding: 10px 0;
+  color: #8A6D3E;
   margin: 0 0 20px 0;
-  font-weight: 500;
-  text-shadow: none;
+  font-weight: 400;
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.5);
 }
 .hero-names .name-span {
   display: block;
@@ -416,9 +417,10 @@ body:not(.invitation-active) .header {
   margin: 4px 0;
 }
 .ampersand {
-  font-style: italic;
+  font-family: 'Pinyon Script', cursive;
+  font-style: normal;
   color: var(--gold-champagne);
-  font-size: 0.78em;
+  font-size: 0.85em;
 }
 .floral-branch {
   width: 90px;
@@ -434,9 +436,25 @@ body:not(.invitation-active) .header {
   text-transform: uppercase;
 }
 .heart-separator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
   color: var(--gold-champagne);
-  font-size: 0.65rem;
+  font-size: 0.85rem;
   margin: 8px 0 18px 0;
+  width: 100%;
+}
+.heart-separator::before,
+.heart-separator::after {
+  content: "";
+  display: block;
+  width: 50px;
+  height: 1px;
+  background: linear-gradient(to var(--direction, right), rgba(201, 164, 106, 0.4), transparent);
+}
+.heart-separator::before {
+  --direction: left;
 }
 .hero-ceremonies {
   width: min(100%, 390px);
@@ -466,6 +484,19 @@ body:not(.invitation-active) .header {
   height: 76px;
   background: linear-gradient(180deg, transparent, var(--gold-pale), transparent);
   align-self: center;
+  position: relative;
+}
+.ceremony-divider::after {
+  content: "♥";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: var(--gold-champagne);
+  font-size: 0.68rem;
+  background: #FFFDF8;
+  padding: 4px 0;
+  line-height: 1;
 }
 .ceremony-date {
   display: flex;
@@ -499,6 +530,17 @@ body:not(.invitation-active) .header {
   font-size: 1rem;
   font-style: italic;
   line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+}
+.location-pin-icon {
+  width: 13px;
+  height: 13px;
+  fill: var(--gold-champagne);
+  display: inline-block;
+  opacity: 0.85;
 }
 .ceremony-lunar {
   margin: 4px 0 0;
@@ -1659,6 +1701,238 @@ body.invitation-active .hero-bottom-fabric {
 
   /* Load-more masonry: 2 cols on mobile */
   .gallery-grid { columns: 2; column-gap: 8px; }
+
+  /* Redesign Hero Section on Mobile */
+  .hero {
+    display: block;
+    position: relative;
+    height: 100svh;
+    min-height: 100svh;
+    background: var(--cream-100);
+    overflow: hidden;
+  }
+
+  .hero-portrait {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    margin: 0;
+    overflow: hidden;
+  }
+
+  .hero-portrait img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 50% 28%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    -webkit-mask-image: linear-gradient(to bottom, black 0%, black 48%, rgba(0,0,0,0.85) 60%, rgba(0,0,0,0.3) 78%, rgba(0,0,0,0.05) 90%, transparent 100%);
+    mask-image: linear-gradient(to bottom, black 0%, black 48%, rgba(0,0,0,0.85) 60%, rgba(0,0,0,0.3) 78%, rgba(0,0,0,0.05) 90%, transparent 100%);
+  }
+
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to bottom,
+      rgba(254, 247, 238, 0) 0%,
+      rgba(254, 247, 238, 0.15) 45%,
+      rgba(254, 247, 238, 0.7) 65%,
+      rgba(254, 247, 238, 0.95) 85%,
+      #FEF7EE 100%
+    );
+    z-index: 2;
+    pointer-events: none;
+    display: block;
+  }
+
+  .hero-content {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 5;
+    padding: 15px 20px clamp(80px, 11vh, 100px) 20px;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .hero-subtitle-top {
+    display: none !important; /* Bỏ dòng chữ Lễ Vu quy & Lễ Tân Hôn ở trên */
+  }
+
+  .hero-subtitle-bottom {
+    order: 1; /* Đưa CHÚNG TÔI KẾT HÔN lên trên cùng */
+    font-size: 0.68rem;
+    letter-spacing: 0.22em;
+    color: var(--charcoal-brown);
+    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
+    margin-bottom: 8px;
+  }
+
+  .hero-names {
+    order: 2; /* Đưa tên dâu rể lên thứ 2 (trên dải trái tim) */
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
+    gap: clamp(4px, 1.5vw, 8px);
+    font-family: 'Pinyon Script', cursive; /* Sử dụng font chữ Pinyon Script như ảnh mẫu */
+    font-size: clamp(2.3rem, 9.2vw, 2.7rem); /* Đảm bảo uốn lượn đẹp mắt và vừa vặn một hàng */
+    line-height: 1.35;
+    padding: 12px 0; /* Cho phép các nét chữ bay bổng của Pinyon Script hiển thị trọn vẹn */
+    margin-top: 10px; /* Thêm khoảng cách đẩy tên xuống */
+    margin-bottom: 18px; /* Tăng khoảng cách lề dưới */
+    color: #8A6D3E; /* Màu vàng đồng sậm / đồng cổ cực kỳ sang trọng */
+    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.7);
+    overflow: visible;
+  }
+
+  .hero-names .name-span {
+    display: inline-block;
+    white-space: nowrap;
+  }
+
+  /* Lá cây trang trí 2 bên tên dâu rể trên mobile */
+  .hero-names::before,
+  .hero-names::after {
+    content: "";
+    display: inline-block;
+    width: clamp(16px, 5.2vw, 22px);
+    height: clamp(30px, 9.5vw, 40px);
+    background: url("/assets/decor/leaves-left.png") no-repeat center / contain;
+    opacity: 0.8;
+    /* Điều chỉnh bộ lọc màu để lá cây tiệp màu đồng sậm với tên */
+    filter: sepia(0.7) saturate(1.3) hue-rotate(-15deg) brightness(0.85);
+    -webkit-filter: sepia(0.7) saturate(1.3) hue-rotate(-15deg) brightness(0.85);
+  }
+
+  .hero-names::before {
+    margin-right: 2px;
+  }
+
+  .hero-names::after {
+    margin-left: 2px;
+    transform: scaleX(-1);
+  }
+
+  .ampersand-wrap {
+    display: inline-flex;
+    align-items: center;
+    margin: 0;
+    gap: 0;
+  }
+
+  .ampersand {
+    font-size: 0.85em;
+    color: #8A6D3E; /* Đồng bộ màu đồng với tên dâu rể */
+    font-family: 'Pinyon Script', cursive;
+    font-style: normal;
+  }
+
+  .floral-branch {
+    display: none !important;
+  }
+
+  .heart-separator {
+    display: none !important;
+  }
+
+  .hero-ceremonies {
+    order: 4; /* Đóng vai trò khối cuối cùng */
+    width: min(100%, 340px);
+    margin: 0;
+    padding: 10px 0 0 0;
+    border: none !important; /* Loại bỏ toàn bộ khung viền bo tròn */
+    background: transparent !important; /* Loại bỏ nền kính mờ để nhìn rõ ảnh nền phía dưới */
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    box-shadow: none !important; /* Hủy đổ bóng hộp */
+    border-radius: 0;
+  }
+
+  .ceremony-family {
+    font-size: 0.65rem;
+    color: var(--charcoal-brown);
+    letter-spacing: 0.1em;
+    margin-bottom: 4px;
+    font-weight: 700;
+  }
+
+  .ceremony-divider {
+    height: 54px;
+    background: linear-gradient(180deg, transparent, rgba(201, 164, 106, 0.4), transparent);
+    position: relative;
+  }
+
+  /* Đè nền màu kem đè lên đường kẻ ngăn cách ở giữa (đã đổi sang màu nền chuẩn #FEF7EE) */
+  .ceremony-divider::after {
+    background: #FEF7EE !important;
+    font-size: 0.72rem;
+  }
+
+  .ceremony-day {
+    font-size: 0.72rem;
+    color: var(--charcoal-brown);
+    font-weight: 600;
+  }
+
+  .ceremony-num {
+    font-size: 1.05rem;
+    color: var(--gold-champagne);
+    font-weight: 500;
+  }
+
+  .ceremony-lunar {
+    font-size: 0.72rem;
+    color: var(--soft-taupe);
+  }
+
+  .ceremony-location {
+    font-size: 0.88rem;
+    color: var(--charcoal-brown);
+    margin-top: 4px;
+  }
+
+  .hero-bottom-fabric {
+    bottom: -90px;
+    height: clamp(140px, 16vh, 200px);
+    z-index: 4;
+  }
+  
+  /* Thu nhỏ nút Thiệp Mời và Mail Icon để mở rộng không gian đứng */
+  .hero-scroll-indicator {
+    z-index: 6;
+    bottom: clamp(12px, 1.8vh, 18px) !important;
+    gap: 4px !important;
+  }
+  .hero-scroll-indicator .invitation-scroll-icon {
+    width: 18px !important;
+    height: 18px !important;
+  }
+  .hero-scroll-indicator .mouse-scroll-text {
+    font-size: 0.6rem !important;
+    letter-spacing: 0.1em !important;
+  }
+
+  /* Thu nhỏ nút Floating Music ở dưới góc phải */
+  .music-toggle {
+    width: 38px !important;
+    height: 38px !important;
+    right: 12px !important;
+    bottom: 12px !important;
+  }
+  .music-toggle svg {
+    width: 16px !important;
+    height: 16px !important;
+  }
 }
 
 
@@ -1684,12 +1958,28 @@ body.invitation-active .hero-bottom-fabric {
   }
   .hero-content {
     flex: 1;
-    padding: 120px 4% 0 13%;
-    align-items: flex-start;
-    text-align: left;
+    padding: 60px 8% 60px 8%;
+    align-items: center; /* Căn giữa hoàn toàn theo chiều ngang */
+    text-align: center; /* Căn giữa văn bản */
     height: 100svh;
     justify-content: center;
     margin-bottom: 0;
+  }
+  .hero-names {
+    line-height: 1.05 !important;
+    margin-bottom: 8px !important;
+    padding: 0 !important;
+  }
+  .ampersand-wrap {
+    margin: -8px 0 !important;
+    justify-content: center !important;
+  }
+  .hero-subtitle-top {
+    margin-bottom: 8px !important;
+  }
+  .hero-subtitle-bottom {
+    margin-top: 10px !important;
+    margin-bottom: 12px !important;
   }
   .hero-bottom-fabric {
     bottom: -88px;
@@ -1744,7 +2034,8 @@ body.invitation-active .hero-bottom-fabric {
   }
   .hero-ceremonies {
     position: relative;
-    left: 30px;
+    left: 0; /* Đưa hộp thông tin nằm chính giữa */
+    margin-top: 15px !important;
   }
   .couple-grid, .event-grid, .wish-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px; }
   .event-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
@@ -2502,7 +2793,7 @@ body:not(.invitation-active) .hero-portrait {
     --card-margin-date: 2px;
   }
   .envelope-wrapper {
-    width: min(72vw, 280px, calc(36vh * 1.55));
+    width: min(86vw, 330px, calc(42vh * 1.55)); /* Tăng kích thước thiệp trên di động */
   }
   .wax-seal {
     width: clamp(58px, 14vw, 84px);
@@ -2523,10 +2814,10 @@ body:not(.invitation-active) .hero-portrait {
     transform: translate3d(0, -58%, 12px);
   }
   .wedding-opening.card-front .envelope-card {
-    transform: translate3d(0, -4%, 28px) scale(1.04);
+    transform: translate3d(0, -4%, 28px) scale(1.18); /* Tăng kích thước ruột thiệp khi mở ra */
   }
   .wedding-opening.card-zoomed .envelope-card {
-    transform: translate3d(0, -6%, 120px) scale(2.1);
+    transform: translate3d(0, -6%, 120px) scale(2.3); /* Tăng kích thước khi card phóng to */
   }
   /* Reduce number of petals on mobile */
   .petal-5, .petal-6, .petal-7, .petal-8 {
@@ -3253,6 +3544,14 @@ body:not(.invitation-active) .hero-portrait {
   opacity: 1;
   visibility: visible;
 }
+
+.vertical-nav.is-visible.nav-dimmed {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translateY(-50%) translateX(-20px);
+}
+
 
 .vertical-nav-item {
   display: flex;
