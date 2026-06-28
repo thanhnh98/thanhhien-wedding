@@ -2649,13 +2649,11 @@ body:not(.invitation-active) .hero-portrait {
   border-radius: 18px;
   overflow: hidden;
   border: 1px solid rgba(214, 168, 79, 0.35);
-  aspect-ratio: 9 / 16;
   background-color: var(--ivory);
 }
 .invitation-card-img {
   width: 100%;
-  height: 100%;
-  object-fit: cover;
+  height: auto;
   display: block;
 }
 .invitation-dynamic-name-overlay {
@@ -2665,10 +2663,13 @@ body:not(.invitation-active) .hero-portrait {
   transform: translate(-50%, -50%);
   width: 70%;
   height: 5%;
-  background-color: var(--ivory);
-  display: flex;
+  background-color: #fcf7f3;
+  display: none;
   align-items: center;
   justify-content: center;
+}
+.invitation-dynamic-name-overlay.active {
+  display: flex;
 }
 #invitationGuestName {
   font-family: "Great Vibes", "Pinyon Script", cursive;

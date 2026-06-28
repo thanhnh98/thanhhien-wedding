@@ -496,6 +496,7 @@ function initPersonalization() {
 
   const envelopeGuestName = document.querySelector('#envelopeGuestName');
   const invitationGuestName = document.querySelector('#invitationGuestName');
+  const invitationOverlay = document.querySelector('.invitation-dynamic-name-overlay');
   const rsvpGuestInput = document.querySelector('input[name="guest"]');
 
   if (name) {
@@ -508,6 +509,9 @@ function initPersonalization() {
     if (invitationGuestName) {
       invitationGuestName.textContent = `${cleanPrefix} ${cleanName}`;
     }
+    if (invitationOverlay) {
+      invitationOverlay.classList.add('active');
+    }
     if (rsvpGuestInput) {
       rsvpGuestInput.value = cleanName;
     }
@@ -516,7 +520,10 @@ function initPersonalization() {
       envelopeGuestName.textContent = 'Trân trọng kính mời Quý khách';
     }
     if (invitationGuestName) {
-      invitationGuestName.textContent = 'Quý khách';
+      invitationGuestName.textContent = '';
+    }
+    if (invitationOverlay) {
+      invitationOverlay.classList.remove('active');
     }
   }
 }
