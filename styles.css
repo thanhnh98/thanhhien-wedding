@@ -1260,6 +1260,21 @@ body.invitation-active .hero-bottom-fabric {
   z-index: 2;
 }
 
+/* Reveal transitions for bento items to support scroll animation without breaking hover scale */
+.bento-item.reveal {
+  transition: 
+    opacity .9s var(--ease),
+    transform .9s var(--ease),
+    border-color .35s var(--ease),
+    box-shadow .35s var(--ease);
+}
+.bento-item.is-visible:hover {
+  transition: 
+    transform .35s var(--ease),
+    border-color .35s var(--ease),
+    box-shadow .35s var(--ease);
+}
+
 /* Hero: 2 cols × 2 rows */
 .bento-hero {
   grid-column: span 2;
