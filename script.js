@@ -14,6 +14,7 @@ const lightboxImage = lightbox?.querySelector('img');
 const onboardingMusic = document.querySelector('#onboardingMusic');
 const weddingMusic = document.querySelector('#weddingMusic');
 let music = onboardingMusic;
+let hasMainMusicStarted = false;
 const musicToggle = document.querySelector('#musicToggle');
 const rsvpForm = document.querySelector('#rsvpForm');
 const rsvpSuccess = document.querySelector('#rsvpSuccess');
@@ -224,41 +225,133 @@ function updateMusicState(state) {
   if (label) label.textContent = state === 'playing' ? 'Đang phát' : state === 'muted' ? 'Tắt tiếng' : 'Tạm dừng';
 }
 
-async function playMusic({ muted = false, userChoice = false } = {}) {
-  if (!music) return;
+// Note: We do not use localStorage here anymore as we want to always autoplay music without caching state.
+function handleMusicCrossfade() {
+  if (musicToggle && musicToggle.getAttribute('data-state') === 'paused') {
+    return;
+  }
+
+  if (!onboardingMusic || !weddingMusic) return;
+
+  // If the main music has already fully started once, keep playing only main music at full volume
+  if (hasMainMusicStarted) {
+    music = weddingMusic;
+    if (!onboardingMusic.paused) {
+      onboardingMusic.pause();
+    }
+    weddingMusic.volume = 1;
+    if (weddingMusic.paused) {
+      weddingMusic.muted = false;
+      weddingMusic.play().catch(e => console.log('Failed to play weddingMusic', e));
+    }
+    return;
+  }
+
+  const isInvitationActive = document.body.classList.contains('invitation-active');
+  if (!isInvitationActive) {
+    music = onboardingMusic;
+    onboardingMusic.volume = 1;
+    if (onboardingMusic.paused) {
+      onboardingMusic.muted = false;
+      onboardingMusic.play().catch(e => console.log('Failed to play onboardingMusic', e));
+    }
+    if (!weddingMusic.paused) {
+      weddingMusic.pause();
+    }
+    return;
+  }
+
+  const hero = document.querySelector('#hero');
+  const heroHeight = hero ? hero.offsetHeight : window.innerHeight;
+  const scrollY = window.scrollY;
+  const ratio = Math.min(Math.max(scrollY / heroHeight, 0), 1);
+
+  // If we scroll past the hero completely, permanently latch to weddingMusic
+  if (ratio >= 1) {
+    hasMainMusicStarted = true;
+    music = weddingMusic;
+    if (!onboardingMusic.paused) {
+      onboardingMusic.pause();
+    }
+    weddingMusic.volume = 1;
+    if (weddingMusic.paused) {
+      weddingMusic.muted = false;
+      weddingMusic.play().catch(e => console.log('Failed to play weddingMusic', e));
+    }
+    return;
+  }
+
+  const onboardingVolume = 1 - ratio;
+  const weddingVolume = ratio;
+
+  music = (onboardingVolume > weddingVolume) ? onboardingMusic : weddingMusic;
+
+  // Onboarding Music volume & state
+  if (onboardingVolume > 0) {
+    onboardingMusic.volume = onboardingVolume;
+    if (onboardingMusic.paused) {
+      onboardingMusic.muted = false;
+      onboardingMusic.play().catch(e => console.log('Failed to play onboardingMusic', e));
+    }
+  } else {
+    onboardingMusic.volume = 0;
+    if (!onboardingMusic.paused) {
+      onboardingMusic.pause();
+    }
+  }
+
+  // Wedding Music volume & state
+  if (weddingVolume > 0) {
+    weddingMusic.volume = weddingVolume;
+    if (weddingMusic.paused) {
+      weddingMusic.muted = false;
+      weddingMusic.play().catch(e => console.log('Failed to play weddingMusic', e));
+    }
+  } else {
+    weddingMusic.volume = 0;
+    if (!weddingMusic.paused) {
+      weddingMusic.pause();
+    }
+  }
+}
+
+async function playMusic({ muted = false } = {}) {
+  if (!onboardingMusic || !weddingMusic) return;
   try {
-    music.muted = muted;
-    await music.play();
-    updateMusicState(muted ? 'muted' : 'playing');
-    if (userChoice) localStorage.setItem('weddingMusicPreference', muted ? 'muted' : 'playing');
-  } catch {
+    if (muted) {
+      onboardingMusic.muted = true;
+      weddingMusic.muted = true;
+      updateMusicState('muted');
+    } else {
+      onboardingMusic.muted = false;
+      weddingMusic.muted = false;
+      updateMusicState('playing');
+      handleMusicCrossfade();
+    }
+  } catch (err) {
     updateMusicState('paused');
   }
 }
 
 function toggleMusic() {
-  if (!music) return;
-  if (music.paused) {
-    playMusic({ muted: false, userChoice: true });
-  } else if (music.muted) {
-    music.muted = false;
-    localStorage.setItem('weddingMusicPreference', 'playing');
-    updateMusicState('playing');
-  } else {
-    music.pause();
-    localStorage.setItem('weddingMusicPreference', 'paused');
+  if (!onboardingMusic || !weddingMusic) return;
+  const isPlaying = musicToggle?.getAttribute('data-state') === 'playing';
+  
+  if (isPlaying) {
+    onboardingMusic.pause();
+    weddingMusic.pause();
     updateMusicState('paused');
+  } else {
+    updateMusicState('playing');
+    handleMusicCrossfade();
   }
 }
 
 function primeMusic() {
-  const preference = localStorage.getItem('weddingMusicPreference');
-  if (preference === 'paused') {
-    updateMusicState('paused');
-    return;
-  }
   playMusic({ muted: false }).then(() => {
-    if (music?.paused) playMusic({ muted: true });
+    if (onboardingMusic?.paused && weddingMusic?.paused) {
+      playMusic({ muted: true });
+    }
   });
 }
 
@@ -459,16 +552,44 @@ rsvpForm?.addEventListener('submit', event => {
 });
 
 musicToggle?.addEventListener('click', toggleMusic);
-['pointerdown', 'keydown', 'touchstart'].forEach(type => {
-  window.addEventListener(type, () => {
-    if (localStorage.getItem('weddingMusicPreference') !== 'paused' && music?.paused) {
-      playMusic({ muted: false });
+['click', 'pointerdown', 'keydown', 'touchstart'].forEach(type => {
+  window.addEventListener(type, (e) => {
+    // Avoid triggering if the user explicitly clicked the music control button
+    if (e.target && (e.target === musicToggle || musicToggle?.contains(e.target))) {
+      return;
     }
-  }, { once: true, passive: true });
+
+    if (onboardingMusic) {
+      if (onboardingMusic.paused) {
+        onboardingMusic.muted = false;
+        onboardingMusic.play().then(() => {
+          updateMusicState('playing');
+        }).catch(err => console.log('Audio autoplay blocked on gesture', err));
+      } else if (onboardingMusic.muted) {
+        onboardingMusic.muted = false;
+        updateMusicState('playing');
+      }
+    }
+
+    // Pre-unlock weddingMusic to allow playing it later inside scroll handlers
+    if (weddingMusic) {
+      weddingMusic.muted = true;
+      weddingMusic.play().then(() => {
+        weddingMusic.pause();
+        weddingMusic.muted = false;
+      }).catch(err => console.log('weddingMusic unlock failed', err));
+    }
+  }, { once: true });
 });
 
-window.addEventListener('scroll', updateScrollProgress, { passive: true });
-window.addEventListener('resize', updateScrollProgress);
+window.addEventListener('scroll', () => {
+  updateScrollProgress();
+  handleMusicCrossfade();
+}, { passive: true });
+window.addEventListener('resize', () => {
+  updateScrollProgress();
+  handleMusicCrossfade();
+});
 
 setupReveals();
 setupFallbackImages();
@@ -541,6 +662,24 @@ function initEnvelopeOpening() {
   document.documentElement.classList.add('envelope-active');
 
   envelope.addEventListener('click', () => {
+    // Sync play/unlock music on direct user gesture
+    if (onboardingMusic && onboardingMusic.paused) {
+      onboardingMusic.muted = false;
+      onboardingMusic.play()
+        .then(() => updateMusicState('playing'))
+        .catch(err => console.log('onboardingMusic play failed on envelope click', err));
+    } else if (onboardingMusic && onboardingMusic.muted) {
+      onboardingMusic.muted = false;
+      updateMusicState('playing');
+    }
+    if (weddingMusic) {
+      weddingMusic.muted = true;
+      weddingMusic.play().then(() => {
+        weddingMusic.pause();
+        weddingMusic.muted = false;
+      }).catch(err => console.log('weddingMusic unlock failed on envelope click', err));
+    }
+
     // Add opening class to trigger 3D flip animation
     overlay.classList.add('is-opening');
 
@@ -565,20 +704,8 @@ function initEnvelopeOpening() {
 
     // Fade in Hero page behind the zooming card and transition music.
     window.setTimeout(() => {
-      // Stop onboarding music
-      if (onboardingMusic) {
-        onboardingMusic.pause();
-      }
-
-      // Switch to main wedding music
-      music = weddingMusic;
-
-      // Auto-play main music if the user hasn't explicitly paused it
-      if (localStorage.getItem('weddingMusicPreference') !== 'paused') {
-        playMusic({ muted: false, userChoice: true });
-      } else {
-        updateMusicState('paused');
-      }
+      // Auto-play music if needed (it should already be playing)
+      playMusic({ muted: false });
 
       document.body.classList.add('invitation-active');
     }, 4900);
@@ -818,4 +945,51 @@ function initStoryLightbox() {
 
 initGiftModal();
 initStoryLightbox();
+
+// Custom falling hearts mouse trail effect
+function initMouseTrail() {
+  if (prefersReducedMotion || window.matchMedia('(pointer: coarse)').matches) {
+    return;
+  }
+
+  let lastX = 0;
+  let lastY = 0;
+  const minDistance = 15; // pixels
+
+  window.addEventListener('mousemove', (e) => {
+    const dist = Math.hypot(e.clientX - lastX, e.clientY - lastY);
+    if (dist < minDistance) return;
+
+    lastX = e.clientX;
+    lastY = e.clientY;
+
+    createMiniHeart(e.clientX, e.clientY);
+  });
+}
+
+function createMiniHeart(x, y) {
+  const heart = document.createElement('span');
+  heart.className = 'trail-heart';
+  heart.textContent = '♥';
+
+  const size = Math.floor(6 + Math.random() * 8); // 6px to 14px
+  const drift = (Math.random() - 0.5) * 30; // -15px to 15px
+  const colors = ['#e11d48', '#fda4af', '#f43f5e', '#ec4899'];
+  const color = colors[Math.floor(Math.random() * colors.length)];
+
+  heart.style.left = `${x + window.scrollX}px`;
+  heart.style.top = `${y + window.scrollY}px`;
+  heart.style.fontSize = `${size}px`;
+  heart.style.color = color;
+  heart.style.setProperty('--drift-x', `${drift}px`);
+
+  document.body.appendChild(heart);
+
+  window.setTimeout(() => {
+    heart.remove();
+  }, 800);
+}
+
+initMouseTrail();
+
 
