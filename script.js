@@ -565,9 +565,7 @@ function initEnvelopeOpening() {
 
     // Fade in Hero page behind the zooming card and transition music.
     window.setTimeout(() => {
-      const wasMusicPaused = !music || music.paused;
-
-      // Stop onboarding music (it kept playing during envelope animation)
+      // Stop onboarding music
       if (onboardingMusic) {
         onboardingMusic.pause();
       }
@@ -575,8 +573,8 @@ function initEnvelopeOpening() {
       // Switch to main wedding music
       music = weddingMusic;
 
-      // Only play main music if onboarding music wasn't paused/muted by the user
-      if (!wasMusicPaused) {
+      // Auto-play main music if the user hasn't explicitly paused it
+      if (localStorage.getItem('weddingMusicPreference') !== 'paused') {
         playMusic({ muted: false, userChoice: true });
       } else {
         updateMusicState('paused');
