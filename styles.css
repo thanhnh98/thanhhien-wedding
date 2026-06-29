@@ -1510,7 +1510,7 @@ body.invitation-active .hero-bottom-fabric {
 
 .music-toggle {
   position: fixed;
-  left: 18px;
+  right: 18px;
   bottom: 18px;
   z-index: 999;
   width: 50px;
@@ -1939,11 +1939,11 @@ body.invitation-active .hero-bottom-fabric {
     letter-spacing: 0.1em !important;
   }
 
-  /* Thu nhỏ nút Floating Music ở dưới góc trái */
+  /* Thu nhỏ nút Floating Music ở dưới góc phải */
   .music-toggle {
     width: 38px !important;
     height: 38px !important;
-    left: 12px !important;
+    right: 12px !important;
     bottom: 12px !important;
   }
   .music-toggle svg {
