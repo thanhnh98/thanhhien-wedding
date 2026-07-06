@@ -46,19 +46,21 @@
   --seal-text: #5A3D1E;
 
   /* Envelope Card Layout Variables */
-  --card-padding-outer: 12px;
-  --card-padding-inner: 8px 12px;
-  --card-font-monogram: clamp(20px, 3.5vh, 28px);
-  --card-margin-monogram: 2px;
-  --card-font-std: clamp(24px, 4vh, 32px);
-  --card-margin-std: 4px;
+  --card-padding-outer: 10px;
+  --card-padding-inner: 6px 12px;
+  --card-font-monogram: clamp(15px, 2.4vh, 20px);
+  --card-margin-monogram: 0px;
+  --card-font-std: clamp(17px, 2.8vh, 24px);
+  --card-margin-std: 2px;
   --card-margin-divider: 4px 0 8px;
   --card-width-divider: 50px;
-  --card-font-prefix: clamp(8px, 1.2vh, 10px);
-  --card-font-guest: clamp(15px, 2.2vh, 20px);
+  --card-font-prefix: clamp(7px, 1vh, 9px);
+  --card-font-guest: clamp(13px, 1.9vh, 17px);
   --card-margin-guest: 3px 0 6px;
-  --card-font-couple: clamp(14px, 2vh, 18px);
+  --card-font-couple: clamp(12px, 1.6vh, 15px);
   --card-margin-couple: 4px 0;
+  --card-font-invite: clamp(9px, 1.3vh, 12px);
+  --card-margin-hd: clamp(1px, 0.5vh, 4px);
   --card-font-date: clamp(8px, 1.2vh, 9px);
   --card-margin-date: 6px;
 }
@@ -2827,8 +2829,8 @@ html.envelope-active {
 }
 
 .card-inner {
-  border: 1px solid rgba(201,164,106,0.25);
-  border-radius: 3px;
+  border: 1px solid rgba(201,164,106,0.5);
+  border-radius: 4px;
   width: 100%;
   height: 100%;
   box-sizing: border-box;
@@ -2841,54 +2843,156 @@ html.envelope-active {
   background: #FCFAF7; /* Premium off-white card face */
 }
 
-/* Card typography */
+/* Inner second hairline => classic double-border frame */
+.card-inner::before {
+  content: "";
+  position: absolute;
+  inset: 4px;
+  border: 1px solid rgba(201,164,106,0.28);
+  border-radius: 3px;
+  pointer-events: none;
+}
+
+/* ---- Monogram row with laurel sprigs ---- */
+.card-monogram-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5em;
+  margin-bottom: var(--card-margin-monogram);
+}
+.card-sprig {
+  width: clamp(22px, 4vh, 32px);
+  height: auto;
+  color: var(--champagne-gold);
+  opacity: 0.85;
+  flex: 0 0 auto;
+}
+.card-sprig-right { transform: scaleX(-1); }
+
 .card-monogram-gold {
   font-family: "Great Vibes", "Allura", cursive;
   font-size: var(--card-font-monogram);
   color: var(--champagne-gold);
   line-height: 1;
-  margin-bottom: var(--card-margin-monogram);
 }
 
 .card-save-the-date {
   font-family: "Pinyon Script", "Great Vibes", cursive;
   font-size: var(--card-font-std);
   color: var(--name-gold);
-  line-height: 1;
+  line-height: 1.05;
   margin-bottom: var(--card-margin-std);
 }
 
-.card-divider-line {
-  width: var(--card-width-divider);
-  height: 1px;
-  background: linear-gradient(90deg, transparent, var(--champagne-gold), transparent);
-  margin: var(--card-margin-divider);
+/* ---- WEDDING INVITATION eyebrow ---- */
+.card-eyebrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.7em;
+  margin-bottom: var(--card-margin-std);
 }
-
-.card-guest-prefix {
+.card-eyebrow-text {
   font-family: "Montserrat", sans-serif;
   font-size: var(--card-font-prefix);
   font-weight: 500;
-  letter-spacing: 2px;
+  letter-spacing: 3px;
   color: var(--label-text);
-  margin: 0;
   text-transform: uppercase;
+  white-space: nowrap;
+}
+.card-eyebrow-rule {
+  width: clamp(18px, 3.4vh, 30px);
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--champagne-gold));
+  position: relative;
+}
+.card-eyebrow-rule::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  width: 2.5px;
+  height: 2.5px;
+  border-radius: 50%;
+  background: var(--champagne-gold);
+  transform: translateY(-50%);
+}
+.card-eyebrow-rule:first-child { background: linear-gradient(90deg, var(--champagne-gold), transparent); }
+.card-eyebrow-rule:first-child::after { right: -1px; }
+.card-eyebrow-rule:last-child::after { left: -1px; }
+
+/* ---- Invite text lines ---- */
+.card-invite-line {
+  font-family: "Cormorant Garamond", serif;
+  font-size: var(--card-font-invite);
+  font-style: italic;
+  font-weight: 500;
+  color: var(--text-main);
+  margin: 0;
+  text-align: center;
+  line-height: 1.3;
 }
 
+/* ---- Heart divider (line — ♥ — line) ---- */
+.card-heart-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5em;
+  margin: var(--card-margin-hd) 0;
+}
+.card-hd-rule {
+  width: clamp(30px, 6vh, 58px);
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--champagne-gold), transparent);
+}
+.card-heart {
+  width: clamp(8px, 1.5vh, 11px);
+  height: auto;
+  color: var(--name-gold);
+  flex: 0 0 auto;
+}
+
+/* ---- Guest name (personalized) ---- */
 .card-guest-name {
   font-family: "Cormorant Garamond", serif;
   font-size: var(--card-font-guest);
-  font-weight: 600;
+  font-weight: 700;
   color: var(--text-main);
-  margin: var(--card-margin-guest);
+  margin: 0;
   text-align: center;
-  line-height: 1.25;
+  line-height: 1.2;
   max-width: 100%;
   display: -webkit-box;
-  -webkit-line-clamp: 3;
+  -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
   word-break: break-word;
+}
+
+/* ---- Leaf divider under the name ---- */
+.card-leaf-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4em;
+  margin: var(--card-margin-hd) 0;
+}
+.card-leaf {
+  width: clamp(9px, 1.7vh, 13px);
+  height: auto;
+  color: var(--champagne-gold);
+  flex: 0 0 auto;
+}
+.card-leaf-flip { transform: scaleX(-1); }
+.card-ld-dots {
+  width: clamp(40px, 8vh, 80px);
+  height: 1px;
+  background-image: linear-gradient(90deg, var(--champagne-gold) 40%, transparent 0);
+  background-size: 5px 1px;
+  background-repeat: repeat-x;
+  opacity: 0.75;
 }
 
 .card-couple-names {
@@ -2897,8 +3001,17 @@ html.envelope-active {
   font-weight: 500;
   font-style: italic;
   color: var(--name-gold);
-  margin: var(--card-margin-couple);
+  margin: 0;
   text-align: center;
+  line-height: 1.2;
+}
+
+.card-bottom-sprig {
+  width: clamp(48px, 9vh, 74px);
+  height: auto;
+  color: var(--champagne-gold);
+  opacity: 0.85;
+  margin-top: var(--card-margin-hd);
 }
 
 /* Wax Seal */
@@ -3123,9 +3236,19 @@ body:not(.invitation-active) .hero-portrait {
     --card-margin-guest: 1px 0 2px;
     --card-font-couple: 10px;
     --card-margin-couple: 2px 0;
+    --card-font-invite: 8.5px;
+    --card-margin-hd: 2px;
     --card-font-date: 6.5px;
     --card-margin-date: 2px;
   }
+  /* Cap card ornament sizes on mobile so the taller content never overflows the small card */
+  .card-sprig { width: 22px; }
+  .card-bottom-sprig { width: 44px; }
+  .card-heart { width: 8px; }
+  .card-leaf { width: 9px; }
+  .card-hd-rule { width: 30px; }
+  .card-eyebrow-rule { width: 16px; }
+  .card-ld-dots { width: 42px; }
   .envelope-wrapper {
     width: min(86vw, 330px, calc(42vh * 1.55)); /* Tăng kích thước thiệp trên di động */
   }
@@ -3190,6 +3313,7 @@ body:not(.invitation-active) .hero-portrait {
     --card-font-std: clamp(18px, 3.2vh, 26px);
     --card-font-guest: clamp(12px, 1.8vh, 16px);
     --card-font-couple: clamp(11px, 1.6vh, 14px);
+    --card-font-invite: clamp(9px, 1.4vh, 12px);
   }
   .envelope-wrapper {
     width: min(clamp(220px, 30vh, 380px), calc(32vh * 1.55));

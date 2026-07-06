@@ -683,7 +683,8 @@ function initPersonalization() {
     const cleanPrefix = decodeURIComponent(prefix.replace(/\+/g, ' ')).trim();
 
     if (envelopeGuestName) {
-      envelopeGuestName.textContent = `${cleanPrefix} ${cleanName}`;
+      // Card shows only the guest name; "Trân trọng kính mời" is a fixed line on the card
+      envelopeGuestName.textContent = cleanName;
     }
     if (invitationGuestName) {
       invitationGuestName.textContent = `${cleanPrefix} ${cleanName}`;
@@ -696,7 +697,7 @@ function initPersonalization() {
     }
   } else {
     if (envelopeGuestName) {
-      envelopeGuestName.textContent = 'Trân trọng kính mời Quý khách';
+      envelopeGuestName.textContent = 'Quý khách';
     }
     if (invitationGuestName) {
       invitationGuestName.textContent = '';
@@ -731,6 +732,8 @@ function initEnvelopeOpening() {
       updateMusicState('playing');
     }
     if (weddingMusic) {
+      // preload="none" => kick off buffering now (on the user gesture), ~5s before it's needed
+      weddingMusic.load();
       weddingMusic.muted = true;
       weddingMusic.play().then(() => {
         weddingMusic.pause();
