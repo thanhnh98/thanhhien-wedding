@@ -1,0 +1,12 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "wedding-template",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": ["server.py", "$PORT"],
+      "port": 8081,
+      "autoPort": true
+    }
+  ]
+}

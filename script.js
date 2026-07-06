@@ -32,6 +32,28 @@ const galleryImages = Array.from({ length: totalImages }, (_, i) => {
   };
 });
 
+// Album ảnh "Trải qua những hành trình" — thứ tự khớp với data-album-index trong markup
+const storyAlbum = [
+  { src: '/assets/hanhtrinh/IMAGE 2026-06-27 12:29:03.jpg', alt: 'Trải qua những hành trình' },
+  { src: '/assets/hanhtrinh/IMAGE 2026-06-27 12:28:54.jpg', alt: 'Ảnh hành trình' },
+  { src: '/assets/hanhtrinh/IMAGE 2026-06-27 12:28:56.jpg', alt: 'Ảnh hành trình' },
+  { src: '/assets/hanhtrinh/IMAGE 2026-06-27 12:28:52.jpg', alt: 'Ảnh hành trình' },
+  { src: '/assets/hanhtrinh/IMAGE 2026-06-27 12:29:01.jpg', alt: 'Ảnh hành trình' },
+  { src: '/assets/hanhtrinh/hanhtrinh-01.jpg', alt: 'Ảnh hành trình' },
+  { src: '/assets/hanhtrinh/hanhtrinh-02.jpg', alt: 'Ảnh hành trình' },
+  { src: '/assets/hanhtrinh/hanhtrinh-03.jpg', alt: 'Ảnh hành trình' },
+  { src: '/assets/hanhtrinh/hanhtrinh-04.jpg', alt: 'Ảnh hành trình' },
+  { src: '/assets/hanhtrinh/hanhtrinh-05.jpg', alt: 'Ảnh hành trình' },
+  { src: '/assets/hanhtrinh/hanhtrinh-06.jpg', alt: 'Ảnh hành trình' },
+  { src: '/assets/hanhtrinh/hanhtrinh-07.jpg', alt: 'Ảnh hành trình' },
+  { src: '/assets/hanhtrinh/hanhtrinh-08.jpg', alt: 'Ảnh hành trình' },
+  { src: '/assets/hanhtrinh/hanhtrinh-09.jpg', alt: 'Ảnh hành trình' },
+  { src: '/assets/hanhtrinh/hanhtrinh-10.jpg', alt: 'Ảnh hành trình' }
+];
+
+// Album đang được điều hướng trong lightbox (mặc định là gallery ảnh cưới)
+let activeAlbum = galleryImages;
+
 function updateScrollProgress() {
   const scrollable = document.documentElement.scrollHeight - window.innerHeight;
   const percent = scrollable > 0 ? (window.scrollY / scrollable) * 100 : 0;
@@ -129,7 +151,7 @@ function initCountdownTabs() {
 function updateLightboxContent(index) {
   if (!lightboxImage || !lightbox) return;
   currentImageIndex = index;
-  const imgData = galleryImages[currentImageIndex - 1];
+  const imgData = activeAlbum[currentImageIndex - 1];
   
   // Transition effect
   lightboxImage.style.opacity = '0.3';
@@ -157,12 +179,36 @@ function updateLightboxContent(index) {
   
   const counter = lightbox.querySelector('.lightbox-counter');
   if (counter) {
-    counter.textContent = `${currentImageIndex} / ${totalImages}`;
+    counter.textContent = `${currentImageIndex} / ${activeAlbum.length}`;
   }
+}
+
+// Hiện/ẩn bộ đếm và nút điều hướng của lightbox
+function setLightboxChromeVisible(visible) {
+  const counter = lightbox?.querySelector('.lightbox-counter');
+  const prevBtn = lightbox?.querySelector('.lightbox-prev');
+  const nextBtn = lightbox?.querySelector('.lightbox-next');
+  const value = visible ? '' : 'none';
+  if (counter) counter.style.display = value;
+  if (prevBtn) prevBtn.style.display = value;
+  if (nextBtn) nextBtn.style.display = value;
 }
 
 function openLightboxIndex(index) {
   if (!lightbox) return;
+  activeAlbum = galleryImages;
+  setLightboxChromeVisible(true);
+  updateLightboxContent(index);
+  lightbox.classList.add('is-open');
+  lightbox.setAttribute('aria-hidden', 'false');
+  document.body.style.overflow = 'hidden';
+}
+
+// Mở lightbox cho album "Trải qua những hành trình" với điều hướng đầy đủ
+function openStoryAlbumIndex(index) {
+  if (!lightbox) return;
+  activeAlbum = storyAlbum;
+  setLightboxChromeVisible(true);
   updateLightboxContent(index);
   lightbox.classList.add('is-open');
   lightbox.setAttribute('aria-hidden', 'false');
@@ -209,13 +255,13 @@ function closeLightbox() {
 
 function nextImage() {
   let nextIdx = currentImageIndex + 1;
-  if (nextIdx > totalImages) nextIdx = 1;
+  if (nextIdx > activeAlbum.length) nextIdx = 1;
   updateLightboxContent(nextIdx);
 }
 
 function prevImage() {
   let prevIdx = currentImageIndex - 1;
-  if (prevIdx < 1) prevIdx = totalImages;
+  if (prevIdx < 1) prevIdx = activeAlbum.length;
   updateLightboxContent(prevIdx);
 }
 
@@ -552,35 +598,47 @@ rsvpForm?.addEventListener('submit', event => {
 });
 
 musicToggle?.addEventListener('click', toggleMusic);
-['click', 'pointerdown', 'keydown', 'touchstart'].forEach(type => {
-  window.addEventListener(type, (e) => {
-    // Avoid triggering if the user explicitly clicked the music control button
-    if (e.target && (e.target === musicToggle || musicToggle?.contains(e.target))) {
-      return;
-    }
+// Unlock audio on the first user gesture. IMPORTANT: a single tap on mobile fires
+// multiple event types (touchstart + pointerdown + click), so we guard with a single
+// flag instead of registering one { once } listener per type. Registering per type
+// caused weddingMusic.play() to be called several times; a later play() would resolve
+// *after* the pause/unmute of an earlier one, leaving weddingMusic audible on top of
+// onboardingMusic (two songs at once).
+const gestureTypes = ['click', 'pointerdown', 'keydown', 'touchstart'];
+let audioUnlocked = false;
+function unlockAudioOnGesture(e) {
+  if (audioUnlocked) return;
+  // Avoid triggering if the user explicitly clicked the music control button
+  if (e.target && (e.target === musicToggle || musicToggle?.contains(e.target))) {
+    return;
+  }
+  audioUnlocked = true;
+  gestureTypes.forEach(type => window.removeEventListener(type, unlockAudioOnGesture));
 
-    if (onboardingMusic) {
-      if (onboardingMusic.paused) {
-        onboardingMusic.muted = false;
-        onboardingMusic.play().then(() => {
-          updateMusicState('playing');
-        }).catch(err => console.log('Audio autoplay blocked on gesture', err));
-      } else if (onboardingMusic.muted) {
-        onboardingMusic.muted = false;
+  if (onboardingMusic) {
+    if (onboardingMusic.paused) {
+      onboardingMusic.muted = false;
+      onboardingMusic.play().then(() => {
         updateMusicState('playing');
-      }
+      }).catch(err => console.log('Audio autoplay blocked on gesture', err));
+    } else if (onboardingMusic.muted) {
+      onboardingMusic.muted = false;
+      updateMusicState('playing');
     }
+  }
 
-    // Pre-unlock weddingMusic to allow playing it later inside scroll handlers
-    if (weddingMusic) {
-      weddingMusic.muted = true;
-      weddingMusic.play().then(() => {
-        weddingMusic.pause();
-        weddingMusic.muted = false;
-      }).catch(err => console.log('weddingMusic unlock failed', err));
-    }
-  }, { once: true });
-});
+  // Pre-unlock weddingMusic (play muted, then immediately pause) so it can be resumed
+  // later inside scroll handlers. Runs exactly once, so there is no play()/pause() race.
+  if (weddingMusic) {
+    weddingMusic.muted = true;
+    weddingMusic.play().then(() => {
+      weddingMusic.pause();
+      weddingMusic.currentTime = 0;
+      weddingMusic.muted = false;
+    }).catch(err => console.log('weddingMusic unlock failed', err));
+  }
+}
+gestureTypes.forEach(type => window.addEventListener(type, unlockAudioOnGesture, { passive: true }));
 
 window.addEventListener('scroll', () => {
   updateScrollProgress();
@@ -772,40 +830,72 @@ function initVerticalNav() {
   const nav = document.querySelector('#verticalNav');
   if (!hero || !nav) return;
 
+  const hoverZone = document.querySelector('#navHoverZone');
+  const backToHome = document.querySelector('#backToHome');
+
   // Auto-hide navigation after 1.5s of no scroll (both mobile and desktop)
   let scrollTimeout = null;
-  
+  // While the pointer is over the left hover zone or the nav, keep it revealed.
+  let isNavHovered = false;
+
   function triggerScrollHide() {
     // Make visible during scrolling
     nav.classList.remove('nav-dimmed');
-    
+
     // Clear previous timeout
     if (scrollTimeout) {
       clearTimeout(scrollTimeout);
     }
-    
-    // Set new timeout to hide after 1.5s
+
+    // Set new timeout to hide after 1.5s (unless the pointer is holding it open)
     scrollTimeout = setTimeout(() => {
+      if (isNavHovered) return;
       if (nav.classList.contains('is-visible')) {
         nav.classList.add('nav-dimmed');
       }
     }, 1500);
   }
 
-  // Use intersection observer to show/hide nav when hero is scrolled past
+  // Reveal the nav when hovering the left edge (or the nav itself), keep it open.
+  function revealNav() {
+    isNavHovered = true;
+    if (scrollTimeout) clearTimeout(scrollTimeout);
+    nav.classList.add('is-visible');
+    nav.classList.remove('nav-dimmed');
+  }
+  function releaseNav() {
+    isNavHovered = false;
+    triggerScrollHide();
+  }
+  hoverZone?.addEventListener('mouseenter', revealNav);
+  hoverZone?.addEventListener('mouseleave', releaseNav);
+  nav.addEventListener('mouseenter', revealNav);
+  nav.addEventListener('mouseleave', releaseNav);
+
+  // Use intersection observer to show/hide nav (and back-to-home) when hero is scrolled past
   const observer = new IntersectionObserver(entries => {
     entries.forEach(entry => {
       if (!entry.isIntersecting) {
         nav.classList.add('is-visible');
+        backToHome?.classList.add('is-visible');
         triggerScrollHide();
       } else {
         nav.classList.remove('is-visible');
         nav.classList.remove('nav-dimmed');
+        backToHome?.classList.remove('is-visible');
       }
     });
   }, { threshold: 0.05 });
 
   observer.observe(hero);
+
+  // Back-to-home button: smoothly scroll back up to the hero section.
+  backToHome?.addEventListener('click', () => {
+    hero.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    if (history.replaceState) {
+      history.replaceState(null, '', window.location.pathname + window.location.search);
+    }
+  });
 
   // Active state highlighting on scroll and URL hash synchronization
   const sectionToNavMap = {
@@ -825,8 +915,20 @@ function initVerticalNav() {
   const navLinks = document.querySelectorAll('.vertical-nav-link');
   let lastActiveSectionId = 'hero';
 
+  // Brighten the back-to-home button while scrolling, then let it fade back.
+  let homeScrollTimeout = null;
+  function pulseBackToHome() {
+    if (!backToHome) return;
+    backToHome.classList.add('is-scrolling');
+    if (homeScrollTimeout) clearTimeout(homeScrollTimeout);
+    homeScrollTimeout = setTimeout(() => {
+      backToHome.classList.remove('is-scrolling');
+    }, 1200);
+  }
+
   window.addEventListener('scroll', () => {
     triggerScrollHide();
+    pulseBackToHome();
 
     let currentSectionId = 'hero';
     const scrollPos = window.scrollY + window.innerHeight / 3;
@@ -935,8 +1037,22 @@ function initGiftModal() {
 
 // Story Lightbox Initialization
 function initStoryLightbox() {
-  const storyImages = document.querySelectorAll('#storyTimeline img');
-  storyImages.forEach(img => {
+  // Album "Trải qua những hành trình": hero + 4 thumbnail (thumbnail cuối là "+N" mở full album)
+  const journeyCollage = document.querySelector('#journeyCollage');
+  if (journeyCollage) {
+    journeyCollage.querySelectorAll('[data-album-index]').forEach(tile => {
+      tile.style.cursor = 'pointer';
+      tile.addEventListener('click', () => {
+        const idx = parseInt(tile.getAttribute('data-album-index'), 10);
+        if (!isNaN(idx)) openStoryAlbumIndex(idx);
+      });
+    });
+  }
+
+  // Các ảnh hành trình còn lại (card 01, 02, 04, 05...) mở lightbox đơn
+  const otherStoryImages = document.querySelectorAll('#storyTimeline .story-img-wrap img');
+  otherStoryImages.forEach(img => {
+    img.style.cursor = 'pointer';
     img.addEventListener('click', () => {
       openGenericLightbox(img.src, img.alt || 'Ảnh hành trình');
     });
