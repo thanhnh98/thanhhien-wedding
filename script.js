@@ -273,7 +273,6 @@ function updateMusicState(state) {
 
 const desiredAudioState = new WeakMap();
 const pendingAudioPlay = new WeakMap();
-let pendingWeddingUnlock = null;
 
 function enforceDesiredAudioState(audio) {
   const desired = desiredAudioState.get(audio);
@@ -338,43 +337,10 @@ function playAudio(audio, options = {}) {
   return setAudioPlayback(audio, { playing: true, ...options });
 }
 
-function unlockWeddingMusicForLater(label = 'weddingMusic unlock failed') {
+function loadWeddingMusicForLater() {
   if (!weddingMusic) return;
-  if (pendingWeddingUnlock) return pendingWeddingUnlock;
-
   weddingMusic.load();
-  weddingMusic.muted = true;
-  desiredAudioState.set(weddingMusic, {
-    playing: false,
-    muted: true,
-    volume: weddingMusic.volume
-  });
-
-  pendingWeddingUnlock = weddingMusic.play()
-    .then(() => {
-      pendingWeddingUnlock = null;
-      const desired = desiredAudioState.get(weddingMusic);
-
-      if (desired?.playing) {
-        enforceDesiredAudioState(weddingMusic);
-        return;
-      }
-
-      desiredAudioState.set(weddingMusic, {
-        playing: false,
-        muted: false,
-        volume: weddingMusic.volume
-      });
-      weddingMusic.pause();
-      weddingMusic.currentTime = 0;
-      weddingMusic.muted = false;
-    })
-    .catch(err => {
-      pendingWeddingUnlock = null;
-      console.log(label, err);
-    });
-
-  return pendingWeddingUnlock;
+  setAudioPlayback(weddingMusic, { playing: false, muted: false, volume: 0 });
 }
 
 // Note: We do not use localStorage here anymore as we want to always autoplay music without caching state.
@@ -390,14 +356,6 @@ function handleMusicCrossfade() {
     music = onboardingMusic;
     playAudio(onboardingMusic, { muted: false, volume: 1, label: 'onboardingMusic' });
     setAudioPlayback(weddingMusic, { playing: false, muted: weddingMusic.muted, volume: 0 });
-    return;
-  }
-
-  // If the main music has already fully started once, keep playing only main music at full volume
-  if (hasMainMusicStarted) {
-    music = weddingMusic;
-    pauseAudio(onboardingMusic);
-    playAudio(weddingMusic, { muted: false, volume: 1, label: 'weddingMusic' });
     return;
   }
 
@@ -423,24 +381,10 @@ function handleMusicCrossfade() {
     return;
   }
 
-  const onboardingVolume = 1 - ratio;
-  const weddingVolume = ratio;
-
-  music = (onboardingVolume > weddingVolume) ? onboardingMusic : weddingMusic;
-
-  // Onboarding Music volume & state
-  if (onboardingVolume > 0) {
-    playAudio(onboardingMusic, { muted: false, volume: onboardingVolume, label: 'onboardingMusic' });
-  } else {
-    setAudioPlayback(onboardingMusic, { playing: false, muted: onboardingMusic.muted, volume: 0 });
-  }
-
-  // Wedding Music volume & state
-  if (weddingVolume > 0) {
-    playAudio(weddingMusic, { muted: false, volume: weddingVolume, label: 'weddingMusic' });
-  } else {
-    setAudioPlayback(weddingMusic, { playing: false, muted: weddingMusic.muted, volume: 0 });
-  }
+  music = onboardingMusic;
+  hasMainMusicStarted = false;
+  playAudio(onboardingMusic, { muted: false, volume: 1, label: 'onboardingMusic' });
+  setAudioPlayback(weddingMusic, { playing: false, muted: false, volume: 0 });
 }
 
 async function playMusic({ muted = false } = {}) {
@@ -680,12 +624,9 @@ rsvpForm?.addEventListener('submit', event => {
 });
 
 musicToggle?.addEventListener('click', toggleMusic);
-// Unlock audio on the first user gesture. IMPORTANT: a single tap on mobile fires
-// multiple event types (touchstart + pointerdown + click), so we guard with a single
-// flag instead of registering one { once } listener per type. Registering per type
-// caused weddingMusic.play() to be called several times; a later play() would resolve
-// *after* the pause/unmute of an earlier one, leaving weddingMusic audible on top of
-// onboardingMusic (two songs at once).
+// Unlock welcome audio on the first user gesture. A single tap on mobile fires
+// multiple event types (touchstart + pointerdown + click), so guard with one flag.
+// Main music must not call play() while the onboarding screen is active.
 const gestureTypes = ['click', 'pointerdown', 'keydown', 'touchstart'];
 let audioUnlocked = false;
 function unlockAudioOnGesture(e) {
@@ -708,9 +649,7 @@ function unlockAudioOnGesture(e) {
     }
   }
 
-  // Pre-unlock weddingMusic (play muted, then immediately pause) so it can be resumed
-  // later inside scroll handlers. Runs exactly once, so there is no play()/pause() race.
-  unlockWeddingMusicForLater('weddingMusic unlock failed');
+  loadWeddingMusicForLater();
 }
 gestureTypes.forEach(type => window.addEventListener(type, unlockAudioOnGesture, { passive: true }));
 
@@ -757,7 +696,9 @@ function fitGuestName(el) {
   el.style.fontSize = '';
   const computed = window.getComputedStyle(el);
   let fontSize = parseFloat(computed.fontSize);
-  const minFontSize = invitationGuestConfig.minFontPx;
+  const minFontSize = window.matchMedia('(max-width: 768px)').matches
+    ? 10
+    : invitationGuestConfig.minFontPx;
 
   while ((el.scrollHeight > el.clientHeight || el.scrollWidth > el.clientWidth) && fontSize > minFontSize) {
     fontSize -= 1;
@@ -787,6 +728,7 @@ function initPersonalization() {
   }
 
   fitGuestName(envelopeGuestName);
+  document.fonts?.ready.then(() => fitGuestName(envelopeGuestName));
 }
 
 function initEnvelopeOpening() {
@@ -818,8 +760,8 @@ function initEnvelopeOpening() {
       updateMusicState('playing');
     }
     if (weddingMusic) {
-      // preload="none" => kick off buffering now (on the user gesture), ~5s before it's needed
-      unlockWeddingMusicForLater('weddingMusic unlock failed on envelope click');
+      // preload="none" => kick off buffering now without playing main music during onboarding.
+      loadWeddingMusicForLater();
     }
 
     // Add opening class to trigger 3D flip animation

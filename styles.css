@@ -3308,6 +3308,23 @@ body:not(.invitation-active) .hero-portrait {
   .card-ornate-divider { width: 195px; }
   .card-corner { width: 13px; }
   .card-mini-heart { width: 7px; }
+  .card-guest-safe-zone {
+    width: min(74%, 240px);
+    min-height: 34px;
+    max-height: 42px;
+    gap: 2px;
+    margin: 2px 0;
+    overflow: hidden;
+  }
+  .card-guest-name {
+    font-size: clamp(10px, 3.2vw, 14px) !important;
+    line-height: 1.02;
+    max-height: 2.1em;
+    min-width: 0;
+    overflow: hidden;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
   .envelope-wrapper {
     width: min(86vw, 330px, calc(42vh * 1.55)); /* Tăng kích thước thiệp trên di động */
   }
@@ -4446,6 +4463,7 @@ body.envelope-active .back-to-home {
 .vertical-nav {
   gap: 2px;
   padding: 18px 12px;
+  width: 104px;
   background: rgba(255, 253, 249, 0.9);
   border-color: rgba(232, 216, 191, 0.75);
   box-shadow:
@@ -4454,11 +4472,25 @@ body.envelope-active .back-to-home {
 }
 
 .vertical-nav-link {
-  width: 34px;
-  height: 34px;
+  width: 82px;
+  min-height: 52px;
+  height: auto;
+  padding: 3px 0;
   display: grid;
   place-items: center;
   border-radius: 999px;
+}
+
+.vertical-nav-link .nav-label {
+  display: block;
+  max-width: 76px;
+  margin-top: 4px;
+  font-size: 0.76rem;
+  line-height: 1.05;
+  letter-spacing: 0.04em;
+  white-space: normal;
+  overflow-wrap: break-word;
+  word-break: normal;
 }
 
 .vertical-nav-link .nav-icon {
@@ -4522,15 +4554,22 @@ body.envelope-active .back-to-home {
 
 @media (max-width: 768px) {
   .vertical-nav {
-    left: 14px;
+    left: 10px;
+    width: auto;
     padding: 10px 6px;
     border-radius: 999px;
     gap: 1px;
   }
 
   .vertical-nav-link {
-    width: 30px;
-    height: 30px;
+    width: 32px;
+    min-height: 32px;
+    height: 32px;
+    padding: 0;
+  }
+
+  .vertical-nav-link .nav-label {
+    display: none;
   }
 
   .vertical-nav-link .nav-icon {
