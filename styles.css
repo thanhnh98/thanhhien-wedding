@@ -2612,8 +2612,17 @@ body.invitation-active .hero-bottom-fabric {
   .music-toggle {
     width: 38px !important;
     height: 38px !important;
-    right: 12px !important;
-    bottom: 12px !important;
+    z-index: 1201;
+    right: auto !important;
+    left: 50% !important;
+    bottom: max(12px, env(safe-area-inset-bottom)) !important;
+    transform: translateX(-50%);
+  }
+  .music-toggle:hover {
+    transform: translateX(-50%) scale(1.08);
+  }
+  .music-toggle:active {
+    transform: translateX(-50%) scale(0.95);
   }
   .music-toggle svg {
     width: 16px !important;
@@ -3744,16 +3753,16 @@ body:not(.invitation-active) .hero-portrait {
 @media (min-width: 390px) and (max-width: 419px) and (min-height: 800px) {
   :root {
     --card-padding-outer: 5px;
-    --card-padding-inner: 3px 6px;
+    --card-padding-inner: 5px 7px;
     --card-font-monogram: 13px;
-    --card-font-std: 16px;
-    --card-margin-std: 2px;
+    --card-font-std: 15px;
+    --card-margin-std: 0;
     --card-font-prefix: 5.8px;
     --card-font-guest: 13px;
     --card-margin-guest: 0;
     --card-font-couple: 9px;
-    --card-margin-couple: 1px 0;
-    --card-font-invite: 7.5px;
+    --card-margin-couple: 0;
+    --card-font-invite: 7px;
     --card-safe-zone-height: 32px;
   }
 
@@ -3762,7 +3771,7 @@ body:not(.invitation-active) .hero-portrait {
   }
 
   .envelope-wrapper {
-    width: min(82vw, 320px, calc(var(--app-viewport-height) * 0.38 * 1.55));
+    width: min(86vw, 330px, calc(var(--app-viewport-height) * 0.4 * 1.55));
   }
 
   .envelope-card {
@@ -3770,26 +3779,44 @@ body:not(.invitation-active) .hero-portrait {
     height: 94%;
   }
 
+  .card-inner {
+    justify-content: center;
+    gap: 4px;
+  }
+
   .card-monogram-row,
   .card-eyebrow,
   .card-guest-safe-zone {
-    margin-bottom: 1px;
+    margin: 0;
+  }
+
+  .card-invite-line {
+    line-height: 1.45;
+  }
+
+  .card-guest-safe-zone {
+    min-height: 30px;
+    max-height: 36px;
   }
 
   .card-sprig { width: 19px; }
-  .card-bottom-sprig { width: 34px; }
+  .card-bottom-sprig { width: 32px; }
   .card-corner { width: 12px; }
+  .card-corner-br,
+  .card-corner-bl {
+    bottom: 9px;
+  }
   .card-eyebrow::before,
   .card-eyebrow::after {
     width: 24px;
   }
 
   .wedding-opening.card-front .envelope-card {
-    transform: translate3d(0, -4%, 28px) scale(1.1);
+    transform: translate3d(0, -8%, 28px) scale(1.06);
   }
 
   .wedding-opening.card-zoomed .envelope-card {
-    transform: translate3d(0, -6%, 120px) scale(2.15);
+    transform: translate3d(0, -8%, 120px) scale(2.05);
   }
 }
 
