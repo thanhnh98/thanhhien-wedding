@@ -3740,6 +3740,59 @@ body:not(.invitation-active) .hero-portrait {
   }
 }
 
+/* iPhone 15 / 15 Pro class: 393 x 852pt can crop script fonts in iOS Safari. */
+@media (min-width: 390px) and (max-width: 419px) and (min-height: 800px) {
+  :root {
+    --card-padding-outer: 5px;
+    --card-padding-inner: 3px 6px;
+    --card-font-monogram: 13px;
+    --card-font-std: 16px;
+    --card-margin-std: 2px;
+    --card-font-prefix: 5.8px;
+    --card-font-guest: 13px;
+    --card-margin-guest: 0;
+    --card-font-couple: 9px;
+    --card-margin-couple: 1px 0;
+    --card-font-invite: 7.5px;
+    --card-safe-zone-height: 32px;
+  }
+
+  .opening-content {
+    gap: clamp(8px, 1.6vh, 14px);
+  }
+
+  .envelope-wrapper {
+    width: min(82vw, 320px, calc(var(--app-viewport-height) * 0.38 * 1.55));
+  }
+
+  .envelope-card {
+    top: 3%;
+    height: 94%;
+  }
+
+  .card-monogram-row,
+  .card-eyebrow,
+  .card-guest-safe-zone {
+    margin-bottom: 1px;
+  }
+
+  .card-sprig { width: 19px; }
+  .card-bottom-sprig { width: 34px; }
+  .card-corner { width: 12px; }
+  .card-eyebrow::before,
+  .card-eyebrow::after {
+    width: 24px;
+  }
+
+  .wedding-opening.card-front .envelope-card {
+    transform: translate3d(0, -4%, 28px) scale(1.1);
+  }
+
+  .wedding-opening.card-zoomed .envelope-card {
+    transform: translate3d(0, -6%, 120px) scale(2.15);
+  }
+}
+
 /* Short Viewports (Tuned to fit within 576px - 700px height screen sizes) */
 @media (max-height: 760px) {
   .wedding-opening {
