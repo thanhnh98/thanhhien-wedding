@@ -2856,9 +2856,11 @@ html.envelope-active {
   position: absolute;
   inset: 0;
   background:
+    linear-gradient(180deg, rgba(248,242,234,0.46), rgba(248,242,234,0.7)),
     radial-gradient(circle at 48% 38%, rgba(255,255,255,0.38), transparent 34%),
     radial-gradient(circle at 20% 12%, rgba(200,164,106,0.1), transparent 26%),
     radial-gradient(circle at 82% 86%, rgba(200,164,106,0.08), transparent 28%),
+    url("/assets/decor/opening-bg.jpg") center / cover no-repeat,
     var(--opening-bg);
   z-index: 1;
   pointer-events: none;
