@@ -44,25 +44,32 @@
   --name-gold: #B89157;
   --label-text: #5F554C;
   --seal-text: #5A3D1E;
+  --opening-bg: #F8F2EA;
+  --opening-card: #FFFDF9;
+  --opening-gold: #C8A46A;
+  --opening-dark: #3E3A37;
+  --opening-border: #E8D8BF;
+  --opening-shadow: rgba(80, 60, 35, 0.18);
 
   /* Envelope Card Layout Variables */
-  --card-padding-outer: 10px;
-  --card-padding-inner: 6px 12px;
-  --card-font-monogram: clamp(15px, 2.4vh, 20px);
-  --card-margin-monogram: 0px;
-  --card-font-std: clamp(17px, 2.8vh, 24px);
-  --card-margin-std: 2px;
+  --card-padding-outer: clamp(14px, 3vh, 24px);
+  --card-padding-inner: clamp(7px, 1.4vh, 12px) clamp(12px, 2.6vh, 20px);
+  --card-font-monogram: clamp(15px, 2.2vh, 19px);
+  --card-margin-monogram: clamp(2px, 0.7vh, 6px);
+  --card-font-std: clamp(20px, 3.5vh, 30px);
+  --card-margin-std: clamp(3px, 0.8vh, 7px);
   --card-margin-divider: 4px 0 8px;
   --card-width-divider: 50px;
-  --card-font-prefix: clamp(7px, 1vh, 9px);
-  --card-font-guest: clamp(13px, 1.9vh, 17px);
-  --card-margin-guest: 3px 0 6px;
-  --card-font-couple: clamp(12px, 1.6vh, 15px);
-  --card-margin-couple: 4px 0;
-  --card-font-invite: clamp(9px, 1.3vh, 12px);
-  --card-margin-hd: clamp(1px, 0.5vh, 4px);
+  --card-font-prefix: clamp(6px, 0.9vh, 8px);
+  --card-font-guest: clamp(17px, 2.55vh, 24px);
+  --card-margin-guest: 0;
+  --card-font-couple: clamp(11px, 1.55vh, 14px);
+  --card-margin-couple: clamp(3px, 0.7vh, 6px) 0;
+  --card-font-invite: clamp(8px, 1.15vh, 11px);
+  --card-margin-hd: clamp(2px, 0.6vh, 5px);
   --card-font-date: clamp(8px, 1.2vh, 9px);
   --card-margin-date: 6px;
+  --card-safe-zone-height: clamp(42px, 7.2vh, 64px);
 }
 
 * { box-sizing: border-box; }
@@ -277,7 +284,8 @@ h2 { color: var(--red-700); font-size: clamp(2rem, 7vw, 4.6rem); line-height: .9
 }
 .header-container {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
+  gap: clamp(2px, 0.45vh, 5px);
   align-items: center;
   max-width: 1360px;
   margin: 0 auto;
@@ -1202,6 +1210,7 @@ body.invitation-active .hero-bottom-fabric {
     0 2px 8px rgba(107,74,20,.08),
     0 0 40px rgba(214,168,79,.15);
   display: block;
+  white-space: nowrap; /* a countdown number must never wrap to a new line */
 }
 
 /* Event label */
@@ -2474,7 +2483,11 @@ html.envelope-active {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: var(--bg-ivory);
+  background-color: var(--opening-bg);
+  background-image:
+    radial-gradient(circle at 50% 42%, rgba(255, 255, 255, 0.62) 0 16%, rgba(248, 242, 234, 0) 50%),
+    radial-gradient(circle at 50% 50%, rgba(200, 164, 106, 0.12), rgba(248, 242, 234, 0) 54%),
+    radial-gradient(ellipse at center, rgba(248, 242, 234, 0) 48%, rgba(80, 60, 35, 0.1) 100%);
   transition: opacity 1.2s ease, visibility 1.2s ease;
   overflow: hidden; /* Prevent scrolling entirely */
   padding: 24px;
@@ -2490,11 +2503,10 @@ html.envelope-active {
   position: absolute;
   inset: 0;
   background-image: 
-    radial-gradient(rgba(58,51,44,0.015) 1px, transparent 0),
-    radial-gradient(rgba(58,51,44,0.01) 1px, transparent 0);
-  background-size: 8px 8px;
-  background-position: 0 0, 4px 4px;
-  opacity: 0.16;
+    radial-gradient(rgba(62,58,55,0.032) 0.5px, transparent 0),
+    linear-gradient(115deg, rgba(255,255,255,0.16), rgba(80,60,35,0.025));
+  background-size: 7px 7px, 100% 100%;
+  opacity: 0.34;
   pointer-events: none;
   z-index: 2;
 }
@@ -2503,8 +2515,11 @@ html.envelope-active {
 .floral-background {
   position: absolute;
   inset: 0;
-  background: var(--bg-ivory) url('/assets/decor/opening-bg.jpg') no-repeat center center;
-  background-size: cover;
+  background:
+    radial-gradient(circle at 48% 38%, rgba(255,255,255,0.38), transparent 34%),
+    radial-gradient(circle at 20% 12%, rgba(200,164,106,0.1), transparent 26%),
+    radial-gradient(circle at 82% 86%, rgba(200,164,106,0.08), transparent 28%),
+    var(--opening-bg);
   z-index: 1;
   pointer-events: none;
 }
@@ -2608,16 +2623,16 @@ html.envelope-active {
 }
 
 .gold-divider::after {
-  content: "♥";
+  content: "";
   position: absolute;
   left: 50%;
   top: 50%;
-  transform: translate(-50%, -50%);
+  width: 4px;
+  height: 4px;
+  transform: translate(-50%, -50%) rotate(45deg);
   color: var(--champagne-gold);
-  background: transparent;
+  background: var(--opening-gold);
   padding: 0;
-  font-size: 10px;
-  line-height: 1;
 }
 
 /* Shorter heart divider under the envelope */
@@ -2811,9 +2826,13 @@ html.envelope-active {
   top: 5%;
   width: 94%;
   height: 90%;
-  background: #FFFFFF;
-  border-radius: 4px;
-  box-shadow: inset 0 0 0 1px rgba(201,164,106,0.3), 0 2px 8px rgba(0,0,0,0.15);
+  background:
+    radial-gradient(circle at 50% 8%, rgba(255,255,255,0.9), rgba(255,253,249,0) 42%),
+    var(--opening-card);
+  border-radius: 16px;
+  box-shadow:
+    inset 0 0 0 1px rgba(232,216,191,0.38),
+    0 22px 70px var(--opening-shadow);
   z-index: 2;
   transform: translate3d(0, 0, 0);
   transform-origin: center center;
@@ -2829,8 +2848,8 @@ html.envelope-active {
 }
 
 .card-inner {
-  border: 1px solid rgba(201,164,106,0.5);
-  border-radius: 4px;
+  border: 1px solid var(--opening-border);
+  border-radius: 11px;
   width: 100%;
   height: 100%;
   box-sizing: border-box;
@@ -2838,34 +2857,40 @@ html.envelope-active {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   position: relative;
-  background: #FCFAF7; /* Premium off-white card face */
+  background:
+    radial-gradient(circle at 50% 0%, rgba(255,255,255,0.88), rgba(255,253,249,0) 35%),
+    var(--opening-card);
 }
 
-/* Inner second hairline => classic double-border frame */
-.card-inner::before {
-  content: "";
+/* Ornamental corner brackets on the single-line frame */
+.card-corner {
   position: absolute;
-  inset: 4px;
-  border: 1px solid rgba(201,164,106,0.28);
-  border-radius: 3px;
+  width: clamp(13px, 2.6vh, 20px);
+  height: auto;
+  color: var(--opening-border);
+  opacity: 0.72;
   pointer-events: none;
 }
+.card-corner-tl { top: 5px; left: 5px; }
+.card-corner-tr { top: 5px; right: 5px; transform: rotate(90deg); }
+.card-corner-br { bottom: 5px; right: 5px; transform: rotate(180deg); }
+.card-corner-bl { bottom: 5px; left: 5px; transform: rotate(270deg); }
 
 /* ---- Monogram row with laurel sprigs ---- */
 .card-monogram-row {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.5em;
+  gap: 0.42em;
   margin-bottom: var(--card-margin-monogram);
 }
 .card-sprig {
-  width: clamp(22px, 4vh, 32px);
+  width: clamp(16px, 3vh, 26px);
   height: auto;
-  color: var(--champagne-gold);
-  opacity: 0.85;
+  color: var(--opening-gold);
+  opacity: 0.62;
   flex: 0 0 auto;
 }
 .card-sprig-right { transform: scaleX(-1); }
@@ -2873,14 +2898,14 @@ html.envelope-active {
 .card-monogram-gold {
   font-family: "Great Vibes", "Allura", cursive;
   font-size: var(--card-font-monogram);
-  color: var(--champagne-gold);
+  color: var(--opening-gold);
   line-height: 1;
 }
 
 .card-save-the-date {
   font-family: "Pinyon Script", "Great Vibes", cursive;
   font-size: var(--card-font-std);
-  color: var(--name-gold);
+  color: var(--opening-gold);
   line-height: 1.05;
   margin-bottom: var(--card-margin-std);
 }
@@ -2890,15 +2915,22 @@ html.envelope-active {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.7em;
+  gap: 0.95em;
   margin-bottom: var(--card-margin-std);
+}
+.card-eyebrow::before,
+.card-eyebrow::after {
+  content: "";
+  width: clamp(18px, 4.4vh, 42px);
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--opening-border), transparent);
 }
 .card-eyebrow-text {
   font-family: "Montserrat", sans-serif;
   font-size: var(--card-font-prefix);
   font-weight: 500;
-  letter-spacing: 3px;
-  color: var(--label-text);
+  letter-spacing: 0.25em;
+  color: var(--opening-dark);
   text-transform: uppercase;
   white-space: nowrap;
 }
@@ -2928,10 +2960,30 @@ html.envelope-active {
   font-size: var(--card-font-invite);
   font-style: italic;
   font-weight: 500;
-  color: var(--text-main);
+  color: var(--opening-gold);
   margin: 0;
   text-align: center;
   line-height: 1.3;
+}
+.card-invite-line--tight { margin-top: 0; }
+
+/* ---- Guest name safe zone: static lines plus one dynamic text layer ---- */
+.card-guest-safe-zone {
+  width: min(82%, 360px);
+  min-height: var(--card-safe-zone-height);
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  align-items: center;
+  justify-items: center;
+  gap: clamp(3px, 0.65vh, 7px);
+  margin: clamp(4px, 0.9vh, 9px) 0;
+}
+
+.card-safe-line {
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, rgba(200,164,106,0.28) 12%, var(--opening-gold) 50%, rgba(200,164,106,0.28) 88%, transparent 100%);
+  opacity: 0.72;
 }
 
 /* ---- Heart divider (line — ♥ — line) ---- */
@@ -2959,16 +3011,18 @@ html.envelope-active {
   font-family: "Cormorant Garamond", serif;
   font-size: var(--card-font-guest);
   font-weight: 700;
-  color: var(--text-main);
-  margin: 0;
+  color: var(--opening-dark);
+  margin: var(--card-margin-guest);
   text-align: center;
-  line-height: 1.2;
+  line-height: 1.08;
   max-width: 100%;
+  width: 100%;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
   word-break: break-word;
+  overflow-wrap: anywhere;
 }
 
 /* ---- Leaf divider under the name ---- */
@@ -2998,20 +3052,20 @@ html.envelope-active {
 .card-couple-names {
   font-family: "Cormorant Garamond", serif;
   font-size: var(--card-font-couple);
-  font-weight: 500;
+  font-weight: 600;
   font-style: italic;
-  color: var(--name-gold);
-  margin: 0;
+  color: var(--opening-gold);
+  margin: var(--card-margin-couple);
   text-align: center;
   line-height: 1.2;
 }
 
 .card-bottom-sprig {
-  width: clamp(48px, 9vh, 74px);
+  width: clamp(28px, 4.5vh, 42px);
   height: auto;
-  color: var(--champagne-gold);
-  opacity: 0.85;
-  margin-top: var(--card-margin-hd);
+  color: var(--opening-gold);
+  opacity: 0.5;
+  margin-top: 0;
 }
 
 /* Wax Seal */
@@ -3193,8 +3247,9 @@ body:not(.invitation-active) .hero-portrait {
     padding: max(16px, env(safe-area-inset-top)) max(14px, env(safe-area-inset-right)) max(16px, env(safe-area-inset-bottom)) max(14px, env(safe-area-inset-left));
   }
   .opening-content {
-    gap: clamp(8px, 1.8vh, 16px);
+    gap: clamp(12px, 2.3vh, 22px);
     justify-content: center;
+    transform: none;
   }
   .opening-header,
   .opening-footer {
@@ -3203,11 +3258,11 @@ body:not(.invitation-active) .hero-portrait {
   }
   .monogram {
     font-size: clamp(32px, 9vw, 48px);
-    margin-bottom: 6px;
+    margin-bottom: 8px;
   }
   .couple-name {
     font-size: clamp(24px, 8.5vw, 42px) !important;
-    margin-top: 10px;
+    margin-top: 14px;
     margin-bottom: 0;
     line-height: 1.08;
     white-space: nowrap !important;
@@ -3217,29 +3272,30 @@ body:not(.invitation-active) .hero-portrait {
     font-size: 10px;
   }
   .gold-divider {
-    margin-top: 8px;
+    margin-top: 10px;
   }
   .gold-divider.small {
-    margin-top: 0;
+    margin-top: 6px;
   }
   :root {
     --card-padding-outer: 6px;
     --card-padding-inner: 4px 6px;
     --card-font-monogram: 15px;
     --card-margin-monogram: 0px;
-    --card-font-std: 17px;
-    --card-margin-std: 2px;
+    --card-font-std: 18px;
+    --card-margin-std: 3px;
     --card-margin-divider: 2px 0 4px;
     --card-width-divider: 35px;
     --card-font-prefix: 6.5px;
-    --card-font-guest: 11px;
+    --card-font-guest: 15px;
     --card-margin-guest: 1px 0 2px;
     --card-font-couple: 10px;
-    --card-margin-couple: 2px 0;
+    --card-margin-couple: 3px 0;
     --card-font-invite: 8.5px;
     --card-margin-hd: 2px;
     --card-font-date: 6.5px;
     --card-margin-date: 2px;
+    --card-safe-zone-height: 46px;
   }
   /* Cap card ornament sizes on mobile so the taller content never overflows the small card */
   .card-sprig { width: 22px; }
@@ -3249,6 +3305,9 @@ body:not(.invitation-active) .hero-portrait {
   .card-hd-rule { width: 30px; }
   .card-eyebrow-rule { width: 16px; }
   .card-ld-dots { width: 42px; }
+  .card-ornate-divider { width: 195px; }
+  .card-corner { width: 13px; }
+  .card-mini-heart { width: 7px; }
   .envelope-wrapper {
     width: min(86vw, 330px, calc(42vh * 1.55)); /* Tăng kích thước thiệp trên di động */
   }
@@ -3260,7 +3319,7 @@ body:not(.invitation-active) .hero-portrait {
     max-width: min(420px, 95vw);
     font-size: clamp(14px, 3.8vw, 17px);
     line-height: 1.35;
-    margin: 0 auto;
+    margin: 4px auto 0;
     white-space: nowrap !important;
   }
   .floral-background {
@@ -3357,16 +3416,17 @@ body:not(.invitation-active) .hero-portrait {
     --card-font-monogram: clamp(14px, 2.4vh, 18px);
     --card-margin-monogram: 0px;
     --card-font-std: clamp(15px, 2.6vh, 20px);
-    --card-margin-std: 1px;
+    --card-margin-std: 2px;
     --card-margin-divider: 1px 0 2px;
     --card-width-divider: 30px;
     --card-font-prefix: 6px;
-    --card-font-guest: clamp(10px, 1.5vh, 12px);
+    --card-font-guest: clamp(13px, 2vh, 15px);
     --card-margin-guest: 1px 0;
     --card-font-couple: clamp(9px, 1.4vh, 11px);
     --card-margin-couple: 1px 0;
     --card-font-date: 6px;
     --card-margin-date: 1px;
+    --card-safe-zone-height: 42px;
   }
   .envelope-wrapper {
     width: min(clamp(180px, 24vh, 260px), calc(28vh * 1.55));
@@ -3405,31 +3465,6 @@ body:not(.invitation-active) .hero-portrait {
   height: auto;
   display: block;
 }
-.invitation-dynamic-name-overlay {
-  position: absolute;
-  top: 42.8%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 70%;
-  height: 5%;
-  background-color: #fcf7f3;
-  display: none;
-  align-items: center;
-  justify-content: center;
-}
-.invitation-dynamic-name-overlay.active {
-  display: flex;
-}
-#invitationGuestName {
-  font-family: "Great Vibes", "Pinyon Script", cursive;
-  font-size: clamp(1.8rem, 5.5vw, 2.5rem);
-  color: #B89157;
-  font-weight: 500;
-  text-align: center;
-  line-height: 1.1;
-  white-space: nowrap;
-}
-
 .invitation-ceremonies {
   display: flex;
   justify-content: center;
@@ -3744,6 +3779,10 @@ body:not(.invitation-active) .hero-portrait {
   margin-bottom: 20px;
 }
 .map-tab {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
   padding: 10px 20px;
   border-radius: 12px;
   border: 1px solid rgba(214, 168, 79, 0.35);
@@ -3753,6 +3792,16 @@ body:not(.invitation-active) .hero-portrait {
   color: var(--soft-taupe);
   cursor: pointer;
   transition: all 0.35s var(--ease);
+}
+.map-tab-icon {
+  width: 14px;
+  height: 14px;
+  flex: 0 0 14px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.9;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
 .map-tab:hover {
   background: rgba(255, 246, 232, 0.9);
@@ -3780,14 +3829,36 @@ body:not(.invitation-active) .hero-portrait {
   display: none;
 }
 .map-address {
+  display: grid;
+  gap: 4px;
+  justify-items: center;
   font-size: 0.85rem;
   color: var(--soft-taupe);
-  margin-bottom: 12px;
+  margin: 0 auto 14px;
   text-align: center;
   line-height: 1.5;
+  max-width: 620px;
 }
-.map-address strong {
-  color: var(--red-700);
+.map-address-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--gold-champagne);
+  font-size: 0.74rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+.map-address-label::before,
+.map-address-label::after {
+  content: "";
+  width: 18px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(201,164,106,0.55), transparent);
+}
+.map-address-text {
+  color: #6F6256;
+  font-weight: 500;
 }
 .iframe-container {
   position: relative;
@@ -3806,8 +3877,19 @@ body:not(.invitation-active) .hero-portrait {
   margin-top: 1.25rem;
 }
 .map-btn {
+  gap: 8px;
   text-decoration: none;
   width: min(100%, 320px);
+}
+.map-btn-icon {
+  width: 16px;
+  height: 16px;
+  flex: 0 0 16px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
 
 @media (max-width: 768px) {
@@ -3841,7 +3923,17 @@ body:not(.invitation-active) .hero-portrait {
   }
   .map-address {
     font-size: 0.78rem;
-    margin-bottom: 8px;
+    gap: 3px;
+    margin-bottom: 10px;
+    padding: 0 4px;
+  }
+  .map-address-label {
+    font-size: 0.66rem;
+    letter-spacing: 0.12em;
+  }
+  .map-address-label::before,
+  .map-address-label::after {
+    width: 14px;
   }
   .iframe-container {
     height: 220px;
@@ -3851,9 +3943,15 @@ body:not(.invitation-active) .hero-portrait {
     margin-top: 10px;
   }
   .map-btn {
+    gap: 7px;
     padding: 10px 16px;
     font-size: 0.8rem;
     min-height: 36px;
+  }
+  .map-btn-icon {
+    width: 14px;
+    height: 14px;
+    flex-basis: 14px;
   }
 }
 
@@ -3869,6 +3967,38 @@ body:not(.invitation-active) .hero-portrait {
 }
 
 @media (max-width: 640px) {
+  .countdown-tabs {
+    width: min(100%, 368px);
+    flex-wrap: nowrap;
+    gap: 8px;
+    margin-bottom: 38px;
+  }
+  .countdown-tab {
+    flex: 1 1 0;
+    min-width: 0;
+    gap: 6px;
+    padding: 8px 10px !important;
+    justify-content: center;
+  }
+  .countdown-tab-icon {
+    width: 24px;
+    height: 24px;
+    flex: 0 0 24px;
+    font-size: 0.68rem;
+  }
+  .countdown-tab-info {
+    min-width: 0;
+  }
+  .tab-family {
+    font-size: 0.82rem;
+  }
+  .tab-date {
+    font-size: 0.6rem;
+    letter-spacing: 0.02em;
+  }
+  .tab-lunar {
+    font-size: 0.55rem;
+  }
   .countdown-wrap {
     padding: 0 10px 8px;
   }
@@ -3878,14 +4008,11 @@ body:not(.invitation-active) .hero-portrait {
   }
   .countdown-grid div {
     min-height: 72px !important;
-    padding: 14px 4px 12px !important;
+    padding: 14px 2px 12px !important;
   }
   .countdown-grid strong {
-    font-size: clamp(1.75rem, 7.5vw, 2.35rem) !important;
-    letter-spacing: -.02em;
-  }
-  .countdown-tab {
-    padding: 8px 16px !important;
+    font-size: clamp(1.4rem, 6.4vw, 2.1rem) !important;
+    letter-spacing: -.03em;
   }
   .countdown-event-label {
     font-size: 0.62rem;
@@ -4304,6 +4431,123 @@ body:not(.invitation-active) .hero-portrait {
   }
 }
 
+/* Polished compact vertical nav */
+.vertical-nav {
+  gap: 2px;
+  padding: 18px 12px;
+  background: rgba(255, 253, 249, 0.9);
+  border-color: rgba(232, 216, 191, 0.75);
+  box-shadow:
+    0 18px 46px rgba(80, 60, 35, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.92);
+}
+
+.vertical-nav-link {
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  border-radius: 999px;
+}
+
+.vertical-nav-link .nav-icon {
+  width: 18px;
+  height: 18px;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  color: #C8A46A;
+  stroke: currentColor;
+  stroke-width: 1.55;
+}
+
+.vertical-nav-link:hover,
+.vertical-nav-link.active {
+  background: rgba(200, 164, 106, 0.12);
+}
+
+.vertical-nav-link:hover .nav-icon,
+.vertical-nav-link.active .nav-icon {
+  transform: none;
+  color: #8E6E38;
+  stroke: currentColor !important;
+  stroke-width: 1.8;
+  background: transparent;
+  border-color: transparent;
+  box-shadow: none;
+}
+
+.vertical-nav-link::before {
+  top: 50%;
+  width: 30px;
+  height: 30px;
+  background: radial-gradient(circle, rgba(200, 164, 106, 0.16), rgba(200, 164, 106, 0) 70%);
+}
+
+.vertical-nav-link::after {
+  top: 50%;
+  width: 30px;
+  height: 30px;
+  border-color: rgba(200, 164, 106, 0.28);
+}
+
+.vertical-nav-separator {
+  width: 3px;
+  height: 3px;
+  margin: 4px 0;
+  border-radius: 50%;
+  background: #E8D8BF;
+  opacity: 0.8;
+}
+
+.vertical-nav::before,
+.vertical-nav::after {
+  width: 3px;
+  height: 3px;
+  margin: 4px 0;
+  background: #C8A46A;
+  opacity: 0.7;
+}
+
+@media (max-width: 768px) {
+  .vertical-nav {
+    left: 14px;
+    padding: 10px 6px;
+    border-radius: 999px;
+    gap: 1px;
+  }
+
+  .vertical-nav-link {
+    width: 30px;
+    height: 30px;
+  }
+
+  .vertical-nav-link .nav-icon {
+    width: 16px;
+    height: 16px;
+    padding: 0;
+    stroke-width: 1.65;
+  }
+
+  .vertical-nav-link:hover .nav-icon,
+  .vertical-nav-link.active .nav-icon {
+    stroke-width: 1.9;
+  }
+
+  .vertical-nav-link::before,
+  .vertical-nav-link::after {
+    top: 50%;
+    width: 28px;
+    height: 28px;
+  }
+
+  .vertical-nav-separator {
+    width: 2.5px;
+    height: 2.5px;
+    margin: 3px 0;
+  }
+}
+
 /* Ensure the couple name on the opening envelope screen doesn't wrap on small mobile devices */
 @media (max-width: 480px) {
   .couple-name {
@@ -4597,4 +4841,3 @@ html, body {
     transform: translate(var(--drift-x, 0px), 40px) scale(0.5) rotate(45deg);
   }
 }
-

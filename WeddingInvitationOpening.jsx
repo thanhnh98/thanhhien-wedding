@@ -94,23 +94,31 @@ export default function WeddingInvitationOpening({
           --text-muted: #8A7A68;
           --label-text: #5F554C;
           --white: #FFFFFF;
+          --opening-bg: #F8F2EA;
+          --opening-card: #FFFDF9;
+          --opening-gold: #C8A46A;
+          --opening-dark: #3E3A37;
+          --opening-border: #E8D8BF;
+          --opening-shadow: rgba(80, 60, 35, 0.18);
 
           /* Envelope Card Layout Variables */
-          --card-padding-outer: 12px;
-          --card-padding-inner: 8px 12px;
-          --card-font-monogram: clamp(20px, 3.5vh, 28px);
-          --card-margin-monogram: 2px;
-          --card-font-std: clamp(24px, 4vh, 32px);
-          --card-margin-std: 4px;
+          --card-padding-outer: clamp(14px, 3vh, 24px);
+          --card-padding-inner: clamp(7px, 1.4vh, 12px) clamp(12px, 2.6vh, 20px);
+          --card-font-monogram: clamp(15px, 2.2vh, 19px);
+          --card-margin-monogram: clamp(2px, 0.7vh, 6px);
+          --card-font-std: clamp(20px, 3.5vh, 30px);
+          --card-margin-std: clamp(3px, 0.8vh, 7px);
           --card-margin-divider: 4px 0 8px;
           --card-width-divider: 50px;
-          --card-font-prefix: clamp(8px, 1.2vh, 10px);
-          --card-font-guest: clamp(15px, 2.2vh, 20px);
-          --card-margin-guest: 3px 0 6px;
-          --card-font-couple: clamp(14px, 2vh, 18px);
-          --card-margin-couple: 4px 0;
+          --card-font-prefix: clamp(6px, 0.9vh, 8px);
+          --card-font-guest: clamp(17px, 2.55vh, 24px);
+          --card-margin-guest: 0;
+          --card-font-couple: clamp(11px, 1.55vh, 14px);
+          --card-margin-couple: clamp(3px, 0.7vh, 6px) 0;
+          --card-font-invite: clamp(8px, 1.15vh, 11px);
           --card-font-date: clamp(8px, 1.2vh, 9px);
           --card-margin-date: 6px;
+          --card-safe-zone-height: clamp(42px, 7.2vh, 64px);
         }
 
         body.envelope-active,
@@ -254,16 +262,14 @@ export default function WeddingInvitationOpening({
         }
 
         .gold-divider::after {
-          content: "♥";
+          content: "";
           position: absolute;
           left: 50%;
           top: 50%;
-          transform: translate(-50%, -50%);
-          color: var(--champagne-gold);
-          background: transparent;
-          padding: 0;
-          font-size: 10px;
-          line-height: 1;
+          width: 4px;
+          height: 4px;
+          transform: translate(-50%, -50%) rotate(45deg);
+          background: var(--opening-gold);
         }
 
         /* Shorter heart divider under the envelope */
@@ -456,9 +462,13 @@ export default function WeddingInvitationOpening({
           top: 5%;
           width: 94%;
           height: 90%;
-          background: #FFFFFF;
-          border-radius: 4px;
-          box-shadow: inset 0 0 0 1px rgba(201,164,106,0.3), 0 2px 8px rgba(0,0,0,0.15);
+          background:
+            radial-gradient(circle at 50% 8%, rgba(255,255,255,0.9), rgba(255,253,249,0) 42%),
+            var(--opening-card);
+          border-radius: 16px;
+          box-shadow:
+            inset 0 0 0 1px rgba(232,216,191,0.38),
+            0 22px 70px var(--opening-shadow);
           z-index: 2;
           transform: translate3d(0, 0, 0);
           transform-origin: center center;
@@ -474,8 +484,8 @@ export default function WeddingInvitationOpening({
         }
 
         .card-inner {
-          border: 1px solid rgba(201,164,106,0.25);
-          border-radius: 3px;
+          border: 1px solid var(--opening-border);
+          border-radius: 11px;
           width: 100%;
           height: 100%;
           box-sizing: border-box;
@@ -484,15 +494,18 @@ export default function WeddingInvitationOpening({
           flex-direction: column;
           align-items: center;
           justify-content: center;
+          gap: clamp(2px, 0.45vh, 5px);
           position: relative;
-          background: #FCFAF7; /* Premium off-white card face */
+          background:
+            radial-gradient(circle at 50% 0%, rgba(255,255,255,0.88), rgba(255,253,249,0) 35%),
+            var(--opening-card);
         }
 
         /* Card typography */
         .card-monogram-gold {
           font-family: "Great Vibes", "Allura", cursive;
           font-size: var(--card-font-monogram);
-          color: var(--champagne-gold);
+          color: var(--opening-gold);
           line-height: 1;
           margin-bottom: var(--card-margin-monogram);
         }
@@ -500,35 +513,81 @@ export default function WeddingInvitationOpening({
         .card-save-the-date {
           font-family: "Pinyon Script", "Great Vibes", cursive;
           font-size: var(--card-font-std);
-          color: var(--name-gold);
+          color: var(--opening-gold);
           line-height: 1;
           margin-bottom: var(--card-margin-std);
         }
 
-        .card-divider-line {
-          width: var(--card-width-divider);
-          height: 1px;
-          background: linear-gradient(90deg, transparent, var(--champagne-gold), transparent);
-          margin: var(--card-margin-divider);
+        .card-eyebrow {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 0.95em;
+          margin-bottom: var(--card-margin-std);
         }
 
-        .card-guest-prefix {
+        .card-eyebrow::before,
+        .card-eyebrow::after {
+          content: "";
+          width: clamp(18px, 4.4vh, 42px);
+          height: 1px;
+          background: linear-gradient(90deg, transparent, var(--opening-border), transparent);
+        }
+
+        .card-eyebrow-text {
           font-family: "Montserrat", sans-serif;
           font-size: var(--card-font-prefix);
           font-weight: 500;
-          letter-spacing: 2px;
-          color: var(--label-text);
-          margin: 0;
+          letter-spacing: 0.25em;
+          color: var(--opening-dark);
           text-transform: uppercase;
+          white-space: nowrap;
+        }
+
+        .card-invite-line {
+          font-family: "Cormorant Garamond", serif;
+          font-size: var(--card-font-invite);
+          font-style: italic;
+          font-weight: 500;
+          color: var(--opening-gold);
+          margin: 0;
+          text-align: center;
+          line-height: 1.3;
+        }
+
+        .card-guest-safe-zone {
+          width: min(82%, 360px);
+          min-height: var(--card-safe-zone-height);
+          display: grid;
+          grid-template-rows: auto 1fr auto;
+          align-items: center;
+          justify-items: center;
+          gap: clamp(3px, 0.65vh, 7px);
+          margin: clamp(4px, 0.9vh, 9px) 0;
+        }
+
+        .card-safe-line {
+          width: 100%;
+          height: 1px;
+          background: linear-gradient(90deg, transparent 0%, rgba(200,164,106,0.28) 12%, var(--opening-gold) 50%, rgba(200,164,106,0.28) 88%, transparent 100%);
+          opacity: 0.72;
         }
 
         .card-guest-name {
           font-family: "Cormorant Garamond", serif;
           font-size: var(--card-font-guest);
           font-weight: 600;
-          color: var(--text-main);
+          color: var(--opening-dark);
           margin: var(--card-margin-guest);
           text-align: center;
+          line-height: 1.08;
+          max-width: 100%;
+          width: 100%;
+          display: -webkit-box;
+          -webkit-line-clamp: 2;
+          -webkit-box-orient: vertical;
+          overflow: hidden;
+          word-break: break-word;
         }
 
         .card-couple-names {
@@ -536,7 +595,7 @@ export default function WeddingInvitationOpening({
           font-size: var(--card-font-couple);
           font-weight: 500;
           font-style: italic;
-          color: var(--name-gold);
+          color: var(--opening-gold);
           margin: var(--card-margin-couple);
           text-align: center;
         }
@@ -736,12 +795,14 @@ export default function WeddingInvitationOpening({
             --card-margin-divider: 2px 0 4px;
             --card-width-divider: 35px;
             --card-font-prefix: 7px;
-            --card-font-guest: 12px;
+            --card-font-guest: 15px;
             --card-margin-guest: 1px 0 2px;
             --card-font-couple: 11px;
-            --card-margin-couple: 2px 0;
+            --card-margin-couple: 3px 0;
+            --card-font-invite: 8.5px;
             --card-font-date: 7px;
             --card-margin-date: 2px;
+            --card-safe-zone-height: 46px;
           }
           .envelope-wrapper {
             width: min(76vw, 306px);
@@ -938,9 +999,14 @@ export default function WeddingInvitationOpening({
                 <div className="card-inner">
                   <div className="card-monogram-gold">HT</div>
                   <div className="card-save-the-date">Save the Date</div>
-                  <div className="card-divider-line"></div>
-                  <p className="card-guest-prefix">WEDDING INVITATION</p>
-                  <h3 className="card-guest-name" id="envelopeGuestName">{guestName}</h3>
+                  <div className="card-eyebrow"><span className="card-eyebrow-text">WEDDING INVITATION</span></div>
+                  <p className="card-invite-line">Trân trọng kính mời</p>
+                  <div className="card-guest-safe-zone" aria-label="Tên khách mời">
+                    <span className="card-safe-line" aria-hidden="true"></span>
+                    <h3 className="card-guest-name" id="envelopeGuestName">{guestName}</h3>
+                    <span className="card-safe-line" aria-hidden="true"></span>
+                  </div>
+                  <p className="card-invite-line card-invite-line--tight">đến dự lễ thành hôn của chúng tôi</p>
                   <p className="card-couple-names">Hoài Thanh &amp; Thanh Hiền</p>
                 </div>
               </div>

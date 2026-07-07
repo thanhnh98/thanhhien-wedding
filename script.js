@@ -647,6 +647,7 @@ window.addEventListener('scroll', () => {
 window.addEventListener('resize', () => {
   updateScrollProgress();
   handleMusicCrossfade();
+  fitGuestName(document.querySelector('#envelopeGuestName'));
 });
 
 setupReveals();
@@ -667,45 +668,51 @@ if (!prefersReducedMotion) {
 }
 
 
+// Static invitation template keeps the background/card text fixed.
+// This config controls the only dynamic layer: the centered guest name.
+const invitationGuestConfig = {
+  guestName: 'Quý Khách',
+  fallbackGuestName: 'Quý Khách',
+  minFontPx: 14,
+  maxLines: 2,
+};
+
+function fitGuestName(el) {
+  if (!el) return;
+
+  el.style.fontSize = '';
+  const computed = window.getComputedStyle(el);
+  let fontSize = parseFloat(computed.fontSize);
+  const minFontSize = invitationGuestConfig.minFontPx;
+
+  while ((el.scrollHeight > el.clientHeight || el.scrollWidth > el.clientWidth) && fontSize > minFontSize) {
+    fontSize -= 1;
+    el.style.fontSize = `${fontSize}px`;
+  }
+}
+
 // 3D Envelope Wax Seal & Personalization logic
 function initPersonalization() {
   const params = new URLSearchParams(window.location.search);
   const name = params.get('name') || params.get('n');
-  const prefix = params.get('prefix') || params.get('p') || 'Trân trọng kính mời';
 
   const envelopeGuestName = document.querySelector('#envelopeGuestName');
-  const invitationGuestName = document.querySelector('#invitationGuestName');
-  const invitationOverlay = document.querySelector('.invitation-dynamic-name-overlay');
   const rsvpGuestInput = document.querySelector('input[name="guest"]');
 
   if (name) {
     const cleanName = decodeURIComponent(name.replace(/\+/g, ' ')).trim();
-    const cleanPrefix = decodeURIComponent(prefix.replace(/\+/g, ' ')).trim();
 
-    if (envelopeGuestName) {
-      // Card shows only the guest name; "Trân trọng kính mời" is a fixed line on the card
-      envelopeGuestName.textContent = cleanName;
-    }
-    if (invitationGuestName) {
-      invitationGuestName.textContent = `${cleanPrefix} ${cleanName}`;
-    }
-    if (invitationOverlay) {
-      invitationOverlay.classList.add('active');
-    }
+    if (envelopeGuestName) envelopeGuestName.textContent = cleanName;
     if (rsvpGuestInput) {
       rsvpGuestInput.value = cleanName;
     }
   } else {
     if (envelopeGuestName) {
-      envelopeGuestName.textContent = 'Quý khách';
-    }
-    if (invitationGuestName) {
-      invitationGuestName.textContent = '';
-    }
-    if (invitationOverlay) {
-      invitationOverlay.classList.remove('active');
+      envelopeGuestName.textContent = invitationGuestConfig.guestName || invitationGuestConfig.fallbackGuestName;
     }
   }
+
+  fitGuestName(envelopeGuestName);
 }
 
 function initEnvelopeOpening() {
@@ -1110,5 +1117,3 @@ function createMiniHeart(x, y) {
 }
 
 initMouseTrail();
-
-

@@ -74,6 +74,12 @@
             <!-- Thiệp giấy bên trong phong bì -->
             <div class="envelope-card" id="envelopeCard">
               <div class="card-inner">
+                <!-- Ornamental corner brackets -->
+                <svg class="card-corner card-corner-tl" viewBox="0 0 24 24" aria-hidden="true"><path d="M1 23 L1 8 Q1 1 8 1 L23 1" fill="none" stroke="currentColor" stroke-width="1.1"/></svg>
+                <svg class="card-corner card-corner-tr" viewBox="0 0 24 24" aria-hidden="true"><path d="M1 23 L1 8 Q1 1 8 1 L23 1" fill="none" stroke="currentColor" stroke-width="1.1"/></svg>
+                <svg class="card-corner card-corner-br" viewBox="0 0 24 24" aria-hidden="true"><path d="M1 23 L1 8 Q1 1 8 1 L23 1" fill="none" stroke="currentColor" stroke-width="1.1"/></svg>
+                <svg class="card-corner card-corner-bl" viewBox="0 0 24 24" aria-hidden="true"><path d="M1 23 L1 8 Q1 1 8 1 L23 1" fill="none" stroke="currentColor" stroke-width="1.1"/></svg>
+
                 <!-- HT monogram flanked by laurel sprigs -->
                 <div class="card-monogram-row">
                   <svg class="card-sprig card-sprig-left" viewBox="0 0 60 30" aria-hidden="true"><path d="M4 15C20 15 40 15 56 15" fill="none" stroke="currentColor" stroke-width="1"/><g fill="currentColor"><ellipse cx="16" cy="9" rx="5" ry="2.3" transform="rotate(-30 16 9)"/><ellipse cx="28" cy="8" rx="5" ry="2.3" transform="rotate(-30 28 8)"/><ellipse cx="40" cy="9" rx="5" ry="2.3" transform="rotate(-30 40 9)"/><ellipse cx="22" cy="21" rx="5" ry="2.3" transform="rotate(30 22 21)"/><ellipse cx="34" cy="22" rx="5" ry="2.3" transform="rotate(30 34 22)"/><ellipse cx="46" cy="21" rx="5" ry="2.3" transform="rotate(30 46 21)"/></g></svg>
@@ -83,36 +89,17 @@
 
                 <div class="card-save-the-date">Save the Date</div>
 
-                <!-- WEDDING INVITATION eyebrow with dotted separators -->
-                <div class="card-eyebrow">
-                  <span class="card-eyebrow-rule"></span>
-                  <span class="card-eyebrow-text">Wedding Invitation</span>
-                  <span class="card-eyebrow-rule"></span>
-                </div>
+                <div class="card-eyebrow"><span class="card-eyebrow-text">Wedding Invitation</span></div>
 
                 <p class="card-invite-line">Trân trọng kính mời</p>
 
-                <div class="card-heart-divider" aria-hidden="true">
-                  <span class="card-hd-rule"></span>
-                  <svg class="card-heart" viewBox="0 0 24 24" fill="currentColor"><path d="M12 20s-7-4.3-9.3-8.5C1 8.5 2.3 5.3 5.3 5c1.9-.2 3.6.8 4.7 2.2C11.1 5.8 12.8 4.8 14.7 5c3 .3 4.3 3.5 2.6 6.5C19 15.7 12 20 12 20Z"/></svg>
-                  <span class="card-hd-rule"></span>
+                <div class="card-guest-safe-zone" aria-label="Tên khách mời">
+                  <span class="card-safe-line" aria-hidden="true"></span>
+                  <h3 class="card-guest-name" id="envelopeGuestName">Quý Khách</h3>
+                  <span class="card-safe-line" aria-hidden="true"></span>
                 </div>
 
-                <h3 class="card-guest-name" id="envelopeGuestName">Quý khách</h3>
-
-                <div class="card-leaf-divider" aria-hidden="true">
-                  <svg class="card-leaf" viewBox="0 0 24 24" fill="currentColor"><path d="M20 4c-8 0-14 4-14 11 0 2 .6 3.6 1.5 4.8C10 16 14 13 19 12c-4 2-7 5-9 9 1.2.6 2.6 1 4 1 7 0 11-7 11-14 0-2 0-4-5-4Z"/></svg>
-                  <span class="card-ld-dots"></span>
-                  <svg class="card-leaf card-leaf-flip" viewBox="0 0 24 24" fill="currentColor"><path d="M20 4c-8 0-14 4-14 11 0 2 .6 3.6 1.5 4.8C10 16 14 13 19 12c-4 2-7 5-9 9 1.2.6 2.6 1 4 1 7 0 11-7 11-14 0-2 0-4-5-4Z"/></svg>
-                </div>
-
-                <p class="card-invite-line">đến dự lễ thành hôn của chúng tôi</p>
-
-                <div class="card-heart-divider" aria-hidden="true">
-                  <span class="card-hd-rule"></span>
-                  <svg class="card-heart" viewBox="0 0 24 24" fill="currentColor"><path d="M12 20s-7-4.3-9.3-8.5C1 8.5 2.3 5.3 5.3 5c1.9-.2 3.6.8 4.7 2.2C11.1 5.8 12.8 4.8 14.7 5c3 .3 4.3 3.5 2.6 6.5C19 15.7 12 20 12 20Z"/></svg>
-                  <span class="card-hd-rule"></span>
-                </div>
+                <p class="card-invite-line card-invite-line--tight">đến dự lễ thành hôn của chúng tôi</p>
 
                 <p class="card-couple-names">Hoài Thanh &amp; Thanh Hiền</p>
 
@@ -240,9 +227,6 @@
         <div class="invitation-card-wrap reveal">
           <div class="invitation-image-container">
             <img src="/assets/decor/invitation-card.jpg" class="invitation-card-img" alt="Thiệp mời cưới">
-            <div class="invitation-dynamic-name-overlay">
-              <span id="invitationGuestName"></span>
-            </div>
           </div>
         </div>
 
@@ -546,36 +530,60 @@
         <div class="maps-section reveal" id="maps-section">
           <div class="maps-tabs" role="tablist" aria-label="Chọn bản đồ đường đi">
             <button class="map-tab is-active" role="tab" aria-selected="true" aria-controls="map-panel-groom" data-target="groom" type="button">
-              📍 Nhà Trai <span class="map-tab-loc">(Đồng Nai)</span>
+              <svg class="map-tab-icon" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M12 21s6-5.25 6-11a6 6 0 1 0-12 0c0 5.75 6 11 6 11Z"></path>
+                <circle cx="12" cy="10" r="2.25"></circle>
+              </svg>
+              <span>Nhà Trai</span> <span class="map-tab-loc">(Đồng Nai)</span>
             </button>
             <button class="map-tab" role="tab" aria-selected="false" aria-controls="map-panel-bride" data-target="bride" type="button">
-              📍 Nhà Gái <span class="map-tab-loc">(Gia Lai)</span>
+              <svg class="map-tab-icon" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M12 21s6-5.25 6-11a6 6 0 1 0-12 0c0 5.75 6 11 6 11Z"></path>
+                <circle cx="12" cy="10" r="2.25"></circle>
+              </svg>
+              <span>Nhà Gái</span> <span class="map-tab-loc">(Gia Lai)</span>
             </button>
           </div>
           
           <div class="map-panels">
             <!-- Map Groom: Sân Banh Nông Trường -->
             <div class="map-panel" id="map-panel-groom" role="tabpanel">
-              <p class="map-address"><strong>Địa điểm:</strong> Sân Banh, Tổ 18A, Khu Phố 2, Phường Đồng Phú, Thành Phố Đồng Nai</p>
+              <p class="map-address">
+                <span class="map-address-label">Địa điểm</span>
+                <span class="map-address-text">Sân Banh, Tổ 18A, Khu Phố 2, Phường Đồng Phú, Thành Phố Đồng Nai</span>
+              </p>
               <div class="iframe-container">
                 <iframe src="https://maps.google.com/maps?q=11.395137,106.826227&t=&z=16&ie=UTF8&iwloc=&output=embed" width="100%" height="380" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
               </div>
               <div class="map-btn-wrap">
                 <a href="https://www.google.com/maps/search/?api=1&query=11.395137,106.826227" target="_blank" rel="noopener noreferrer" class="btn btn-primary map-btn">
-                  🗺️ Xem trên Google Maps
+                  <svg class="map-btn-icon" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M9 18 3 21V6l6-3 6 3 6-3v15l-6 3-6-3Z"></path>
+                    <path d="M9 3v15"></path>
+                    <path d="M15 6v15"></path>
+                  </svg>
+                  <span>Xem trên Google Maps</span>
                 </a>
               </div>
             </div>
 
             <!-- Map Bride: Nhà hàng Memory An Khê Gia Lai -->
             <div class="map-panel is-hidden" id="map-panel-bride" role="tabpanel">
-              <p class="map-address"><strong>Địa điểm:</strong> Nhà hàng Memory An Khê, Gia Lai</p>
+              <p class="map-address">
+                <span class="map-address-label">Địa điểm</span>
+                <span class="map-address-text">Nhà hàng Memory An Khê, Gia Lai</span>
+              </p>
               <div class="iframe-container">
                 <iframe src="https://maps.google.com/maps?q=Nh%C3%A0%20h%C3%A0ng%20Memory%20An%20Kh%C3%AA%20Gia%20Lai&t=&z=15&ie=UTF8&iwloc=&output=embed" width="100%" height="380" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
               </div>
               <div class="map-btn-wrap">
                 <a href="https://www.google.com/maps/search/?api=1&query=Nh%C3%A0%20h%C3%A0ng%20Memory%20An%20Kh%C3%AA%20Gia%20Lai" target="_blank" rel="noopener noreferrer" class="btn btn-primary map-btn">
-                  🗺️ Xem trên Google Maps
+                  <svg class="map-btn-icon" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M9 18 3 21V6l6-3 6 3 6-3v15l-6 3-6-3Z"></path>
+                    <path d="M9 3v15"></path>
+                    <path d="M15 6v15"></path>
+                  </svg>
+                  <span>Xem trên Google Maps</span>
                 </a>
               </div>
             </div>
