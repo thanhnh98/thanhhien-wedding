@@ -1,0 +1,384 @@
+- generic [active] [ref=f10e1]:
+  - dialog "Bìa thiệp cưới" [ref=f10e2]:
+    - generic [ref=f10e3]:
+      - generic [ref=f10e4]:
+        - generic [ref=f10e5]: HT
+        - paragraph [ref=f10e6]: TRÂN TRỌNG KÍNH MỜI
+        - heading "Hoài Thanh & Thanh Hiền" [level=1] [ref=f10e8]
+      - button "Mở thiệp cưới" [ref=f10e11] [cursor=pointer]:
+        - generic [ref=f10e14]:
+          - img
+          - img
+          - img
+          - img
+          - generic [ref=f10e15]:
+            - img [ref=f10e16]
+            - generic [ref=f10e24]: HT
+            - img [ref=f10e25]
+          - generic [ref=f10e33]: Save the Date
+          - generic [ref=f10e35]: Wedding Invitation
+          - paragraph [ref=f10e36]: Trân trọng kính mời
+          - generic "Tên khách mời" [ref=f10e37]:
+            - heading "Quý Khách" [level=3] [ref=f10e39]
+          - paragraph [ref=f10e41]: đến dự lễ thành hôn của chúng tôi
+          - paragraph [ref=f10e42]: Hoài Thanh & Thanh Hiền
+          - img [ref=f10e43]
+        - img "Mở thiệp cưới"
+      - paragraph [ref=f10e62]: Nhấn để mở lời mời thân thương từ chúng tôi
+  - generic:
+    - generic: ♥
+    - generic: ♥
+  - button "Bật hoặc tắt nhạc nền" [ref=f10e63] [cursor=pointer]:
+    - img
+    - img
+  - main [ref=f10e64]:
+    - region "Mở đầu thiệp cưới" [ref=f10e65]:
+      - generic [ref=f10e66]:
+        - heading "Hoài Thanh & Thanh Hiền" [level=1] [ref=f10e67]:
+          - generic [ref=f10e68]: Hoài Thanh
+          - generic [ref=f10e70]: "&"
+          - generic [ref=f10e71]: Thanh Hiền
+        - paragraph [ref=f10e72]: CHÚNG TÔI KẾT HÔN!
+        - generic "Thông tin lễ cưới hai gia đình" [ref=f10e73]:
+          - generic [ref=f10e74]:
+            - paragraph [ref=f10e75]: LỄ VU QUY
+            - time [ref=f10e76]:
+              - generic [ref=f10e77]: • THỨ BẢY •
+              - generic [ref=f10e78]: 25.07.2026
+            - paragraph [ref=f10e79]: (Nhằm ngày 12.06 Âm Lịch)
+            - paragraph [ref=f10e80]:
+              - img [ref=f10e81]
+              - text: Gia Lai
+          - generic [ref=f10e83]: ♥
+          - generic [ref=f10e84]:
+            - paragraph [ref=f10e85]: LỄ TÂN HÔN
+            - time [ref=f10e86]:
+              - generic [ref=f10e87]: • THỨ BẢY •
+              - generic [ref=f10e88]: 01.08.2026
+            - paragraph [ref=f10e89]: (Nhằm ngày 19.06 Âm Lịch)
+            - paragraph [ref=f10e90]:
+              - img [ref=f10e91]
+              - text: Đồng Nai
+      - figure [ref=f10e93]:
+        - img "Ảnh cưới của cô dâu chú rể" [ref=f10e94]
+      - link "THIỆP MỜI" [ref=f10e95] [cursor=pointer]:
+        - /url: "#couple"
+        - img [ref=f10e96]
+        - generic [ref=f10e99]: THIỆP MỜI
+    - generic [ref=f10e100]:
+      - img "Thiệp mời cưới" [ref=f10e103]
+      - generic [ref=f10e104]:
+        - paragraph [ref=f10e105]: Cô dâu & chú rể
+        - heading "Hai trái tim, một lời hẹn ước" [level=2] [ref=f10e106]
+        - paragraph [ref=f10e107]: Giữa những ngày rất đỗi bình thường, chúng mình tìm thấy nhau và cùng viết nên một chương mới đầy yêu thương.
+      - generic [ref=f10e108]:
+        - article [ref=f10e109]:
+          - figure [ref=f10e110]:
+            - img "Chú rể Hoài Thanh" [ref=f10e111]
+          - generic [ref=f10e112]:
+            - paragraph [ref=f10e113]: Chú rể
+            - heading "Hoài Thanh" [level=3] [ref=f10e114]
+            - paragraph [ref=f10e115]: Một người điềm đạm, chân thành, luôn tin rằng tình yêu đẹp nhất được vun đắp từ những điều nhỏ bé mỗi ngày.
+        - article [ref=f10e116]:
+          - figure [ref=f10e117]:
+            - img "Cô dâu Thanh Hiền" [ref=f10e118]
+          - generic [ref=f10e119]:
+            - paragraph [ref=f10e120]: Cô dâu
+            - heading "Thanh Hiền" [level=3] [ref=f10e121]
+            - paragraph [ref=f10e122]: Một cô gái ấm áp và chân thành, luôn lan tỏa niềm vui bằng nụ cười và những điều giản dị trong cuộc sống.
+    - generic [ref=f10e123]:
+      - generic [ref=f10e124]:
+        - paragraph [ref=f10e125]: LOVE STORY
+        - heading "Hành trình bên nhau" [level=2] [ref=f10e126]
+        - paragraph [ref=f10e127]: Từng cột mốc nhỏ được ghi lại những kỷ niệm đẹp, đưa chúng mình đến gần nhau hơn mỗi ngày.
+      - generic [ref=f10e128]:
+        - generic [ref=f10e129]:
+          - article [ref=f10e130]:
+            - generic [ref=f10e131]: "01"
+            - img "Gặp nhau ở công ty" [ref=f10e133] [cursor=pointer]
+            - generic [ref=f10e134]:
+              - generic [ref=f10e135]: "2020"
+              - heading "Gặp nhau ở công ty" [level=3] [ref=f10e136]
+              - paragraph [ref=f10e137]: Nơi công sở năm ấy, những buổi làm việc chung và những câu chuyện trò giản dị đã mở đầu cho hành trình của chúng mình.
+          - article [ref=f10e138]:
+            - generic [ref=f10e139]: "02"
+            - img "Bên nhau ngày tốt nghiệp" [ref=f10e141] [cursor=pointer]
+            - generic [ref=f10e142]:
+              - generic [ref=f10e143]: "2022"
+              - heading "Bên nhau ngày tốt nghiệp" [level=3] [ref=f10e144]
+              - paragraph [ref=f10e145]: Đồng hành cùng em trong ngày bước nhận bằng tốt nghiệp tháng 6 rực rỡ, cũng là cột mốc tiếp theo bắt đầu một chặng mới của cuộc đời.
+          - article [ref=f10e146]:
+            - generic [ref=f10e147]: "03"
+            - generic [ref=f10e148]:
+              - img "Trải qua những hành trình" [ref=f10e150] [cursor=pointer]
+              - generic [ref=f10e151]:
+                - img "Du lịch" [ref=f10e153] [cursor=pointer]
+                - img "Du lịch" [ref=f10e155] [cursor=pointer]
+                - img "Quán quen" [ref=f10e157] [cursor=pointer]
+                - generic [ref=f10e158] [cursor=pointer]:
+                  - img "Xem toàn bộ album hành trình" [ref=f10e159]
+                  - generic [ref=f10e161]: "+10"
+            - generic [ref=f10e162]:
+              - generic [ref=f10e163]: 2021 - 2026
+              - heading "Trải qua những hành trình" [level=3] [ref=f10e164]
+              - paragraph [ref=f10e165]: Đi qua nhiều nơi, cùng nhiều cung bậc cảm xúc, có những niềm vui và cả những thử thách. Nhưng càng nắm tay, mọi thứ đều trở nên ý nghĩa hơn.
+        - generic [ref=f10e166]:
+          - article [ref=f10e167]:
+            - generic [ref=f10e168]: "04"
+            - img "Ngày Em Đồng Ý" [ref=f10e170] [cursor=pointer]
+            - generic [ref=f10e171]:
+              - generic [ref=f10e172]: "2026"
+              - heading "Ngày Em Đồng Ý" [level=3] [ref=f10e173]
+              - paragraph [ref=f10e174]: Dưới ánh nến và những lời ước hẹn ngọt ngào, em đã nói "Đồng ý" và con đường hạnh phúc của chúng mình chính thức bắt đầu.
+          - article [ref=f10e175]:
+            - generic [ref=f10e176]: "05"
+            - img "Về chung một nhà" [ref=f10e178] [cursor=pointer]
+            - generic [ref=f10e179]:
+              - generic [ref=f10e180]: "2026"
+              - heading "Về chung một nhà" [level=3] [ref=f10e181]
+              - paragraph [ref=f10e182]: Một chương mới, một mái ấm chung, nơi tình yêu của chúng mình sẽ tiếp tục được vun đắp mỗi ngày, mãi mãi.
+    - generic [ref=f10e183]:
+      - generic [ref=f10e184]:
+        - paragraph [ref=f10e185]: Save the Date
+        - heading "Lịch đám cưới" [level=2] [ref=f10e186]
+        - paragraph [ref=f10e187]: Hai ngày vui trọn vẹn của chúng mình, kính mời bạn cùng lưu lại lịch để chung vui.
+      - generic [ref=f10e188]:
+        - generic [ref=f10e189]:
+          - generic [ref=f10e190]:
+            - heading "Tháng 7 / 2026" [level=3] [ref=f10e191]
+            - paragraph [ref=f10e192]: ♥ Lễ Vu Quy
+          - generic [ref=f10e193]:
+            - generic [ref=f10e194]: CN
+            - generic [ref=f10e195]: T2
+            - generic [ref=f10e196]: T3
+            - generic [ref=f10e197]: T4
+            - generic [ref=f10e198]: T5
+            - generic [ref=f10e199]: T6
+            - generic [ref=f10e200]: T7
+          - generic [ref=f10e201]:
+            - generic [ref=f10e202]: "1"
+            - generic [ref=f10e203]: "2"
+            - generic [ref=f10e204]: "3"
+            - generic [ref=f10e205]: "4"
+            - generic [ref=f10e206]: "5"
+            - generic [ref=f10e207]: "6"
+            - generic [ref=f10e208]: "7"
+            - generic [ref=f10e209]: "8"
+            - generic [ref=f10e210]: "9"
+            - generic [ref=f10e211]: "10"
+            - generic [ref=f10e212]: "11"
+            - generic [ref=f10e213]: "12"
+            - generic [ref=f10e214]: "13"
+            - generic [ref=f10e215]: "14"
+            - generic [ref=f10e216]: "15"
+            - generic [ref=f10e217]: "16"
+            - generic [ref=f10e218]: "17"
+            - generic [ref=f10e219]: "18"
+            - generic [ref=f10e220]: "19"
+            - generic [ref=f10e221]: "20"
+            - generic [ref=f10e222]: "21"
+            - generic [ref=f10e223]: "22"
+            - generic [ref=f10e224]: "23"
+            - generic [ref=f10e225]: "24"
+            - generic "25 — Lễ Vu Quy" [ref=f10e226]:
+              - generic: "25"
+              - img
+              - generic:
+                - generic: ♥
+                - generic: ♥
+                - generic: ♥
+              - text: Lễ Vu Quy
+            - generic [ref=f10e227]: "26"
+            - generic [ref=f10e228]: "27"
+            - generic [ref=f10e229]: "28"
+            - generic [ref=f10e230]: "29"
+            - generic [ref=f10e231]: "30"
+            - generic [ref=f10e232]: "31"
+        - generic [ref=f10e233]:
+          - generic [ref=f10e234]:
+            - heading "Tháng 8 / 2026" [level=3] [ref=f10e235]
+            - paragraph [ref=f10e236]: ♥ Lễ Tân Hôn
+          - generic [ref=f10e237]:
+            - generic [ref=f10e238]: CN
+            - generic [ref=f10e239]: T2
+            - generic [ref=f10e240]: T3
+            - generic [ref=f10e241]: T4
+            - generic [ref=f10e242]: T5
+            - generic [ref=f10e243]: T6
+            - generic [ref=f10e244]: T7
+          - generic [ref=f10e245]:
+            - generic "1 — Lễ Tân Hôn" [ref=f10e246]:
+              - generic: "1"
+              - img
+              - generic:
+                - generic: ♥
+                - generic: ♥
+                - generic: ♥
+              - text: Lễ Tân Hôn
+            - generic [ref=f10e247]: "2"
+            - generic [ref=f10e248]: "3"
+            - generic [ref=f10e249]: "4"
+            - generic [ref=f10e250]: "5"
+            - generic [ref=f10e251]: "6"
+            - generic [ref=f10e252]: "7"
+            - generic [ref=f10e253]: "8"
+            - generic [ref=f10e254]: "9"
+            - generic [ref=f10e255]: "10"
+            - generic [ref=f10e256]: "11"
+            - generic [ref=f10e257]: "12"
+            - generic [ref=f10e258]: "13"
+            - generic [ref=f10e259]: "14"
+            - generic [ref=f10e260]: "15"
+            - generic [ref=f10e261]: "16"
+            - generic [ref=f10e262]: "17"
+            - generic [ref=f10e263]: "18"
+            - generic [ref=f10e264]: "19"
+            - generic [ref=f10e265]: "20"
+            - generic [ref=f10e266]: "21"
+            - generic [ref=f10e267]: "22"
+            - generic [ref=f10e268]: "23"
+            - generic [ref=f10e269]: "24"
+            - generic [ref=f10e270]: "25"
+            - generic [ref=f10e271]: "26"
+            - generic [ref=f10e272]: "27"
+            - generic [ref=f10e273]: "28"
+            - generic [ref=f10e274]: "29"
+            - generic [ref=f10e275]: "30"
+            - generic [ref=f10e276]: "31"
+    - generic [ref=f10e277]:
+      - generic [ref=f10e278]:
+        - paragraph [ref=f10e279]: Đếm ngược
+        - heading "Đến ngày chung đôi" [level=2] [ref=f10e280]
+      - tablist "Chọn đám cưới" [ref=f10e281]:
+        - tab "♥ Lễ Vu Quy Thứ Bảy, 25.07.2026 (Nhằm 12.06 Âm Lịch)" [selected] [ref=f10e282] [cursor=pointer]:
+          - generic [ref=f10e283]: ♥
+          - generic [ref=f10e284]:
+            - generic [ref=f10e285]: Lễ Vu Quy
+            - generic [ref=f10e286]: Thứ Bảy, 25.07.2026
+            - generic [ref=f10e287]: (Nhằm 12.06 Âm Lịch)
+        - tab "♥ Lễ Tân Hôn Thứ Bảy, 01.08.2026 (Nhằm 19.06 Âm Lịch)" [ref=f10e288] [cursor=pointer]:
+          - generic [ref=f10e289]: ♥
+          - generic [ref=f10e290]:
+            - generic [ref=f10e291]: Lễ Tân Hôn
+            - generic [ref=f10e292]: Thứ Bảy, 01.08.2026
+            - generic [ref=f10e293]: (Nhằm 19.06 Âm Lịch)
+      - tabpanel "♥ Lễ Vu Quy Thứ Bảy, 25.07.2026 (Nhằm 12.06 Âm Lịch)" [ref=f10e294]:
+        - generic [ref=f10e295]:
+          - text: ✦
+          - generic [ref=f10e296]:
+            - generic "Ngày" [ref=f10e297]:
+              - strong [ref=f10e298]: "017"
+            - generic "Giờ" [ref=f10e299]:
+              - strong [ref=f10e300]: "21"
+            - generic "Phút" [ref=f10e301]:
+              - strong [ref=f10e302]: "02"
+            - generic "Giây" [ref=f10e303]:
+              - strong [ref=f10e304]: "52"
+          - paragraph [ref=f10e305]: Tiệc cưới Lễ Vu Quy — Gia Lai — Thứ Bảy, 25.07.2026 (Nhằm 12.06 Âm Lịch)
+      - text: ✦
+    - generic [ref=f10e306]:
+      - generic [ref=f10e308]:
+        - paragraph [ref=f10e309]: Địa điểm
+        - heading "Bản đồ chỉ đường" [level=2] [ref=f10e310]
+      - generic [ref=f10e311]:
+        - tablist "Chọn bản đồ đường đi" [ref=f10e312]:
+          - tab "Nhà Trai" [selected] [ref=f10e313] [cursor=pointer]:
+            - img [ref=f10e314]
+            - generic [ref=f10e317]: Nhà Trai
+          - tab "Nhà Gái" [ref=f10e318] [cursor=pointer]:
+            - img [ref=f10e319]
+            - generic [ref=f10e322]: Nhà Gái
+        - tabpanel [ref=f10e324]:
+          - paragraph [ref=f10e325]:
+            - generic [ref=f10e326]: Địa điểm
+            - generic [ref=f10e327]: Sân Banh, Tổ 18A, Khu Phố 2, Phường Đồng Phú, Thành Phố Đồng Nai
+          - iframe [ref=f10e329]:
+            - generic [ref=f11e3]:
+              - region "Map" [ref=f11e4]
+              - iframe [ref=f11e10]:
+                
+          - link "Xem trên Google Maps" [ref=f10e331] [cursor=pointer]:
+            - /url: https://www.google.com/maps/search/?api=1&query=11.395137,106.826227
+            - img [ref=f10e332]
+            - generic [ref=f10e334]: Xem trên Google Maps
+    - generic [ref=f10e335]:
+      - generic [ref=f10e336]:
+        - paragraph [ref=f10e337]: Wedding album
+        - heading "Khoảnh khắc của chúng mình" [level=2] [ref=f10e338]
+        - paragraph [ref=f10e339]: Mỗi tấm ảnh là một khoảnh khắc yêu thương được giữ lại mãi mãi.
+      - generic [ref=f10e340]:
+        - button "Ảnh cưới Hoài Thanh & Thanh Hiền 07" [ref=f10e341]:
+          - img "Ảnh cưới Hoài Thanh & Thanh Hiền 07" [ref=f10e342]
+        - button "Ảnh cưới Hoài Thanh & Thanh Hiền 03" [ref=f10e343]:
+          - img "Ảnh cưới Hoài Thanh & Thanh Hiền 03" [ref=f10e344]
+        - button "Ảnh cưới Hoài Thanh & Thanh Hiền 16" [ref=f10e345]:
+          - img "Ảnh cưới Hoài Thanh & Thanh Hiền 16" [ref=f10e346]
+        - button "Ảnh cưới Hoài Thanh & Thanh Hiền 24" [ref=f10e347]:
+          - img "Ảnh cưới Hoài Thanh & Thanh Hiền 24" [ref=f10e348]
+        - button "Ảnh cưới Hoài Thanh & Thanh Hiền 31" [ref=f10e349]:
+          - img "Ảnh cưới Hoài Thanh & Thanh Hiền 31" [ref=f10e350]
+        - button "Ảnh cưới Hoài Thanh & Thanh Hiền 06" [ref=f10e351]:
+          - img "Ảnh cưới Hoài Thanh & Thanh Hiền 06" [ref=f10e352]
+        - button "Ảnh cưới Hoài Thanh & Thanh Hiền 01" [ref=f10e353]:
+          - img "Ảnh cưới Hoài Thanh & Thanh Hiền 01" [ref=f10e354]
+        - button "Ảnh cưới Hoài Thanh & Thanh Hiền 13" [ref=f10e355]:
+          - img "Ảnh cưới Hoài Thanh & Thanh Hiền 13" [ref=f10e356]
+      - button "Xem thêm ảnh (Còn 32 ảnh)" [ref=f10e358] [cursor=pointer]:
+        - img [ref=f10e359]
+        - generic [ref=f10e364]: Xem thêm ảnh (Còn 32 ảnh)
+    - generic [ref=f10e365]:
+      - generic [ref=f10e371]:
+        - paragraph [ref=f10e372]: Wedding wishes
+        - heading "Lời chúc yêu thương" [level=2] [ref=f10e373]
+        - paragraph [ref=f10e374]: Gửi đến chúng mình đôi lời chúc phúc, để ngày vui thêm trọn vẹn nhé! ♡
+        - generic [ref=f10e375]: ♥
+      - generic [ref=f10e378]:
+        - img [ref=f10e380]
+        - generic [ref=f10e382]:
+          - generic [ref=f10e383]:
+            - img [ref=f10e384]
+            - text: Tên của bạn
+          - generic [ref=f10e387]:
+            - textbox "Tên của bạn" [ref=f10e388]:
+              - /placeholder: Tên người nhắn gửi
+            - img
+        - generic [ref=f10e389]:
+          - generic [ref=f10e390]:
+            - img [ref=f10e391]
+            - text: Lời chúc
+          - generic [ref=f10e394]:
+            - textbox "Lời chúc" [ref=f10e395]:
+              - /placeholder: Chúc hai bạn trăm năm hạnh phúc...
+            - img
+        - button "Gửi lời chúc ♥" [ref=f10e396] [cursor=pointer]
+        - alert [ref=f10e397]
+      - paragraph [ref=f10e398]: Đang tải lời chúc...
+    - paragraph [ref=f10e400]: "\"Cảm ơn vì đã là một phần trong ngày hạnh phúc của chúng mình.\""
+  - contentinfo [ref=f10e401]:
+    - button "Gửi mừng cưới" [ref=f10e403] [cursor=pointer]:
+      - img "Hoài Thanh & Thanh Hiền" [ref=f10e405]
+      - generic [ref=f10e406]:
+        - heading "Gửi Mừng Cưới" [level=3] [ref=f10e407]
+        - img [ref=f10e409]
+    - strong [ref=f10e422]: Hoài Thanh & Thanh Hiền
+  - navigation "Menu dọc" [ref=f10e423]:
+    - link [ref=f10e425] [cursor=pointer]:
+      - /url: "#hero"
+      - img [ref=f10e426]
+    - link [ref=f10e430] [cursor=pointer]:
+      - /url: "#couple"
+      - img [ref=f10e431]
+    - link [ref=f10e436] [cursor=pointer]:
+      - /url: "#story"
+      - img [ref=f10e437]
+    - link [ref=f10e442] [cursor=pointer]:
+      - /url: "#location"
+      - img [ref=f10e443]
+    - link [ref=f10e448] [cursor=pointer]:
+      - /url: "#gallery"
+      - img [ref=f10e449]
+    - link [ref=f10e455] [cursor=pointer]:
+      - /url: "#wishes"
+      - img [ref=f10e456]
+  - button "Về đầu trang" [ref=f10e459] [cursor=pointer]:
+    - img

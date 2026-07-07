@@ -4130,6 +4130,14 @@ body:not(.invitation-active) .hero-portrait {
   visibility: visible;
 }
 
+body.envelope-active .vertical-nav,
+body.envelope-active .nav-hover-zone,
+body.envelope-active .back-to-home {
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+
 .vertical-nav.is-visible.nav-dimmed {
   opacity: 0;
   visibility: hidden;

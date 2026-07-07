@@ -1,0 +1,4 @@
+[      51ms] [ERROR] Failed to load resource: the server responded with a status of 404 (File not found) @ http://localhost:8081/assets/decor/ornament.png:0
+[      80ms] [LOG] Failed to play onboardingMusic NotAllowedError: play() failed because the user didn't interact with the document first. https://goo.gl/xX8pDD @ http://localhost:8081/script.js?v=9:325
+[      81ms] [ERROR] Failed to load resource: the server responded with a status of 404 (File not found) @ http://localhost:8081/assets/logo/signature.png:0
+[   79559ms] [LOG] Scroll-to-hash debug: {initialHash: , hasTargetSection: false} @ http://localhost:8081/script.js?v=9:856
