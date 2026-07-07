@@ -20,6 +20,19 @@ const rsvpForm = document.querySelector('#rsvpForm');
 const rsvpSuccess = document.querySelector('#rsvpSuccess');
 const heartLayer = document.querySelector('#heartLayer');
 
+function revealMonogramFonts() {
+  document.documentElement.classList.remove('fonts-loading');
+  document.documentElement.classList.add('fonts-ready');
+}
+
+if (document.fonts?.load) {
+  document.fonts.load('1em "Great Vibes"', 'HT')
+    .then(revealMonogramFonts, revealMonogramFonts);
+  window.setTimeout(revealMonogramFonts, 1800);
+} else {
+  revealMonogramFonts();
+}
+
 let currentImageIndex = 1;
 const totalImages = 40;
 const galleryImages = Array.from({ length: totalImages }, (_, i) => {

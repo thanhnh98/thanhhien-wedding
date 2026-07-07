@@ -2934,6 +2934,21 @@ html.envelope-active {
   animation: fadeUpMonogram 900ms ease-out both;
 }
 
+.fonts-loading .monogram,
+.fonts-loading .card-monogram-gold {
+  opacity: 0 !important;
+}
+
+.fonts-loading .monogram {
+  animation: none !important;
+}
+
+.fonts-ready .monogram,
+.fonts-ready .card-monogram-gold {
+  opacity: 1;
+  transition: opacity 180ms ease;
+}
+
 .invite-label {
   font-family: "Montserrat", "Inter", sans-serif;
   font-size: 13px;
