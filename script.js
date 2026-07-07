@@ -54,6 +54,15 @@ const storyAlbum = [
 // Album đang được điều hướng trong lightbox (mặc định là gallery ảnh cưới)
 let activeAlbum = galleryImages;
 
+function syncAppViewportHeight() {
+  const viewportHeight = window.visualViewport?.height || window.innerHeight;
+  document.documentElement.style.setProperty('--app-viewport-height', `${viewportHeight}px`);
+}
+
+syncAppViewportHeight();
+window.addEventListener('resize', syncAppViewportHeight, { passive: true });
+window.visualViewport?.addEventListener('resize', syncAppViewportHeight, { passive: true });
+
 function updateScrollProgress() {
   const scrollable = document.documentElement.scrollHeight - window.innerHeight;
   const percent = scrollable > 0 ? (window.scrollY / scrollable) * 100 : 0;

@@ -70,6 +70,7 @@
   --card-font-date: clamp(8px, 1.2vh, 9px);
   --card-margin-date: 6px;
   --card-safe-zone-height: clamp(42px, 7.2vh, 64px);
+  --app-viewport-height: 100dvh;
 }
 
 * { box-sizing: border-box; }
@@ -2833,6 +2834,7 @@ html.envelope-active {
   padding: 24px;
   padding: max(24px, env(safe-area-inset-top)) max(24px, env(safe-area-inset-right)) max(24px, env(safe-area-inset-bottom)) max(24px, env(safe-area-inset-left));
   box-sizing: border-box;
+  height: var(--app-viewport-height);
   min-height: 100vh;
   min-height: 100dvh;
 }
@@ -3587,6 +3589,7 @@ body:not(.invitation-active) .hero-portrait {
 @media (max-width: 768px) {
   .wedding-opening {
     padding: max(16px, env(safe-area-inset-top)) max(14px, env(safe-area-inset-right)) max(16px, env(safe-area-inset-bottom)) max(14px, env(safe-area-inset-left));
+    min-height: var(--app-viewport-height);
   }
   .opening-content {
     gap: clamp(12px, 2.3vh, 22px);
@@ -3668,7 +3671,7 @@ body:not(.invitation-active) .hero-portrait {
     word-break: break-word;
   }
   .envelope-wrapper {
-    width: min(86vw, 330px, calc(42vh * 1.55)); /* Tăng kích thước thiệp trên di động */
+    width: min(86vw, 330px, calc(var(--app-viewport-height) * 0.42 * 1.55)); /* Tăng kích thước thiệp trên di động */
   }
   .wax-seal {
     width: clamp(58px, 14vw, 84px);
@@ -3697,6 +3700,43 @@ body:not(.invitation-active) .hero-portrait {
   /* Reduce number of petals on mobile */
   .petal-5, .petal-6, .petal-7, .petal-8 {
     display: none !important;
+  }
+}
+
+/* iPhone 15 Pro Max / large iPhone Safari viewport: keep the opened card content inside the frame. */
+@media (min-width: 420px) and (max-width: 480px) and (min-height: 800px) {
+  :root {
+    --card-padding-outer: 6px;
+    --card-padding-inner: 4px 6px;
+    --card-font-monogram: 14px;
+    --card-font-std: 17px;
+    --card-margin-std: 2px;
+    --card-font-prefix: 6px;
+    --card-font-guest: 14px;
+    --card-margin-couple: 2px 0;
+    --card-font-invite: 8px;
+    --card-safe-zone-height: 34px;
+  }
+
+  .opening-content {
+    gap: clamp(8px, 1.8vh, 16px);
+  }
+
+  .card-monogram-row,
+  .card-eyebrow,
+  .card-guest-safe-zone {
+    margin-bottom: 2px;
+  }
+
+  .card-sprig { width: 20px; }
+  .card-bottom-sprig { width: 38px; }
+  .card-eyebrow::before,
+  .card-eyebrow::after {
+    width: 28px;
+  }
+
+  .wedding-opening.card-front .envelope-card {
+    transform: translate3d(0, -4%, 28px) scale(1.14);
   }
 }
 
