@@ -28,7 +28,7 @@
     <link rel="preload" as="image" href="/assets/hero/hero-main.jpg" media="(min-width: 768px)">
     <link rel="preload" as="image" href="/assets/hero/hero-main-mobile.jpg" media="(max-width: 767px)">
     <link rel="preload" as="image" href="/assets/hero/hero-bg.jpg">
-    <link rel="stylesheet" href="styles.css?v=23">
+    <link rel="stylesheet" href="styles.css?v=25">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Pinyon+Script&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&family=Montserrat:wght@100..900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -781,48 +781,70 @@
         <div class="section-heading reveal">
           <p class="eyebrow">Wedding wishes</p>
           <h2>Lời chúc yêu thương</h2>
-          <p>Gửi đến chúng mình đôi lời chúc phúc, để ngày vui thêm trọn vẹn nhé! <span class="wish-inline-heart">♡</span></p>
+          <p>Gửi một lời chúc yêu thương để ngày vui của chúng mình thêm trọn vẹn nhé! <span class="wish-inline-heart">♡</span></p>
           <div class="wish-divider" aria-hidden="true"><span></span>♥<span></span></div>
         </div>
 
-        <!-- Form gửi lời chúc — lưu vào Firestore -->
-        <form class="wish-form reveal" id="wishForm" autocomplete="off">
-          <span class="wish-medallion" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 21s-7.5-4.9-10-9.4C.6 8.9 2 5.5 5.2 5.1 7 4.9 8.7 5.8 12 8.2c3.3-2.4 5-3.3 6.8-3.1C22 5.5 23.4 8.9 22 11.6 19.5 16.1 12 21 12 21z"/></svg>
-          </span>
+        <article class="wish-composer-card reveal" id="wishComposerCard"></article>
 
-          <div class="wish-field">
-            <label for="wishName">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 4-6.5 8-6.5S20 16 20 20"/></svg>
-              Tên của bạn
-            </label>
-            <div class="wish-input-wrap">
-              <input type="text" id="wishName" name="name" maxlength="60" placeholder="Tên người nhắn gửi" required>
-              <svg class="wish-input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 4-6.5 8-6.5S20 16 20 20"/></svg>
-            </div>
+        <div class="public-wishes reveal" id="publicWishesSection">
+          <div class="public-wishes-header">
+            <p class="eyebrow">Sweet messages</p>
+            <h3>Lời chúc từ mọi người</h3>
+            <p>Những lời chúc yêu thương được gửi đến cô dâu và chú rể</p>
           </div>
-
-          <div class="wish-field">
-            <label for="wishMessage">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>
-              Lời chúc
-            </label>
-            <div class="wish-input-wrap">
-              <textarea id="wishMessage" name="wish" rows="3" maxlength="500" placeholder="Chúc hai bạn trăm năm hạnh phúc..." required></textarea>
-              <svg class="wish-input-icon wish-input-icon--pen" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4z"/></svg>
-            </div>
-          </div>
-
-          <button type="submit" class="wish-submit shine" id="wishSubmit">Gửi lời chúc ♥</button>
-          <p class="wish-hint" id="wishHint"></p>
-          <p class="rsvp-success" id="wishSuccess">Cảm ơn bạn đã gửi lời chúc yêu thương! ♥</p>
-          <p class="wish-error" id="wishError" role="alert"></p>
-        </form>
-
-        <!-- Danh sách lời chúc từ Firestore -->
-        <p class="wish-status" id="wishStatus">Đang tải lời chúc...</p>
-        <div class="wish-grid" id="wishGrid"></div>
+          <p class="wish-status" id="wishStatus">Đang tải lời chúc...</p>
+          <div class="wish-grid" id="wishGrid"></div>
+          <button class="wish-secondary-action" id="viewAllWishesBtn" type="button" hidden>Xem tất cả lời chúc</button>
+        </div>
       </section>
+
+      <div class="wish-dialog" id="wishDialog" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="wishDialogTitle">
+        <div class="wish-dialog-overlay" data-wish-close></div>
+        <div class="wish-dialog-content" role="document">
+          <button class="wish-dialog-close" type="button" aria-label="Đóng" data-wish-close>&times;</button>
+          <div class="wish-dialog-header">
+            <span class="wish-dialog-icon" aria-hidden="true">♥</span>
+            <h2 id="wishDialogTitle">Lời chúc yêu thương</h2>
+            <p>Cảm ơn bạn đã gửi đến chúng mình những lời chúc tốt đẹp.</p>
+          </div>
+          <form class="wish-form" id="wishForm" autocomplete="off" novalidate>
+            <div class="wish-field">
+              <label for="wishName">Tên của bạn</label>
+              <div class="wish-input-wrap">
+                <input type="text" id="wishName" name="name" maxlength="60" placeholder="Nhập tên của bạn">
+              </div>
+              <p class="wish-field-error" id="wishNameError"></p>
+            </div>
+
+            <div class="wish-field">
+              <label for="wishMessage">Lời chúc</label>
+              <div class="wish-input-wrap">
+                <textarea id="wishMessage" name="wish" rows="4" maxlength="500" placeholder="Viết lời chúc của bạn tại đây..."></textarea>
+              </div>
+              <p class="wish-field-error" id="wishMessageError"></p>
+            </div>
+
+            <p class="wish-error" id="wishError" role="alert"></p>
+            <button type="submit" class="wish-submit shine" id="wishSubmit">Gửi lời chúc ♥</button>
+          </form>
+        </div>
+      </div>
+
+      <div class="wish-dialog all-wishes-dialog" id="allWishesDialog" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="allWishesTitle">
+        <div class="wish-dialog-overlay" data-all-wishes-close></div>
+        <div class="wish-dialog-content all-wishes-content" role="document">
+          <button class="wish-dialog-close" type="button" aria-label="Đóng" data-all-wishes-close>&times;</button>
+          <div class="wish-dialog-header">
+            <span class="wish-dialog-icon" aria-hidden="true">♡</span>
+            <h2 id="allWishesTitle">Tất cả lời chúc</h2>
+            <p>Những lời chúc yêu thương được gửi đến chúng mình.</p>
+          </div>
+          <div class="all-wishes-list" id="allWishesList"></div>
+        </div>
+      </div>
+
+      <div class="wish-toast" id="wishToast" role="status" aria-live="polite"></div>
 
       <section class="video-section section-red" id="video">
         <p class="closing-message reveal">"Cảm ơn vì đã là một phần trong ngày hạnh phúc của chúng mình."</p>
@@ -1019,17 +1041,22 @@
       const db = getFirestore(app);
       const wishesRef = collection(db, "wishes");
 
+      const composerCard = document.querySelector("#wishComposerCard");
+      const wishDialog = document.querySelector("#wishDialog");
+      const allWishesDialog = document.querySelector("#allWishesDialog");
       const form = document.querySelector("#wishForm");
       const nameInput = document.querySelector("#wishName");
       const messageInput = document.querySelector("#wishMessage");
       const submitBtn = document.querySelector("#wishSubmit");
-      const hintEl = document.querySelector("#wishHint");
-      const successEl = document.querySelector("#wishSuccess");
       const errorEl = document.querySelector("#wishError");
+      const nameErrorEl = document.querySelector("#wishNameError");
+      const messageErrorEl = document.querySelector("#wishMessageError");
       const statusEl = document.querySelector("#wishStatus");
       const gridEl = document.querySelector("#wishGrid");
+      const viewAllBtn = document.querySelector("#viewAllWishesBtn");
+      const allWishesList = document.querySelector("#allWishesList");
+      const toastEl = document.querySelector("#wishToast");
 
-      // Cache lời chúc đã gửi -> lần sau chỉ được cập nhật, hạn chế spam
       const STORAGE_KEY = "weddingWish_v1";
       function loadCached() {
         try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || null; }
@@ -1040,38 +1067,129 @@
       }
 
       let myWishId = null;
-      const renderedIds = new Set(); // để chỉ chạy animation cho lời chúc mới xuất hiện
+      let hasSubmittedWish = false;
+      let guestName = "";
+      let wishMessage = "";
+      let isWishDialogOpen = false;
+      let isEditingWish = false;
+      let isSubmitting = false;
+      let allWishes = [];
+      let toastTimeout = null;
+      const renderedIds = new Set();
 
-      // Chuyển Firestore Timestamp -> số ms để sắp xếp
       function toMillis(value) {
         if (value && typeof value.toMillis === "function") return value.toMillis();
         return 0;
       }
 
-      // Cập nhật giao diện form theo chế độ: gửi mới hay chỉnh sửa
-      function applyMode() {
-        if (myWishId) {
-          submitBtn.textContent = "Cập nhật lời chúc ♥";
-          hintEl.textContent = "Bạn đã gửi lời chúc rồi — bạn có thể chỉnh sửa nội dung bên trên nhé ♥";
-          hintEl.style.display = "";
-        } else {
-          submitBtn.textContent = "Gửi lời chúc ♥";
-          hintEl.style.display = "none";
-        }
+      function escapeText(value) {
+        const span = document.createElement("span");
+        span.textContent = value || "";
+        return span.innerHTML;
       }
 
-      // Khôi phục lời chúc đã lưu và điền sẵn vào form
+      function setPageLocked(locked) {
+        document.body.style.overflow = locked ? "hidden" : "";
+      }
+
+      function showToast(message) {
+        if (!toastEl) return;
+        toastEl.textContent = message;
+        toastEl.classList.add("is-visible");
+        if (toastTimeout) clearTimeout(toastTimeout);
+        toastTimeout = window.setTimeout(() => {
+          toastEl.classList.remove("is-visible");
+        }, 3600);
+      }
+
+      function clearFieldErrors() {
+        if (nameErrorEl) nameErrorEl.textContent = "";
+        if (messageErrorEl) messageErrorEl.textContent = "";
+        if (errorEl) errorEl.textContent = "";
+        nameInput?.removeAttribute("aria-invalid");
+        messageInput?.removeAttribute("aria-invalid");
+      }
+
+      function renderComposerCard() {
+        if (!composerCard) return;
+
+        if (!hasSubmittedWish) {
+          composerCard.innerHTML = `
+            <span class="wish-composer-icon" aria-hidden="true">♥</span>
+            <h3>Gửi lời chúc đến chúng mình ♥</h3>
+            <p>Hãy để lại một lời chúc yêu thương để ngày vui của chúng mình thêm trọn vẹn nhé!</p>
+            <button class="wish-primary-action" id="openWishDialogBtn" type="button">Gửi lời chúc ♥</button>
+          `;
+        } else {
+          composerCard.innerHTML = `
+            <span class="wish-composer-icon" aria-hidden="true">♥</span>
+            <h3>Lời chúc của bạn đã được gửi ♥</h3>
+            <p>Cảm ơn bạn đã gửi đến chúng mình những lời chúc yêu thương.</p>
+            <blockquote class="wish-preview-quote">“${escapeText(wishMessage)}”</blockquote>
+            <p class="wish-preview-sender">— ${escapeText(guestName || "Ẩn danh")}</p>
+            <button class="wish-secondary-action" id="editWishBtn" type="button">Chỉnh sửa lời chúc</button>
+          `;
+        }
+
+        composerCard.querySelector("#openWishDialogBtn")?.addEventListener("click", () => openWishDialog(false));
+        composerCard.querySelector("#editWishBtn")?.addEventListener("click", () => openWishDialog(true));
+      }
+
+      function openWishDialog(editing) {
+        isWishDialogOpen = true;
+        isEditingWish = editing;
+        clearFieldErrors();
+
+        if (editing) {
+          nameInput.value = guestName;
+          messageInput.value = wishMessage;
+          submitBtn.textContent = "Cập nhật lời chúc ♥";
+        } else {
+          nameInput.value = "";
+          messageInput.value = "";
+          submitBtn.textContent = "Gửi lời chúc ♥";
+        }
+
+        wishDialog?.classList.add("is-active");
+        wishDialog?.setAttribute("aria-hidden", "false");
+        setPageLocked(true);
+        window.setTimeout(() => nameInput?.focus(), 80);
+      }
+
+      function closeWishDialog() {
+        isWishDialogOpen = false;
+        isEditingWish = false;
+        clearFieldErrors();
+        wishDialog?.classList.remove("is-active");
+        wishDialog?.setAttribute("aria-hidden", "true");
+        if (!allWishesDialog?.classList.contains("is-active")) setPageLocked(false);
+      }
+
+      function openAllWishesDialog() {
+        renderAllWishes();
+        allWishesDialog?.classList.add("is-active");
+        allWishesDialog?.setAttribute("aria-hidden", "false");
+        setPageLocked(true);
+      }
+
+      function closeAllWishesDialog() {
+        allWishesDialog?.classList.remove("is-active");
+        allWishesDialog?.setAttribute("aria-hidden", "true");
+        if (!wishDialog?.classList.contains("is-active")) setPageLocked(false);
+      }
+
       const cached = loadCached();
       if (cached && cached.id) {
         myWishId = cached.id;
-        if (cached.name) nameInput.value = cached.name;
-        if (cached.wish) messageInput.value = cached.wish;
+        guestName = cached.name || "";
+        wishMessage = cached.wish || "";
+        hasSubmittedWish = !!wishMessage;
       }
-      applyMode();
+      renderComposerCard();
 
-      // Hiệu ứng tim bay lên khi gửi/cập nhật thành công
       function burstHearts() {
-        const rect = submitBtn.getBoundingClientRect();
+        const source = composerCard || submitBtn;
+        const rect = source.getBoundingClientRect();
         const layer = document.createElement("div");
         layer.className = "wish-hearts-burst";
         layer.style.left = rect.left + rect.width / 2 + "px";
@@ -1089,89 +1207,105 @@
         window.setTimeout(() => layer.remove(), 1700);
       }
 
-      // Icon SVG (chuỗi an toàn, không chèn dữ liệu người dùng)
       const ICON_PERSON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 4-6.5 8-6.5S20 16 20 20"/></svg>';
 
-      // Tim bay lên khi hover vào 1 thẻ lời chúc
-      function floatHeartsFrom(card) {
-        for (let i = 0; i < 5; i++) {
-          const h = document.createElement("span");
-          h.className = "wish-float-heart";
-          h.textContent = "♥";
-          h.style.left = (15 + Math.random() * 70) + "%";
-          h.style.setProperty("--dx", (Math.random() * 44 - 22).toFixed(0) + "px");
-          h.style.fontSize = (11 + Math.random() * 12).toFixed(0) + "px";
-          h.style.animationDelay = (Math.random() * 0.25).toFixed(2) + "s";
-          card.append(h);
-          window.setTimeout(() => h.remove(), 1600);
+      function createWishCard(item, { truncate = true, index = 0 } = {}) {
+        const card = document.createElement("article");
+        card.className = "wish-card";
+        if (!truncate) card.classList.add("wish-card--full");
+        if (item.id === myWishId) card.classList.add("is-mine");
+
+        if (truncate && !renderedIds.has(item.id)) {
+          card.classList.add("wish-card--enter");
+          card.style.animationDelay = Math.min(index * 0.08, 0.6) + "s";
+          renderedIds.add(item.id);
+        }
+
+        if (item.id === myWishId) {
+          const badge = document.createElement("span");
+          badge.className = "wish-badge";
+          badge.textContent = "Lời chúc của bạn";
+          card.append(badge);
+        }
+
+        const quote = document.createElement("span");
+        quote.className = "wish-quote";
+        quote.textContent = "“";
+
+        const p = document.createElement("p");
+        p.className = "wish-text";
+        p.textContent = `"${item.wish || ""}"`;
+
+        const divider = document.createElement("span");
+        divider.className = "wish-card-heart";
+        divider.textContent = "♥";
+
+        const author = document.createElement("div");
+        author.className = "wish-author";
+        const icon = document.createElement("span");
+        icon.className = "wish-author-icon";
+        icon.innerHTML = ICON_PERSON;
+        const strong = document.createElement("strong");
+        strong.textContent = item.name || "Ẩn danh";
+        author.append(icon, strong);
+
+        card.append(quote, p, divider, author);
+        return card;
+      }
+
+      function renderWishes(items) {
+        if (!gridEl || !statusEl) return;
+        gridEl.innerHTML = "";
+
+        if (!items.length) {
+          statusEl.textContent = "Chưa có lời chúc nào. Hãy là người đầu tiên gửi lời chúc đến chúng mình nhé ♥";
+          statusEl.style.display = "";
+          viewAllBtn.hidden = true;
+          return;
+        }
+
+        statusEl.style.display = "none";
+        items.slice(0, 3).forEach((item, index) => {
+          gridEl.append(createWishCard(item, { truncate: true, index }));
+        });
+
+        if (items.length > 3) {
+          viewAllBtn.hidden = false;
+          viewAllBtn.textContent = `Xem tất cả ${items.length} lời chúc`;
+        } else {
+          viewAllBtn.hidden = true;
         }
       }
 
-      // Hiển thị danh sách lời chúc (dùng textContent để tránh XSS)
-      function renderWishes(items) {
-        gridEl.innerHTML = "";
-        if (!items.length) {
-          statusEl.textContent = "Hãy là người đầu tiên gửi lời chúc nhé! ♥";
-          statusEl.style.display = "";
+      function renderAllWishes() {
+        if (!allWishesList) return;
+        allWishesList.innerHTML = "";
+
+        if (!allWishes.length) {
+          const empty = document.createElement("p");
+          empty.className = "wish-status";
+          empty.textContent = "Chưa có lời chúc nào. Hãy là người đầu tiên gửi lời chúc đến chúng mình nhé ♥";
+          allWishesList.append(empty);
           return;
         }
-        statusEl.style.display = "none";
 
-        items.forEach((item, index) => {
-          const card = document.createElement("article");
-          card.className = "wish-card";
-          if (item.id === myWishId) card.classList.add("is-mine");
-          // Chỉ chạy animation xuất hiện cho lời chúc chưa từng hiển thị
-          if (!renderedIds.has(item.id)) {
-            card.classList.add("wish-card--enter");
-            card.style.animationDelay = Math.min(index * 0.08, 0.6) + "s";
-            renderedIds.add(item.id);
-          }
-
-          if (item.id === myWishId) {
-            const badge = document.createElement("span");
-            badge.className = "wish-badge";
-            badge.textContent = "Lời chúc của bạn";
-            card.append(badge);
-          }
-
-          const quote = document.createElement("span");
-          quote.className = "wish-quote";
-          quote.textContent = "“";
-
-          const p = document.createElement("p");
-          p.className = "wish-text";
-          p.textContent = `"${item.wish || ""}"`;
-
-          const divider = document.createElement("span");
-          divider.className = "wish-card-heart";
-          divider.textContent = "♥";
-
-          const author = document.createElement("div");
-          author.className = "wish-author";
-          const icon = document.createElement("span");
-          icon.className = "wish-author-icon";
-          icon.innerHTML = ICON_PERSON;
-          const strong = document.createElement("strong");
-          strong.textContent = item.name || "Ẩn danh";
-          author.append(icon, strong);
-
-          card.append(quote, p, divider, author);
-
-          // Hover: bubble + tim bay lên
-          card.addEventListener("mouseenter", () => floatHeartsFrom(card));
-
-          gridEl.append(card);
+        allWishes.forEach((item) => {
+          allWishesList.append(createWishCard(item, { truncate: false }));
         });
       }
 
-      // Lắng nghe realtime — lời chúc mới hiện ngay không cần tải lại
       onSnapshot(
         wishesRef,
         (snapshot) => {
           const items = snapshot.docs.map((d) => ({ id: d.id, ...d.data() }));
-          items.sort((a, b) => toMillis(b.createdAt) - toMillis(a.createdAt));
-          renderWishes(items);
+          items.sort((a, b) => {
+            const bTime = Math.max(toMillis(b.updatedAt), toMillis(b.createdAt));
+            const aTime = Math.max(toMillis(a.updatedAt), toMillis(a.createdAt));
+            return bTime - aTime;
+          });
+          allWishes = items;
+          renderWishes(allWishes);
+          if (allWishesDialog?.classList.contains("is-active")) renderAllWishes();
         },
         (err) => {
           console.error("Lỗi tải lời chúc:", err);
@@ -1180,27 +1314,37 @@
         }
       );
 
-      // Gửi mới hoặc cập nhật lời chúc
       form?.addEventListener("submit", async (event) => {
         event.preventDefault();
-        errorEl.textContent = "";
+        clearFieldErrors();
         const name = nameInput.value.trim();
         const wish = messageInput.value.trim();
-        if (!name || !wish) return;
+        let hasError = false;
 
+        if (!name) {
+          nameErrorEl.textContent = "Tên không được để trống.";
+          nameInput.setAttribute("aria-invalid", "true");
+          hasError = true;
+        }
+        if (!wish) {
+          messageErrorEl.textContent = "Lời chúc không được để trống.";
+          messageInput.setAttribute("aria-invalid", "true");
+          hasError = true;
+        }
+        if (hasError) return;
+
+        isSubmitting = true;
         submitBtn.disabled = true;
-        const wasUpdate = !!myWishId;
+        const wasUpdate = !!myWishId && isEditingWish;
         submitBtn.textContent = wasUpdate ? "Đang cập nhật..." : "Đang gửi...";
 
         try {
-          if (myWishId) {
-            // Đã gửi trước đó -> chỉ cập nhật lại đúng lời chúc đó
+          if (wasUpdate) {
             try {
               await updateDoc(doc(db, "wishes", myWishId), {
                 name, wish, updatedAt: serverTimestamp()
               });
             } catch (e) {
-              // Nếu lời chúc cũ đã bị xoá thì tạo lại bản mới
               if (e && e.code === "not-found") {
                 myWishId = null;
               } else {
@@ -1215,21 +1359,36 @@
             myWishId = ref.id;
           }
 
+          hasSubmittedWish = true;
+          guestName = name;
+          wishMessage = wish;
           saveCached({ id: myWishId, name, wish });
-          applyMode();
-          successEl.textContent = wasUpdate
-            ? "Đã cập nhật lời chúc của bạn! ♥"
-            : "Cảm ơn bạn đã gửi lời chúc yêu thương! ♥";
-          successEl.classList.add("is-visible");
+          renderComposerCard();
+          closeWishDialog();
+          showToast(wasUpdate ? "Lời chúc đã được cập nhật ♥" : "Cảm ơn bạn, lời chúc đã được gửi ♥");
           burstHearts();
-          window.setTimeout(() => successEl.classList.remove("is-visible"), 5200);
         } catch (err) {
           console.error("Lỗi gửi lời chúc:", err);
-          errorEl.textContent = "Gửi lời chúc chưa thành công, bạn thử lại giúp mình nhé!";
-          applyMode();
+          errorEl.textContent = "Có lỗi xảy ra, bạn thử lại giúp chúng mình nhé.";
         } finally {
+          isSubmitting = false;
           submitBtn.disabled = false;
+          submitBtn.textContent = isEditingWish ? "Cập nhật lời chúc ♥" : "Gửi lời chúc ♥";
         }
+      });
+
+      wishDialog?.querySelectorAll("[data-wish-close]").forEach((el) => {
+        el.addEventListener("click", closeWishDialog);
+      });
+      allWishesDialog?.querySelectorAll("[data-all-wishes-close]").forEach((el) => {
+        el.addEventListener("click", closeAllWishesDialog);
+      });
+      viewAllBtn?.addEventListener("click", openAllWishesDialog);
+
+      window.addEventListener("keydown", (event) => {
+        if (event.key !== "Escape") return;
+        if (wishDialog?.classList.contains("is-active")) closeWishDialog();
+        if (allWishesDialog?.classList.contains("is-active")) closeAllWishesDialog();
       });
     </script>
   </body>

@@ -367,6 +367,13 @@ function handleMusicCrossfade() {
     return;
   }
 
+  if (hasMainMusicStarted) {
+    music = weddingMusic;
+    setAudioPlayback(onboardingMusic, { playing: false, muted: onboardingMusic.muted, volume: 0 });
+    playAudio(weddingMusic, { muted: false, volume: 1, label: 'weddingMusic' });
+    return;
+  }
+
   const hero = document.querySelector('#hero');
   const heroHeight = hero ? hero.offsetHeight : window.innerHeight;
   const scrollY = window.scrollY;
@@ -376,15 +383,27 @@ function handleMusicCrossfade() {
   if (ratio >= 1) {
     hasMainMusicStarted = true;
     music = weddingMusic;
-    pauseAudio(onboardingMusic);
+    setAudioPlayback(onboardingMusic, { playing: false, muted: onboardingMusic.muted, volume: 0 });
     playAudio(weddingMusic, { muted: false, volume: 1, label: 'weddingMusic' });
     return;
   }
 
-  music = onboardingMusic;
-  hasMainMusicStarted = false;
-  playAudio(onboardingMusic, { muted: false, volume: 1, label: 'onboardingMusic' });
-  setAudioPlayback(weddingMusic, { playing: false, muted: false, volume: 0 });
+  const onboardingVolume = 1 - ratio;
+  const weddingVolume = ratio;
+
+  music = onboardingVolume >= weddingVolume ? onboardingMusic : weddingMusic;
+
+  if (onboardingVolume > 0) {
+    playAudio(onboardingMusic, { muted: false, volume: onboardingVolume, label: 'onboardingMusic' });
+  } else {
+    setAudioPlayback(onboardingMusic, { playing: false, muted: onboardingMusic.muted, volume: 0 });
+  }
+
+  if (weddingVolume > 0) {
+    playAudio(weddingMusic, { muted: false, volume: weddingVolume, label: 'weddingMusic' });
+  } else {
+    setAudioPlayback(weddingMusic, { playing: false, muted: false, volume: 0 });
+  }
 }
 
 async function playMusic({ muted = false } = {}) {
