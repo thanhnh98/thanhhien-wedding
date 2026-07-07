@@ -2613,16 +2613,16 @@ body.invitation-active .hero-bottom-fabric {
     width: 38px !important;
     height: 38px !important;
     z-index: 1201;
-    right: auto !important;
-    left: 50% !important;
+    right: 12px !important;
+    left: auto !important;
     bottom: max(12px, env(safe-area-inset-bottom)) !important;
-    transform: translateX(-50%);
+    transform: none;
   }
   .music-toggle:hover {
-    transform: translateX(-50%) scale(1.08);
+    transform: scale(1.08);
   }
   .music-toggle:active {
-    transform: translateX(-50%) scale(0.95);
+    transform: scale(0.95);
   }
   .music-toggle svg {
     width: 16px !important;
@@ -3871,17 +3871,17 @@ body:not(.invitation-active) .hero-portrait {
 @media (min-width: 481px) and (max-width: 700px) and (max-height: 700px) {
   :root {
     --card-padding-outer: 5px;
-    --card-padding-inner: 4px 6px;
-    --card-font-monogram: 11px;
-    --card-font-std: 13px;
+    --card-padding-inner: 5px 7px;
+    --card-font-monogram: 12px;
+    --card-font-std: 14px;
     --card-margin-std: 0;
-    --card-font-prefix: 5.5px;
-    --card-font-guest: 11px;
+    --card-font-prefix: 5.8px;
+    --card-font-guest: 12px;
     --card-margin-guest: 0;
-    --card-font-couple: 8px;
+    --card-font-couple: 8.5px;
     --card-margin-couple: 0;
-    --card-font-invite: 6.5px;
-    --card-safe-zone-height: 24px;
+    --card-font-invite: 7px;
+    --card-safe-zone-height: 26px;
   }
 
   .card-inner {
@@ -3900,16 +3900,16 @@ body:not(.invitation-active) .hero-portrait {
   }
 
   .card-guest-safe-zone {
-    min-height: 24px;
-    max-height: 28px;
+    min-height: 26px;
+    max-height: 30px;
   }
 
-  .card-sprig { width: 16px; }
-  .card-bottom-sprig { width: 28px; }
+  .card-sprig { width: 17px; }
+  .card-bottom-sprig { width: 30px; }
   .card-corner { width: 11px; }
   .card-eyebrow::before,
   .card-eyebrow::after {
-    width: 22px;
+    width: 24px;
   }
 }
 
@@ -4008,17 +4008,17 @@ body:not(.invitation-active) .hero-portrait {
 @media (max-width: 480px) and (max-height: 760px) {
   :root {
     --card-padding-outer: 5px;
-    --card-padding-inner: 4px 6px;
-    --card-font-monogram: 11px;
-    --card-font-std: 13px;
+    --card-padding-inner: 5px 7px;
+    --card-font-monogram: 15px;
+    --card-font-std: 17px;
     --card-margin-std: 0;
-    --card-font-prefix: 5.5px;
-    --card-font-guest: 11px;
+    --card-font-prefix: 6.5px;
+    --card-font-guest: 15px;
     --card-margin-guest: 0;
-    --card-font-couple: 8px;
+    --card-font-couple: 10px;
     --card-margin-couple: 0;
-    --card-font-invite: 6.5px;
-    --card-safe-zone-height: 24px;
+    --card-font-invite: 8.5px;
+    --card-safe-zone-height: 32px;
   }
 
   .envelope-wrapper {
@@ -4041,16 +4041,16 @@ body:not(.invitation-active) .hero-portrait {
   }
 
   .card-guest-safe-zone {
-    min-height: 24px;
-    max-height: 28px;
+    min-height: 32px;
+    max-height: 36px;
   }
 
-  .card-sprig { width: 16px; }
-  .card-bottom-sprig { width: 28px; }
-  .card-corner { width: 11px; }
+  .card-sprig { width: 20px; }
+  .card-bottom-sprig { width: 36px; }
+  .card-corner { width: 13px; }
   .card-eyebrow::before,
   .card-eyebrow::after {
-    width: 22px;
+    width: 30px;
   }
 
   .wedding-opening.card-front .envelope-card {
@@ -4063,16 +4063,16 @@ body:not(.invitation-active) .hero-portrait {
   :root {
     --card-padding-outer: 4px;
     --card-padding-inner: 3px 5px;
-    --card-font-monogram: 9px;
-    --card-font-std: 11px;
+    --card-font-monogram: 12px;
+    --card-font-std: 14px;
     --card-margin-std: 0;
-    --card-font-prefix: 4.8px;
-    --card-font-guest: 9px;
+    --card-font-prefix: 5.7px;
+    --card-font-guest: 12px;
     --card-margin-guest: 0;
-    --card-font-couple: 7px;
+    --card-font-couple: 8.5px;
     --card-margin-couple: 0;
-    --card-font-invite: 5.8px;
-    --card-safe-zone-height: 20px;
+    --card-font-invite: 7px;
+    --card-safe-zone-height: 24px;
   }
 
   .wedding-opening {
@@ -4103,17 +4103,17 @@ body:not(.invitation-active) .hero-portrait {
   }
 
   .card-guest-safe-zone {
-    min-height: 18px;
-    max-height: 22px;
+    min-height: 24px;
+    max-height: 28px;
     gap: 1px;
   }
 
-  .card-sprig { width: 13px; }
-  .card-bottom-sprig { width: 22px; }
-  .card-corner { width: 9px; }
+  .card-sprig { width: 16px; }
+  .card-bottom-sprig { width: 28px; }
+  .card-corner { width: 11px; }
   .card-eyebrow::before,
   .card-eyebrow::after {
-    width: 16px;
+    width: 22px;
   }
 
   .wedding-opening.card-front .envelope-card {

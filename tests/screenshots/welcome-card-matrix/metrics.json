@@ -5,20 +5,9 @@
       "h": 900,
       "visualH": 900
     },
-    "wrapper": {
-      "w": 476,
-      "h": 307.1
-    },
     "card": {
-      "w": 502.2,
-      "h": 310.2,
-      "top": 301.1,
-      "bottom": 611.3
-    },
-    "inner": {
-      "h": 256.3,
-      "top": 328,
-      "bottom": 584.4
+      "w": 502.4,
+      "h": 310.3
     },
     "buffers": {
       "allTop": 6.7,
@@ -42,20 +31,9 @@
       "h": 720,
       "visualH": 720
     },
-    "wrapper": {
-      "w": 417.6,
-      "h": 269.4
-    },
     "card": {
-      "w": 440,
-      "h": 271.8,
-      "top": 202.5,
-      "bottom": 474.3
-    },
-    "inner": {
-      "h": 244.9,
-      "top": 216,
-      "bottom": 460.8
+      "w": 440.6,
+      "h": 272.1
     },
     "buffers": {
       "allTop": 6.7,
@@ -79,32 +57,21 @@
       "h": 628,
       "visualH": 628
     },
-    "wrapper": {
-      "w": 220,
-      "h": 141.9
-    },
     "card": {
-      "w": 247.4,
-      "h": 152.8,
-      "top": 254.7,
-      "bottom": 407.5
-    },
-    "inner": {
-      "h": 140.8,
-      "top": 260.7,
-      "bottom": 401.5
+      "w": 246.9,
+      "h": 152.5
     },
     "buffers": {
       "allTop": 7.2,
       "allBottom": 7.2,
-      "textTop": 10,
-      "textBottom": 10
+      "textTop": 7.2,
+      "textBottom": 7.2
     },
     "vars": {
-      "std": "13px",
-      "guest": "11px",
-      "invite": "6.5px",
-      "safe": "24px"
+      "std": "14px",
+      "guest": "12px",
+      "invite": "7px",
+      "safe": "26px"
     },
     "name": "review-612x628",
     "file": "/Users/ethan/Desktop/wedding-template/tests/screenshots/welcome-card-matrix/review-612x628.png",
@@ -116,20 +83,9 @@
       "h": 1024,
       "visualH": 1024
     },
-    "wrapper": {
-      "w": 330,
-      "h": 212.9
-    },
     "card": {
       "w": 370.3,
-      "h": 228.7,
-      "top": 421.1,
-      "bottom": 649.8
-    },
-    "inner": {
-      "h": 214.4,
-      "top": 428.3,
-      "bottom": 642.7
+      "h": 228.7
     },
     "buffers": {
       "allTop": 6,
@@ -153,20 +109,9 @@
       "h": 852,
       "visualH": 852
     },
-    "wrapper": {
-      "w": 330,
-      "h": 212.9
-    },
     "card": {
-      "w": 336.4,
-      "h": 217,
-      "top": 321.1,
-      "bottom": 538.2
-    },
-    "inner": {
-      "h": 206.2,
-      "top": 326.5,
-      "bottom": 532.7
+      "w": 336.3,
+      "h": 217
     },
     "buffers": {
       "allTop": 6.5,
@@ -190,20 +135,9 @@
       "h": 932,
       "visualH": 932
     },
-    "wrapper": {
-      "w": 330,
-      "h": 212.9
-    },
     "card": {
       "w": 358.8,
-      "h": 221.6,
-      "top": 368.5,
-      "bottom": 590.1
-    },
-    "inner": {
-      "h": 207.7,
-      "top": 375.4,
-      "bottom": 583.2
+      "h": 221.6
     },
     "buffers": {
       "allTop": 5.8,
@@ -227,32 +161,21 @@
       "h": 667,
       "visualH": 667
     },
-    "wrapper": {
-      "w": 310,
-      "h": 200
-    },
     "card": {
-      "w": 321.2,
-      "h": 198.4,
-      "top": 234.3,
-      "bottom": 432.7
-    },
-    "inner": {
-      "h": 187.4,
-      "top": 239.8,
-      "bottom": 427.2
+      "w": 321.3,
+      "h": 198.5
     },
     "buffers": {
       "allTop": 6.6,
       "allBottom": 6.6,
-      "textTop": 38.1,
-      "textBottom": 38.1
+      "textTop": 22.9,
+      "textBottom": 22.9
     },
     "vars": {
-      "std": "13px",
-      "guest": "11px",
-      "invite": "6.5px",
-      "safe": "24px"
+      "std": "17px",
+      "guest": "15px",
+      "invite": "8.5px",
+      "safe": "32px"
     },
     "name": "iphone-se-375x667",
     "file": "/Users/ethan/Desktop/wedding-template/tests/screenshots/welcome-card-matrix/iphone-se-375x667.png",
@@ -264,32 +187,21 @@
       "h": 600,
       "visualH": 600
     },
-    "wrapper": {
-      "w": 310,
-      "h": 200
-    },
     "card": {
-      "w": 321.2,
-      "h": 198.4,
-      "top": 200.7,
-      "bottom": 399.1
-    },
-    "inner": {
-      "h": 187.4,
-      "top": 206.2,
-      "bottom": 393.6
+      "w": 321.3,
+      "h": 198.5
     },
     "buffers": {
       "allTop": 6.6,
       "allBottom": 6.6,
-      "textTop": 38,
-      "textBottom": 38.1
+      "textTop": 22.9,
+      "textBottom": 22.9
     },
     "vars": {
-      "std": "13px",
-      "guest": "11px",
-      "invite": "6.5px",
-      "safe": "24px"
+      "std": "17px",
+      "guest": "15px",
+      "invite": "8.5px",
+      "safe": "32px"
     },
     "name": "short-mobile-390x600",
     "file": "/Users/ethan/Desktop/wedding-template/tests/screenshots/welcome-card-matrix/short-mobile-390x600.png",
@@ -301,32 +213,21 @@
       "h": 393,
       "visualH": 393
     },
-    "wrapper": {
-      "w": 292.4,
-      "h": 188.6
-    },
     "card": {
-      "w": 298.1,
-      "h": 184.1,
-      "top": 92.9,
-      "bottom": 277
-    },
-    "inner": {
-      "h": 175.4,
-      "top": 97.2,
-      "bottom": 272.6
+      "w": 298,
+      "h": 184.1
     },
     "buffers": {
       "allTop": 6.5,
       "allBottom": 6.5,
-      "textTop": 45.1,
-      "textBottom": 45.2
+      "textTop": 34.8,
+      "textBottom": 34.8
     },
     "vars": {
-      "std": "11px",
-      "guest": "9px",
-      "invite": "5.8px",
-      "safe": "20px"
+      "std": "14px",
+      "guest": "12px",
+      "invite": "7px",
+      "safe": "24px"
     },
     "name": "landscape-phone-852x393",
     "file": "/Users/ethan/Desktop/wedding-template/tests/screenshots/welcome-card-matrix/landscape-phone-852x393.png",
