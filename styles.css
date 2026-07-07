@@ -4177,10 +4177,13 @@ body:not(.invitation-active) .hero-portrait {
               background-color 0.25s ease, box-shadow 0.25s ease;
 }
 .back-to-home.is-visible {
-  opacity: 0.35;
+  opacity: 0.26;
   visibility: visible;
   pointer-events: auto;
   transform: translateX(-50%) translateY(0);
+}
+.back-to-home.is-visible.is-idle {
+  opacity: 0.14;
 }
 /* Bright and clear while scrolling or on hover, faint at rest otherwise. */
 .back-to-home.is-visible.is-scrolling,

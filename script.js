@@ -851,6 +851,7 @@ function initVerticalNav() {
   function triggerScrollHide() {
     // Make visible during scrolling
     nav.classList.remove('nav-dimmed');
+    backToHome?.classList.remove('is-idle');
 
     // Clear previous timeout
     if (scrollTimeout) {
@@ -862,6 +863,7 @@ function initVerticalNav() {
       if (isNavHovered) return;
       if (nav.classList.contains('is-visible')) {
         nav.classList.add('nav-dimmed');
+        backToHome?.classList.add('is-idle');
       }
     }, 1500);
   }
@@ -872,6 +874,7 @@ function initVerticalNav() {
     if (scrollTimeout) clearTimeout(scrollTimeout);
     nav.classList.add('is-visible');
     nav.classList.remove('nav-dimmed');
+    backToHome?.classList.remove('is-idle');
   }
   function releaseNav() {
     isNavHovered = false;
@@ -893,6 +896,7 @@ function initVerticalNav() {
         nav.classList.remove('is-visible');
         nav.classList.remove('nav-dimmed');
         backToHome?.classList.remove('is-visible');
+        backToHome?.classList.remove('is-idle');
       }
     });
   }, { threshold: 0.05 });
@@ -930,6 +934,7 @@ function initVerticalNav() {
   function pulseBackToHome() {
     if (!backToHome) return;
     backToHome.classList.add('is-scrolling');
+    backToHome.classList.remove('is-idle');
     if (homeScrollTimeout) clearTimeout(homeScrollTimeout);
     homeScrollTimeout = setTimeout(() => {
       backToHome.classList.remove('is-scrolling');
