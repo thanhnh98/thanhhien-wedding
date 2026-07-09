@@ -831,14 +831,16 @@ body.invitation-active .hero-bottom-fabric {
 
 .story-img-wrap {
   width: 100%;
-  height: 200px;
+  aspect-ratio: 4 / 3;
   overflow: hidden;
   border-radius: 24px 24px 0 0;
 }
 .story-img-wrap img {
+  display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center;
   transition: transform 0.6s var(--ease);
 }
 .story-card:hover .story-img-wrap img {
@@ -847,25 +849,30 @@ body.invitation-active .hero-bottom-fabric {
 
 /* Card Collage Style */
 .story-collage {
-  display: flex;
-  flex-direction: column;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) 48px;
   gap: 6px;
-  padding: 8px;
-  background: rgba(217, 179, 152, 0.06);
+  padding: 0 0 8px;
+  box-sizing: border-box;
   border-radius: 24px 24px 0 0;
+  overflow: hidden;
+  background: rgba(217, 179, 152, 0.06);
 }
 .collage-main {
-  height: 150px;
+  min-height: 0;
   overflow: hidden;
-  border-radius: 16px;
 }
 .collage-main img {
+  display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
   transition: transform 0.6s var(--ease);
 }
 .collage-thumbs {
+  padding: 0 8px;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 6px;
@@ -1775,8 +1782,13 @@ body.invitation-active .hero-bottom-fabric {
 }
 @media (prefers-reduced-motion: reduce) {
   .wish-card-heart, .wish-medallion, .wish-sparkle,
-  .wish-card--enter { animation: none; }
-  .wish-hearts-burst, .wish-float-heart { display: none; }
+  .wish-card--enter,
+  .wish-carousel-track.is-animating,
+  .wish-reaction-btn.is-optimistic,
+  .wish-reaction-btn.is-optimistic .wish-heart-icon,
+  .wish-reaction-btn.is-optimistic strong,
+  .wish-flying-heart { animation: none; }
+  .wish-hearts-burst, .wish-float-heart, .wish-flying-heart { display: none; }
   .wish-card:hover { transform: none; }
 }
 
@@ -1877,6 +1889,11 @@ body.invitation-active .hero-bottom-fabric {
   margin-top: 28px;
 }
 
+.public-wishes > .wish-secondary-action {
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .public-wishes-header {
   margin-bottom: 22px;
 }
@@ -1885,12 +1902,101 @@ body.invitation-active .hero-bottom-fabric {
   margin-bottom: 0;
 }
 
-.wishes .wish-grid {
-  display: grid;
+.wishes .wish-carousel {
   width: 100%;
+}
+
+.wish-carousel-viewport {
+  overflow: hidden;
+  width: 100%;
+}
+
+.wish-carousel-track {
+  display: flex;
+  width: 100%;
+  will-change: transform;
+}
+
+.wish-carousel-track.is-animating {
+  transition: transform .55s cubic-bezier(.16, 1, .3, 1);
+}
+
+.wish-carousel-slide {
+  flex: 0 0 100%;
+  display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 18px;
   padding-top: 14px;
+}
+
+.wish-carousel-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  margin-top: 20px;
+}
+
+.wish-carousel-dots {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.wish-carousel-dot {
+  width: 9px;
+  height: 9px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: rgba(201, 164, 106, .34);
+  cursor: pointer;
+  transition: transform .25s var(--ease), background .25s var(--ease), box-shadow .25s var(--ease);
+}
+
+.wish-carousel-dot.is-active {
+  background: var(--gold);
+  transform: scale(1.25);
+  box-shadow: 0 0 0 3px rgba(201, 164, 106, .18);
+}
+
+.wish-carousel-dot:focus-visible {
+  outline: 2px solid rgba(201, 164, 106, .78);
+  outline-offset: 3px;
+}
+
+.wish-carousel-nav {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid rgba(201, 164, 106, .34);
+  background: rgba(255, 253, 249, .88);
+  color: var(--gold);
+  font-size: 1.35rem;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform .25s var(--ease), border-color .25s var(--ease), box-shadow .25s var(--ease);
+}
+
+.wish-carousel-nav:hover:not(:disabled) {
+  transform: translateY(-1px);
+  border-color: rgba(201, 164, 106, .68);
+  box-shadow: 0 8px 18px rgba(201, 164, 106, .16);
+}
+
+.wish-carousel-nav:disabled {
+  opacity: .35;
+  cursor: default;
+}
+
+.wish-carousel-nav:focus-visible {
+  outline: 2px solid rgba(201, 164, 106, .78);
+  outline-offset: 3px;
 }
 
 .wish-card {
@@ -1899,10 +2005,20 @@ body.invitation-active .hero-bottom-fabric {
   padding: 24px 20px 22px;
   border-radius: 22px;
   gap: 8px;
+  cursor: pointer;
+}
+
+.public-wishes .wish-carousel-slide .wish-card {
+  height: 292px;
 }
 
 .wish-card:hover {
   transform: translateY(-4px);
+}
+
+.wish-card:focus-visible {
+  outline: 2px solid rgba(201, 164, 106, .78);
+  outline-offset: 5px;
 }
 
 .wish-text {
@@ -1923,6 +2039,147 @@ body.invitation-active .hero-bottom-fabric {
 
 .wish-card.is-mine {
   overflow: visible;
+}
+
+.wish-reactions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  margin-top: auto;
+}
+
+.wish-reaction-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  min-height: 34px;
+  padding: 7px 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(201, 164, 106, .34);
+  color: var(--red-700);
+  background: rgba(255, 253, 249, .78);
+  font: inherit;
+  font-size: .86rem;
+  font-weight: 800;
+  cursor: pointer;
+  transition: transform .25s var(--ease), background .25s var(--ease), border-color .25s var(--ease), box-shadow .25s var(--ease);
+}
+
+.wish-reaction-btn:hover {
+  transform: translateY(-2px);
+  border-color: rgba(201, 164, 106, .68);
+  background: #fffaf1;
+  box-shadow: 0 8px 18px rgba(201, 164, 106, .18);
+}
+
+.wish-reaction-btn.is-loved {
+  color: #B4233E;
+  border-color: rgba(255, 105, 130, .34);
+  background: linear-gradient(180deg, #FFE9EE, #FFDDE6);
+  box-shadow: 0 8px 20px rgba(255, 91, 120, .14);
+}
+
+.wish-reaction-btn.is-loved:hover {
+  border-color: rgba(255, 82, 112, .52);
+  background: linear-gradient(180deg, #FFE2E9, #FFD2DD);
+  box-shadow: 0 12px 24px rgba(255, 91, 120, .2);
+}
+
+.wish-reaction-btn strong {
+  min-width: 1.4ch;
+}
+
+.wish-heart-icon {
+  width: 18px;
+  height: 18px;
+  flex: 0 0 18px;
+  display: inline-block;
+  background: url("/assets/decor/wish-heart.png") center / contain no-repeat;
+  filter: drop-shadow(0 3px 5px rgba(255, 72, 102, .22));
+}
+
+.wish-reaction-btn.is-optimistic {
+  animation: wishLovePop .65s cubic-bezier(.16, 1, .3, 1) both;
+}
+
+.wish-reaction-btn.is-optimistic .wish-heart-icon {
+  animation: wishHeartBeat .75s cubic-bezier(.16, 1, .3, 1) both;
+}
+
+.wish-reaction-btn.is-optimistic strong {
+  animation: wishCountPop .65s cubic-bezier(.16, 1, .3, 1) both;
+}
+
+@keyframes wishHeartBeat {
+  0% { transform: scale(.82); }
+  45% { transform: scale(1.28); }
+  100% { transform: scale(1); }
+}
+
+@keyframes wishLovePop {
+  0% { box-shadow: 0 0 0 0 rgba(255, 87, 117, .36); }
+  70% { box-shadow: 0 0 0 12px rgba(255, 87, 117, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(255, 87, 117, 0); }
+}
+
+@keyframes wishCountPop {
+  0% { transform: translateY(0) scale(1); }
+  45% { transform: translateY(-2px) scale(1.22); }
+  100% { transform: translateY(0) scale(1); }
+}
+
+.wish-flying-heart {
+  position: fixed;
+  z-index: 2400;
+  width: 28px;
+  height: 28px;
+  pointer-events: none;
+  background: url("/assets/decor/wish-heart.png") center / contain no-repeat;
+  filter: drop-shadow(0 8px 14px rgba(255, 72, 102, .28));
+  transform: translate(-50%, -50%);
+  animation: wishHeartFloat 1.15s cubic-bezier(.16, 1, .3, 1) forwards;
+}
+
+@keyframes wishHeartFloat {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) translate3d(0, 0, 0) scale(.65) rotate(0deg);
+  }
+  18% {
+    opacity: 1;
+    transform: translate(-50%, -50%) translate3d(0, -12px, 0) scale(1.05) rotate(0deg);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) translate3d(var(--float-x, 0), -86px, 0) scale(1.35) rotate(var(--float-rotate, 12deg));
+  }
+}
+
+.wish-reactions--large {
+  gap: 12px;
+  margin-top: 18px;
+  flex-wrap: wrap;
+}
+
+.wish-reaction-btn--large {
+  min-height: 46px;
+  padding: 11px 18px;
+  font-size: .95rem;
+}
+
+.wish-reaction-btn--large .wish-heart-icon {
+  width: 22px;
+  height: 22px;
+  flex-basis: 22px;
+}
+
+.wish-reaction-btn--large em {
+  font-style: normal;
+  font-weight: 700;
+  color: inherit;
 }
 
 .wish-secondary-action:focus-visible,
@@ -2049,6 +2306,30 @@ body.invitation-active .hero-bottom-fabric {
   width: min(720px, 92vw);
 }
 
+.wish-detail-content {
+  width: min(620px, 92vw);
+}
+
+.wish-detail-quote {
+  margin: 0;
+  padding: clamp(22px, 4vw, 32px);
+  border-radius: 24px;
+  color: var(--ink);
+  background: rgba(255, 255, 255, .66);
+  border: 1px solid rgba(214, 168, 79, .22);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .7);
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: clamp(1.35rem, 4vw, 1.9rem);
+  line-height: 1.45;
+  white-space: pre-wrap;
+  text-align: center;
+}
+
+.wish-detail-reactions {
+  display: flex;
+  justify-content: center;
+}
+
 .all-wishes-list {
   display: grid;
   gap: 16px;
@@ -2087,12 +2368,25 @@ body.invitation-active .hero-bottom-fabric {
     border-radius: 24px;
   }
 
-  .wishes .wish-grid {
+  .wishes .wish-carousel-slide {
     grid-template-columns: 1fr;
+  }
+
+  .public-wishes .wish-carousel-slide .wish-card {
+    height: 270px;
   }
 
   .wish-card {
     padding: 22px 18px 20px;
+  }
+
+  .wish-reactions {
+    gap: 6px;
+  }
+
+  .wish-reaction-btn {
+    flex: 1;
+    padding-inline: 10px;
   }
 
   .wish-dialog {
@@ -2113,6 +2407,10 @@ body.invitation-active .hero-bottom-fabric {
 
   .wish-dialog .wish-form textarea {
     min-height: 112px;
+  }
+
+  .wish-detail-quote {
+    text-align: left;
   }
 
   .all-wishes-list {
@@ -2251,122 +2549,37 @@ body.invitation-active .hero-bottom-fabric {
   }
 }
 
-.lightbox {
-  position: fixed;
-  inset: 0;
-  z-index: 30;
-  display: grid;
-  place-items: center;
-  padding: 24px;
-  background: rgba(42, 4, 4, .72);
+.pswp {
+  --pswp-bg: rgba(42, 4, 4, .9);
+  --pswp-placeholder-bg: rgba(255, 248, 232, .08);
+  --pswp-icon-color: var(--cream-100);
+  --pswp-icon-color-secondary: var(--gold-soft);
+  --pswp-icon-stroke-color: rgba(42, 4, 4, .36);
+  --pswp-icon-stroke-width: 1px;
+  --pswp-error-text-color: var(--cream-100);
   backdrop-filter: blur(14px);
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity .35s var(--ease), visibility .35s var(--ease);
 }
-.lightbox.is-open { opacity: 1; visibility: visible; }
-.lightbox-content {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  max-width: 90%;
-  max-height: 84vh;
+.pswp__top-bar {
+  background: linear-gradient(to bottom, rgba(42, 4, 4, .56), transparent);
 }
-.lightbox img {
-  max-width: 100%;
-  max-height: 76vh;
-  object-fit: contain;
-  border-radius: 24px;
-  border: 1px solid rgba(214,168,79,.58);
-  box-shadow: 0 28px 100px rgba(0,0,0,.45);
-  transform: scale(.92);
-  transition: transform .45s var(--ease);
-}
-.lightbox.is-open img { transform: scale(1); }
-.lightbox-close {
-  position: absolute;
-  top: 18px;
-  right: 18px;
-  width: 48px;
-  height: 48px;
-  border: 1px solid rgba(214,168,79,.6);
-  border-radius: 50%;
-  color: var(--red-700);
-  background: var(--cream-100);
-  font-size: 2rem;
-  cursor: pointer;
-  z-index: 33;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all .3s var(--ease);
-}
-.lightbox-close:hover {
-  background: var(--red-700);
+.pswp__button {
   color: var(--cream-100);
-  transform: scale(1.08);
 }
-.lightbox-nav {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 54px;
-  height: 54px;
-  border: 1px solid rgba(214, 168, 79, .4);
-  border-radius: 50%;
+.pswp__counter {
+  min-width: 76px;
+  padding: 0 12px;
   color: var(--gold-soft);
-  background: rgba(95, 8, 8, .6);
-  backdrop-filter: blur(8px);
-  font-size: 2.2rem;
-  font-family: Georgia, serif;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  z-index: 32;
-  transition: all .3s var(--ease);
-  user-select: none;
-}
-.lightbox-nav:hover {
-  color: var(--cream-100);
-  border-color: var(--gold);
-  background: var(--red-700);
-  transform: translateY(-50%) scale(1.08);
-}
-.lightbox-nav:active {
-  transform: translateY(-50%) scale(.95);
-}
-.lightbox-prev {
-  left: 24px;
-}
-.lightbox-next {
-  right: 24px;
-}
-.lightbox-counter {
-  margin-top: 14px;
-  color: var(--gold-soft);
-  font-size: .88rem;
-  letter-spacing: .12em;
+  font-size: .82rem;
   font-weight: 700;
-  text-shadow: 0 2px 8px rgba(0, 0, 0, .5);
+  letter-spacing: .12em;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, .55);
+  opacity: 1;
+}
+.pswp__img {
+  border-radius: 18px;
+  box-shadow: 0 28px 100px rgba(0, 0, 0, .45);
 }
 @media (max-width: 767px) {
-  .lightbox {
-    padding: 12px;
-  }
-  .lightbox-nav {
-    width: 44px;
-    height: 44px;
-    font-size: 1.8rem;
-  }
-  .lightbox-prev {
-    left: 12px;
-  }
-  .lightbox-next {
-    right: 12px;
-  }
-
   /* Bento grid — mobile: 2 columns, hero full-width */
   .bento-grid {
     grid-template-columns: repeat(2, 1fr);

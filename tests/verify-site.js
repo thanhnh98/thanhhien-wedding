@@ -44,7 +44,7 @@ for (let i = 1; i <= 12; i++) {
   assert(html.includes(`/assets/gallery/gallery-${n}-thumb.jpg`), `Missing gallery image ${n}`);
 }
 
-for (const token of ['musicToggle', 'lightbox', 'countdownGrid']) {
+for (const token of ['musicToggle', 'photoswipe-gallery.js', 'countdownGrid']) {
   assert(html.includes(token), `Missing interaction hook ${token}`);
 }
 

@@ -1,16 +1,14 @@
 const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 // Ngày cưới nhà gái: 25/07/2026 (Gia Lai)
-const brideDate = new Date('2026-07-25T08:00:00+07:00');
+const brideDate = new Date('2026-07-25T11:00:00+07:00');
 // Ngày cưới nhà trai: 01/08/2026 (Đồng Nai)
-const groomDate = new Date('2026-08-01T09:00:00+07:00');
+const groomDate = new Date('2026-08-01T11:00:00+07:00');
 
 const progress = document.querySelector('.scroll-progress');
 const timeline = document.querySelector('#storyTimeline');
 const reveals = document.querySelectorAll('.reveal');
 const countdownGridBride = document.querySelector('#countdownGridBride');
 const countdownGridGroom = document.querySelector('#countdownGridGroom');
-const lightbox = document.querySelector('#lightbox');
-const lightboxImage = lightbox?.querySelector('img');
 const onboardingMusic = document.querySelector('#onboardingMusic');
 const weddingMusic = document.querySelector('#weddingMusic');
 let music = onboardingMusic;
@@ -64,8 +62,7 @@ const storyAlbum = [
   { src: '/assets/hanhtrinh/hanhtrinh-10.jpg', alt: 'Ảnh hành trình' }
 ];
 
-// Album đang được điều hướng trong lightbox (mặc định là gallery ảnh cưới)
-let activeAlbum = galleryImages;
+// PhotoSwipe module is loaded separately and owns image caching, preload, and swipe gestures.
 
 function syncAppViewportHeight() {
   const viewportHeight = window.visualViewport?.height || window.innerHeight;
@@ -122,6 +119,62 @@ function updateCountdown() {
   updateCountdownGrid(countdownGridGroom, calcTimeLeft(groomDate), 'groom');
 }
 
+function getVietnamDateParts(date = new Date()) {
+  const parts = new Intl.DateTimeFormat('en-CA', {
+    timeZone: 'Asia/Ho_Chi_Minh',
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit'
+  }).formatToParts(date);
+  const get = type => parts.find(part => part.type === type)?.value;
+  return {
+    year: Number(get('year')),
+    month: Number(get('month')),
+    day: Number(get('day'))
+  };
+}
+
+function toDateKey({ year, month, day }) {
+  return year * 10000 + month * 100 + day;
+}
+
+function getActiveCountdownTarget() {
+  const today = toDateKey(getVietnamDateParts());
+  const brideDay = toDateKey({
+    year: brideDate.getFullYear(),
+    month: brideDate.getMonth() + 1,
+    day: brideDate.getDate()
+  });
+  const groomDay = toDateKey({
+    year: groomDate.getFullYear(),
+    month: groomDate.getMonth() + 1,
+    day: groomDate.getDate()
+  });
+
+  if (today === groomDay) return 'groom';
+  if (today === brideDay) return 'bride';
+  if (today > brideDay) return 'groom';
+  return 'bride';
+}
+
+function activateCountdownTab(target) {
+  const tab = document.querySelector(`.countdown-tab[data-target="${target}"]`);
+  tab?.click();
+}
+
+function initCountdownDefaultTab() {
+  const target = getActiveCountdownTarget();
+  const tabsContainer = document.querySelector('.countdown-tabs');
+  const tabBride = document.getElementById('tab-bride');
+  const tabGroom = document.getElementById('tab-groom');
+
+  if (target === 'groom' && tabsContainer && tabGroom && tabBride) {
+    tabsContainer.insertBefore(tabGroom, tabBride);
+  }
+
+  activateCountdownTab(target);
+}
+
 // Tab switching for countdown
 function initCountdownTabs() {
   const tabs = document.querySelectorAll('.countdown-tab');
@@ -170,121 +223,29 @@ function initCountdownTabs() {
 }
 
 
-function updateLightboxContent(index) {
-  if (!lightboxImage || !lightbox) return;
-  currentImageIndex = index;
-  const imgData = activeAlbum[currentImageIndex - 1];
-  
-  // Transition effect
-  lightboxImage.style.opacity = '0.3';
-  lightboxImage.style.transform = 'scale(0.97)';
-  
-  const tempImg = new Image();
-  tempImg.src = imgData.src;
-  tempImg.onload = () => {
-    if (currentImageIndex === index) {
-      lightboxImage.src = imgData.src;
-      lightboxImage.alt = imgData.alt;
-      lightboxImage.style.opacity = '1';
-      lightboxImage.style.transform = 'scale(1)';
-    }
-  };
-  
-  window.setTimeout(() => {
-    if (lightboxImage.src !== imgData.src) {
-      lightboxImage.src = imgData.src;
-      lightboxImage.alt = imgData.alt;
-      lightboxImage.style.opacity = '1';
-      lightboxImage.style.transform = 'scale(1)';
-    }
-  }, 300);
-  
-  const counter = lightbox.querySelector('.lightbox-counter');
-  if (counter) {
-    counter.textContent = `${currentImageIndex} / ${activeAlbum.length}`;
-  }
-}
-
-// Hiện/ẩn bộ đếm và nút điều hướng của lightbox
-function setLightboxChromeVisible(visible) {
-  const counter = lightbox?.querySelector('.lightbox-counter');
-  const prevBtn = lightbox?.querySelector('.lightbox-prev');
-  const nextBtn = lightbox?.querySelector('.lightbox-next');
-  const value = visible ? '' : 'none';
-  if (counter) counter.style.display = value;
-  if (prevBtn) prevBtn.style.display = value;
-  if (nextBtn) nextBtn.style.display = value;
-}
-
 function openLightboxIndex(index) {
-  if (!lightbox) return;
-  activeAlbum = galleryImages;
-  setLightboxChromeVisible(true);
-  updateLightboxContent(index);
-  lightbox.classList.add('is-open');
-  lightbox.setAttribute('aria-hidden', 'false');
-  document.body.style.overflow = 'hidden';
+  window.weddingPhotoSwipe?.openGalleryIndex(index);
 }
 
 // Mở lightbox cho album "Trải qua những hành trình" với điều hướng đầy đủ
 function openStoryAlbumIndex(index) {
-  if (!lightbox) return;
-  activeAlbum = storyAlbum;
-  setLightboxChromeVisible(true);
-  updateLightboxContent(index);
-  lightbox.classList.add('is-open');
-  lightbox.setAttribute('aria-hidden', 'false');
-  document.body.style.overflow = 'hidden';
+  window.weddingPhotoSwipe?.openStoryAlbumIndex(index);
 }
 
 function openGenericLightbox(src, alt) {
-  if (!lightbox || !lightboxImage) return;
-  lightboxImage.src = src;
-  lightboxImage.alt = alt;
-  lightboxImage.style.opacity = '1';
-  lightboxImage.style.transform = 'scale(1)';
-  
-  const counter = lightbox.querySelector('.lightbox-counter');
-  if (counter) counter.style.display = 'none';
-  
-  const prevBtn = lightbox.querySelector('.lightbox-prev');
-  const nextBtn = lightbox.querySelector('.lightbox-next');
-  if (prevBtn) prevBtn.style.display = 'none';
-  if (nextBtn) nextBtn.style.display = 'none';
-  
-  lightbox.classList.add('is-open');
-  lightbox.setAttribute('aria-hidden', 'false');
-  document.body.style.overflow = 'hidden';
+  window.weddingPhotoSwipe?.openSingleImage(src, alt);
 }
 
 function closeLightbox() {
-  if (!lightbox || !lightboxImage) return;
-  lightbox.classList.remove('is-open');
-  lightbox.setAttribute('aria-hidden', 'true');
-  document.body.style.overflow = '';
-  window.setTimeout(() => {
-    if (!lightbox.classList.contains('is-open')) {
-      lightboxImage.src = '';
-      const counter = lightbox.querySelector('.lightbox-counter');
-      if (counter) counter.style.display = '';
-      const prevBtn = lightbox.querySelector('.lightbox-prev');
-      const nextBtn = lightbox.querySelector('.lightbox-next');
-      if (prevBtn) prevBtn.style.display = '';
-      if (nextBtn) nextBtn.style.display = '';
-    }
-  }, 250);
+  window.weddingPhotoSwipe?.close();
 }
 
 function nextImage() {
-  let nextIdx = currentImageIndex + 1;
-  if (nextIdx > activeAlbum.length) nextIdx = 1;
-  updateLightboxContent(nextIdx);
+  window.weddingPhotoSwipe?.next();
 }
 
 function prevImage() {
-  let prevIdx = currentImageIndex - 1;
-  if (prevIdx < 1) prevIdx = activeAlbum.length;
-  updateLightboxContent(prevIdx);
+  window.weddingPhotoSwipe?.prev();
 }
 
 function updateMusicState(state) {
@@ -587,76 +548,6 @@ if (loadMoreBtn) {
   loadMoreBtn.addEventListener('click', toggleGallery);
 }
 
-// Initial gallery items click binding
-document.querySelectorAll('.gallery-item').forEach(button => {
-  button.addEventListener('click', () => {
-    const idx = parseInt(button.getAttribute('data-index'), 10);
-    if (!isNaN(idx)) {
-      openLightboxIndex(idx);
-    }
-  });
-});
-
-// Bento grid items click binding (indices 1–12)
-document.querySelectorAll('.bento-item').forEach(button => {
-  button.addEventListener('click', () => {
-    const idx = parseInt(button.getAttribute('data-index'), 10);
-    if (!isNaN(idx)) openLightboxIndex(idx);
-  });
-});
-
-lightbox?.addEventListener('click', event => {
-  if (event.target === lightbox || event.target.closest('.lightbox-close')) closeLightbox();
-});
-
-// Lightbox Nav Buttons
-lightbox?.querySelector('.lightbox-prev')?.addEventListener('click', event => {
-  event.stopPropagation();
-  prevImage();
-});
-
-lightbox?.querySelector('.lightbox-next')?.addEventListener('click', event => {
-  event.stopPropagation();
-  nextImage();
-});
-
-// Keyboard Nav
-document.addEventListener('keydown', event => {
-  if (!lightbox || !lightbox.classList.contains('is-open')) return;
-  if (event.key === 'Escape') {
-    closeLightbox();
-  } else if (event.key === 'ArrowRight') {
-    nextImage();
-  } else if (event.key === 'ArrowLeft') {
-    prevImage();
-  }
-});
-
-// Touch Navigation (Swipe gestures)
-let touchStartX = 0;
-let touchEndX = 0;
-
-lightbox?.addEventListener('touchstart', event => {
-  touchStartX = event.changedTouches[0].screenX;
-}, { passive: true });
-
-lightbox?.addEventListener('touchend', event => {
-  touchEndX = event.changedTouches[0].screenX;
-  handleSwipe();
-}, { passive: true });
-
-function handleSwipe() {
-  const swipeThreshold = 50;
-  const diff = touchEndX - touchStartX;
-  if (Math.abs(diff) > swipeThreshold) {
-    if (diff < 0) {
-      nextImage();
-    } else {
-      prevImage();
-    }
-  }
-}
-
 rsvpForm?.addEventListener('submit', event => {
   event.preventDefault();
   rsvpSuccess?.classList.add('is-visible');
@@ -709,6 +600,7 @@ setupFallbackImages();
 updateScrollProgress();
 updateCountdown();
 initCountdownTabs();
+initCountdownDefaultTab();
 primeMusic();
 window.setInterval(updateCountdown, 1000);
 

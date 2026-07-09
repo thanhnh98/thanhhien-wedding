@@ -6,12 +6,12 @@
     <meta name="theme-color" content="#9E1B1B">
     <!-- SEO & Open Graph Social Share Meta Tags -->
     <title>Hoài Thanh & Thanh Hiền | Thiệp Mời Cưới</title>
-    <meta name="description" content="Trân trọng kính mời bạn đến chung vui cùng gia đình chúng mình tại Lễ Vu Quy (Thứ Bảy, 25/07/2026 - 12/06 Âm Lịch) và Lễ Tân Hôn (Thứ Bảy, 01/08/2026 - 19/06 Âm Lịch).">
+    <meta name="description" content="Trân trọng kính mời quý khách đến chung vui cùng gia đình chúng mình tại Lễ Vu Quy (Thứ Bảy, 25/07/2026 - 12/06 Âm Lịch) và Lễ Tân Hôn (Thứ Bảy, 01/08/2026 - 19/06 Âm Lịch).">
     
     <!-- Open Graph / Facebook / Zalo -->
     <meta property="og:type" content="website">
     <meta property="og:title" content="Hoài Thanh & Thanh Hiền | Thiệp Mời Cưới">
-    <meta property="og:description" content="Trân trọng kính mời bạn đến chung vui cùng gia đình chúng mình tại Lễ Vu Quy (Thứ Bảy, 25/07/2026 - 12/06 Âm Lịch) và Lễ Tân Hôn (Thứ Bảy, 01/08/2026 - 19/06 Âm Lịch).">
+    <meta property="og:description" content="Trân trọng kính mời quý khách đến chung vui cùng gia đình chúng mình tại Lễ Vu Quy (Thứ Bảy, 25/07/2026 - 12/06 Âm Lịch) và Lễ Tân Hôn (Thứ Bảy, 01/08/2026 - 19/06 Âm Lịch).">
     <meta property="og:image" content="/assets/logo/share-preview.png">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
@@ -19,7 +19,7 @@
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:title" content="Hoài Thanh & Thanh Hiền | Thiệp Mời Cưới">
-    <meta property="twitter:description" content="Trân trọng kính mời bạn đến chung vui cùng gia đình chúng mình tại Lễ Vu Quy (Thứ Bảy, 25/07/2026 - 12/06 Âm Lịch) và Lễ Tân Hôn (Thứ Bảy, 01/08/2026 - 19/06 Âm Lịch).">
+    <meta property="twitter:description" content="Trân trọng kính mời quý khách đến chung vui cùng gia đình chúng mình tại Lễ Vu Quy (Thứ Bảy, 25/07/2026 - 12/06 Âm Lịch) và Lễ Tân Hôn (Thứ Bảy, 01/08/2026 - 19/06 Âm Lịch).">
     <meta property="twitter:image" content="/assets/logo/share-preview.png">
 
     <!-- Favicon -->
@@ -28,7 +28,8 @@
     <link rel="preload" as="image" href="/assets/hero/hero-main.jpg" media="(min-width: 768px)">
     <link rel="preload" as="image" href="/assets/hero/hero-main-mobile.jpg" media="(max-width: 767px)">
     <link rel="preload" as="image" href="/assets/hero/hero-bg.jpg">
-    <link rel="stylesheet" href="styles.css?v=32">
+    <link rel="stylesheet" href="vendor/photoswipe/photoswipe.css?v=5.4.4">
+    <link rel="stylesheet" href="styles.css?v=33">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Pinyon+Script&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&family=Montserrat:wght@100..900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -795,7 +796,16 @@
             <p>Những lời chúc yêu thương được gửi đến cô dâu và chú rể</p>
           </div>
           <p class="wish-status" id="wishStatus">Đang tải lời chúc...</p>
-          <div class="wish-grid" id="wishGrid"></div>
+          <div class="wish-carousel" id="wishCarousel" hidden>
+            <div class="wish-carousel-viewport">
+              <div class="wish-carousel-track" id="wishGrid"></div>
+            </div>
+            <nav class="wish-carousel-pagination" id="wishPagination" aria-label="Phân trang lời chúc" hidden>
+              <button class="wish-carousel-nav wish-carousel-nav--prev" id="wishCarouselPrev" type="button" aria-label="Trang trước">‹</button>
+              <div class="wish-carousel-dots" id="wishCarouselDots"></div>
+              <button class="wish-carousel-nav wish-carousel-nav--next" id="wishCarouselNext" type="button" aria-label="Trang sau">›</button>
+            </nav>
+          </div>
           <button class="wish-secondary-action" id="viewAllWishesBtn" type="button" hidden>Xem tất cả lời chúc</button>
         </div>
       </section>
@@ -842,6 +852,20 @@
             <p>Những lời chúc yêu thương được gửi đến chúng mình.</p>
           </div>
           <div class="all-wishes-list" id="allWishesList"></div>
+        </div>
+      </div>
+
+      <div class="wish-dialog wish-detail-dialog" id="wishDetailDialog" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="wishDetailTitle">
+        <div class="wish-dialog-overlay" data-wish-detail-close></div>
+        <div class="wish-dialog-content wish-detail-content" role="document">
+          <button class="wish-dialog-close" type="button" aria-label="Đóng" data-wish-detail-close>&times;</button>
+          <div class="wish-dialog-header">
+            <span class="wish-dialog-icon" aria-hidden="true">♡</span>
+            <h2 id="wishDetailTitle">Lời chúc yêu thương</h2>
+            <p id="wishDetailAuthor">Một lời chúc gửi đến cô dâu và chú rể.</p>
+          </div>
+          <blockquote class="wish-detail-quote" id="wishDetailText"></blockquote>
+          <div class="wish-detail-reactions" id="wishDetailReactions"></div>
         </div>
       </div>
 
@@ -963,16 +987,6 @@
       </svg>
     </button>
 
-    <div class="lightbox" id="lightbox" aria-hidden="true" role="dialog" aria-label="Xem ảnh cưới">
-      <button class="lightbox-close" type="button" aria-label="Đóng ảnh">×</button>
-      <button class="lightbox-nav lightbox-prev" type="button" aria-label="Ảnh trước">‹</button>
-      <div class="lightbox-content">
-        <img src="" alt="">
-        <div class="lightbox-counter">1 / 40</div>
-      </div>
-      <button class="lightbox-nav lightbox-next" type="button" aria-label="Ảnh sau">›</button>
-    </div>
-
     <!-- Modal Gửi Mừng Cưới -->
     <div class="gift-modal" id="giftModal" aria-hidden="true" role="dialog" aria-label="Gửi mừng cưới">
       <div class="gift-modal-overlay" id="giftModalOverlay"></div>
@@ -982,12 +996,34 @@
           <h2>Gửi Mừng Cưới</h2>
           <p class="gift-modal-desc">Cảm ơn bạn đã gửi món quà mừng cưới đến chúng mình.</p>
         </div>
-        
 
+        <div class="gift-tabs" role="tablist" aria-label="Chọn người nhận mừng cưới">
+          <button class="gift-tab active" type="button" role="tab" aria-selected="true" aria-controls="gift-panel-bride" data-target="bride">
+            Cô dâu
+          </button>
+          <button class="gift-tab" type="button" role="tab" aria-selected="false" aria-controls="gift-panel-groom" data-target="groom">
+            Chú rể
+          </button>
+        </div>
 
         <div class="gift-panels">
+          <!-- Panel Cô Dâu -->
+          <div class="gift-panel active" id="gift-panel-bride" role="tabpanel">
+            <div class="gift-qr-container">
+              <img src="/assets/decor/qr-bride.jpg" alt="Mã QR Cô Dâu" class="gift-qr-img" loading="lazy">
+            </div>
+            <div class="gift-bank-info">
+              <p><strong>Ngân hàng:</strong> Techcombank</p>
+              <p><strong>Số tài khoản:</strong> 1903 6695 6320 16</p>
+              <p><strong>Chủ tài khoản:</strong> LE THI THANH HIEN</p>
+              <button class="copy-btn" data-copy="19036695632016" type="button">
+                📋 Sao chép số tài khoản
+              </button>
+            </div>
+          </div>
+
           <!-- Panel Chú Rể -->
-          <div class="gift-panel active" id="gift-panel-groom" role="tabpanel">
+          <div class="gift-panel" id="gift-panel-groom" role="tabpanel">
             <div class="gift-qr-container">
               <img src="/assets/decor/qr-groom.jpg" alt="Mã QR Chú Rể" class="gift-qr-img" loading="lazy">
             </div>
@@ -1000,32 +1036,18 @@
               </button>
             </div>
           </div>
-
-          <!-- Panel Cô Dâu -->
-          <div class="gift-panel" id="gift-panel-bride" role="tabpanel">
-            <div class="gift-qr-container">
-              <img src="/assets/decor/qr-bride.jpg" alt="Mã QR Cô Dâu" class="gift-qr-img" loading="lazy">
-            </div>
-            <div class="gift-bank-info">
-              <p><strong>Ngân hàng:</strong> Vietcombank</p>
-              <p><strong>Số tài khoản:</strong> 0123456789</p>
-              <p><strong>Chủ tài khoản:</strong> LÊ THỊ THANH HIỀN</p>
-              <button class="copy-btn" data-copy="0123456789" type="button">
-                📋 Sao chép số tài khoản
-              </button>
-            </div>
-          </div>
         </div>
       </div>
     </div>
 
     <script src="script.js?v=11"></script>
+    <script type="module" src="photoswipe-gallery.js?v=5"></script>
 
     <!-- Firebase Firestore — Lời chúc yêu thương -->
     <script type="module">
       import { initializeApp } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-app.js";
       import {
-        getFirestore, collection, doc, addDoc, updateDoc, onSnapshot, serverTimestamp
+        getFirestore, collection, doc, addDoc, updateDoc, onSnapshot, serverTimestamp, increment
       } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js";
 
       const firebaseConfig = {
@@ -1045,6 +1067,7 @@
       const composerCard = document.querySelector("#wishComposerCard");
       const wishDialog = document.querySelector("#wishDialog");
       const allWishesDialog = document.querySelector("#allWishesDialog");
+      const wishDetailDialog = document.querySelector("#wishDetailDialog");
       const form = document.querySelector("#wishForm");
       const nameInput = document.querySelector("#wishName");
       const messageInput = document.querySelector("#wishMessage");
@@ -1053,9 +1076,17 @@
       const nameErrorEl = document.querySelector("#wishNameError");
       const messageErrorEl = document.querySelector("#wishMessageError");
       const statusEl = document.querySelector("#wishStatus");
+      const carouselEl = document.querySelector("#wishCarousel");
       const gridEl = document.querySelector("#wishGrid");
+      const paginationEl = document.querySelector("#wishPagination");
+      const paginationDotsEl = document.querySelector("#wishCarouselDots");
+      const paginationPrevBtn = document.querySelector("#wishCarouselPrev");
+      const paginationNextBtn = document.querySelector("#wishCarouselNext");
       const viewAllBtn = document.querySelector("#viewAllWishesBtn");
       const allWishesList = document.querySelector("#allWishesList");
+      const wishDetailAuthor = document.querySelector("#wishDetailAuthor");
+      const wishDetailText = document.querySelector("#wishDetailText");
+      const wishDetailReactions = document.querySelector("#wishDetailReactions");
       const toastEl = document.querySelector("#wishToast");
 
       const STORAGE_KEY = "weddingWish_v1";
@@ -1065,6 +1096,14 @@
       }
       function saveCached(data) {
         try { localStorage.setItem(STORAGE_KEY, JSON.stringify(data)); } catch {}
+      }
+      const LOVED_WISHES_STORAGE_KEY = "weddingLovedWishes_v1";
+      function loadLovedWishes() {
+        try { return JSON.parse(localStorage.getItem(LOVED_WISHES_STORAGE_KEY)) || {}; }
+        catch { return {}; }
+      }
+      function saveLovedWishes(data) {
+        try { localStorage.setItem(LOVED_WISHES_STORAGE_KEY, JSON.stringify(data)); } catch {}
       }
 
       let myWishId = null;
@@ -1076,6 +1115,13 @@
       let isSubmitting = false;
       let allWishes = [];
       let toastTimeout = null;
+      let currentWishPage = 0;
+      let wishRotateTimer = null;
+      let wishResizeTimer = null;
+      let selectedWish = null;
+      let optimisticHeartCounts = {};
+      let optimisticHeartBaseCounts = {};
+      let lovedWishIds = loadLovedWishes();
       const renderedIds = new Set();
 
       function toMillis(value) {
@@ -1137,6 +1183,7 @@
       }
 
       function openWishDialog(editing) {
+        pauseWishRotation();
         isWishDialogOpen = true;
         isEditingWish = editing;
         clearFieldErrors();
@@ -1163,10 +1210,12 @@
         clearFieldErrors();
         wishDialog?.classList.remove("is-active");
         wishDialog?.setAttribute("aria-hidden", "true");
-        if (!allWishesDialog?.classList.contains("is-active")) setPageLocked(false);
+        if (!allWishesDialog?.classList.contains("is-active") && !wishDetailDialog?.classList.contains("is-active")) setPageLocked(false);
+        resumeWishRotation();
       }
 
       function openAllWishesDialog() {
+        pauseWishRotation();
         renderAllWishes();
         allWishesDialog?.classList.add("is-active");
         allWishesDialog?.setAttribute("aria-hidden", "false");
@@ -1176,7 +1225,113 @@
       function closeAllWishesDialog() {
         allWishesDialog?.classList.remove("is-active");
         allWishesDialog?.setAttribute("aria-hidden", "true");
-        if (!wishDialog?.classList.contains("is-active")) setPageLocked(false);
+        if (!wishDialog?.classList.contains("is-active") && !wishDetailDialog?.classList.contains("is-active")) setPageLocked(false);
+        resumeWishRotation();
+      }
+
+      function renderWishDetail(item) {
+        if (!item || !wishDetailAuthor || !wishDetailText || !wishDetailReactions) return;
+        wishDetailAuthor.textContent = `Từ ${item.name || "Ẩn danh"}`;
+        wishDetailText.textContent = `“${item.wish || ""}”`;
+        wishDetailReactions.innerHTML = "";
+        wishDetailReactions.append(createReactionRow(item, { large: true }));
+      }
+
+      function openWishDetail(item) {
+        selectedWish = item;
+        pauseWishRotation();
+        renderWishDetail(item);
+        wishDetailDialog?.classList.add("is-active");
+        wishDetailDialog?.setAttribute("aria-hidden", "false");
+        setPageLocked(true);
+      }
+
+      function closeWishDetailDialog() {
+        selectedWish = null;
+        wishDetailDialog?.classList.remove("is-active");
+        wishDetailDialog?.setAttribute("aria-hidden", "true");
+        if (!wishDialog?.classList.contains("is-active") && !allWishesDialog?.classList.contains("is-active")) setPageLocked(false);
+        resumeWishRotation();
+      }
+
+      function pauseWishRotation() {
+        if (wishRotateTimer) {
+          clearInterval(wishRotateTimer);
+          wishRotateTimer = null;
+        }
+      }
+
+      function shouldRotateWishes() {
+        return getWishPageCount() > 1
+          && !wishDialog?.classList.contains("is-active")
+          && !allWishesDialog?.classList.contains("is-active")
+          && !wishDetailDialog?.classList.contains("is-active");
+      }
+
+      function getWishesPerPage() {
+        return window.matchMedia("(max-width: 768px)").matches ? 1 : 3;
+      }
+
+      function getWishPageCount(items = allWishes) {
+        const perPage = getWishesPerPage();
+        return Math.max(1, Math.ceil(items.length / perPage));
+      }
+
+      function getWishPageItems(items, page) {
+        const perPage = getWishesPerPage();
+        const start = page * perPage;
+        return items.slice(start, start + perPage);
+      }
+
+      function goToWishPage(page, { animate = true } = {}) {
+        if (!gridEl) return;
+        const pageCount = getWishPageCount();
+        currentWishPage = ((page % pageCount) + pageCount) % pageCount;
+        gridEl.classList.toggle("is-animating", animate);
+        gridEl.style.transform = `translate3d(-${currentWishPage * 100}%, 0, 0)`;
+        paginationDotsEl?.querySelectorAll(".wish-carousel-dot").forEach((dot, index) => {
+          const isActive = index === currentWishPage;
+          dot.classList.toggle("is-active", isActive);
+          dot.setAttribute("aria-selected", isActive ? "true" : "false");
+        });
+        if (paginationPrevBtn) paginationPrevBtn.disabled = pageCount <= 1;
+        if (paginationNextBtn) paginationNextBtn.disabled = pageCount <= 1;
+      }
+
+      function renderWishPagination(pageCount) {
+        if (!paginationEl || !paginationDotsEl) return;
+        const showPagination = pageCount > 1;
+        paginationEl.hidden = !showPagination;
+        paginationDotsEl.innerHTML = "";
+        if (!showPagination) return;
+
+        for (let page = 0; page < pageCount; page += 1) {
+          const dot = document.createElement("button");
+          dot.type = "button";
+          dot.className = "wish-carousel-dot";
+          dot.dataset.page = String(page);
+          dot.setAttribute("role", "tab");
+          dot.setAttribute("aria-label", `Trang ${page + 1}`);
+          dot.setAttribute("aria-selected", page === currentWishPage ? "true" : "false");
+          if (page === currentWishPage) dot.classList.add("is-active");
+          dot.addEventListener("click", () => {
+            pauseWishRotation();
+            goToWishPage(page);
+            resumeWishRotation();
+          });
+          paginationDotsEl.append(dot);
+        }
+      }
+
+      function resumeWishRotation() {
+        if (!shouldRotateWishes() || wishRotateTimer) return;
+        wishRotateTimer = window.setInterval(() => {
+          if (!shouldRotateWishes()) {
+            pauseWishRotation();
+            return;
+          }
+          goToWishPage(currentWishPage + 1);
+        }, 10000);
       }
 
       const cached = loadCached();
@@ -1209,12 +1364,139 @@
       }
 
       const ICON_PERSON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 4-6.5 8-6.5S20 16 20 20"/></svg>';
+      const reactionConfig = {
+        heart: { field: "heartCount", label: "Thả tim" }
+      };
+
+      function getReactionCount(item, type) {
+        const persistedCount = getPersistedReactionCount(item, type);
+        return persistedCount + (optimisticHeartCounts[item?.id] || 0);
+      }
+
+      function getPersistedReactionCount(item, type) {
+        const value = Number(item?.[reactionConfig[type].field]);
+        return Number.isFinite(value) && value > 0 ? value : 0;
+      }
+
+      function floatWishHeartFromButton(button) {
+        if (!button) return;
+        const rect = button.getBoundingClientRect();
+        const layer = document.createElement("span");
+        layer.className = "wish-flying-heart";
+        layer.style.left = `${rect.left + rect.width / 2}px`;
+        layer.style.top = `${rect.top + rect.height / 2}px`;
+        layer.style.setProperty("--float-x", `${Math.round(-20 + Math.random() * 40)}px`);
+        layer.style.setProperty("--float-rotate", `${Math.round(-18 + Math.random() * 36)}deg`);
+        document.body.append(layer);
+        window.setTimeout(() => layer.remove(), 1200);
+      }
+
+      function markWishLoved(wishId) {
+        if (!wishId || lovedWishIds[wishId]) return;
+        lovedWishIds = { ...lovedWishIds, [wishId]: true };
+        saveLovedWishes(lovedWishIds);
+      }
+
+      function getWishById(wishId) {
+        return allWishes.find((wish) => wish.id === wishId)
+          || (selectedWish?.id === wishId ? selectedWish : null);
+      }
+
+      function updateWishHeartButtons(wishId) {
+        const item = getWishById(wishId);
+        if (!item) return;
+        const count = getReactionCount(item, "heart");
+        document.querySelectorAll(".wish-reaction-btn[data-wish-id]").forEach((button) => {
+          if (button.dataset.wishId !== wishId) return;
+          button.classList.toggle("is-loved", !!lovedWishIds[wishId]);
+          if (optimisticHeartCounts[wishId]) {
+            button.classList.remove("is-optimistic");
+            void button.offsetWidth;
+            button.classList.add("is-optimistic");
+          } else {
+            button.classList.remove("is-optimistic");
+          }
+          button.setAttribute("aria-label", `${reactionConfig.heart.label}: ${count}`);
+          const countEl = button.querySelector("strong");
+          if (countEl) countEl.textContent = String(count);
+        });
+      }
+
+      async function reactToWish(item, type, sourceButton) {
+        if (!item?.id) return;
+        const config = reactionConfig[type];
+        if (!config) return;
+
+        markWishLoved(item.id);
+        optimisticHeartCounts = {
+          ...optimisticHeartCounts,
+          [item.id]: (optimisticHeartCounts[item.id] || 0) + 1
+        };
+        optimisticHeartBaseCounts = {
+          ...optimisticHeartBaseCounts,
+          [item.id]: getPersistedReactionCount(item, type)
+        };
+        updateWishHeartButtons(item.id);
+        floatWishHeartFromButton(sourceButton);
+
+        try {
+          await updateDoc(doc(db, "wishes", item.id), {
+            [config.field]: increment(1)
+          });
+        } catch (err) {
+          console.error("Lỗi gửi reaction:", err);
+          optimisticHeartCounts = {
+            ...optimisticHeartCounts,
+            [item.id]: Math.max((optimisticHeartCounts[item.id] || 1) - 1, 0)
+          };
+          if (optimisticHeartCounts[item.id] === 0) delete optimisticHeartCounts[item.id];
+          optimisticHeartBaseCounts = { ...optimisticHeartBaseCounts };
+          delete optimisticHeartBaseCounts[item.id];
+          updateWishHeartButtons(item.id);
+          showToast("Chưa gửi được tim, bạn thử lại giúp chúng mình nhé.");
+        }
+      }
+
+      function createReactionButton(item, type, { large = false } = {}) {
+        const config = reactionConfig[type];
+        const button = document.createElement("button");
+        button.className = large ? "wish-reaction-btn wish-reaction-btn--large" : "wish-reaction-btn";
+        button.type = "button";
+        button.dataset.reaction = type;
+        button.dataset.wishId = item.id;
+        if (lovedWishIds[item.id]) button.classList.add("is-loved");
+        if (optimisticHeartCounts[item.id]) button.classList.add("is-optimistic");
+        button.setAttribute("aria-label", `${config.label}: ${getReactionCount(item, type)}`);
+        button.innerHTML = `<span class="wish-heart-icon" aria-hidden="true"></span><strong>${getReactionCount(item, type)}</strong>${large ? `<em>${config.label}</em>` : ""}`;
+        button.addEventListener("click", (event) => {
+          event.stopPropagation();
+          reactToWish(item, type, button);
+        });
+        return button;
+      }
+
+      function createReactionRow(item, { large = false } = {}) {
+        const row = document.createElement("div");
+        row.className = large ? "wish-reactions wish-reactions--large" : "wish-reactions";
+        row.append(createReactionButton(item, "heart", { large }));
+        return row;
+      }
 
       function createWishCard(item, { truncate = true, index = 0 } = {}) {
         const card = document.createElement("article");
         card.className = "wish-card";
         if (!truncate) card.classList.add("wish-card--full");
         if (item.id === myWishId) card.classList.add("is-mine");
+        card.tabIndex = 0;
+        card.setAttribute("role", "button");
+        card.setAttribute("aria-label", `Xem lời chúc của ${item.name || "Ẩn danh"}`);
+        card.addEventListener("click", () => openWishDetail(item));
+        card.addEventListener("keydown", (event) => {
+          if (event.key === "Enter" || event.key === " ") {
+            event.preventDefault();
+            openWishDetail(item);
+          }
+        });
 
         if (truncate && !renderedIds.has(item.id)) {
           card.classList.add("wish-card--enter");
@@ -1250,7 +1532,7 @@
         strong.textContent = item.name || "Ẩn danh";
         author.append(icon, strong);
 
-        card.append(quote, p, divider, author);
+        card.append(quote, p, divider, author, createReactionRow(item));
         return card;
       }
 
@@ -1261,14 +1543,29 @@
         if (!items.length) {
           statusEl.textContent = "Chưa có lời chúc nào. Hãy là người đầu tiên gửi lời chúc đến chúng mình nhé ♥";
           statusEl.style.display = "";
+          carouselEl.hidden = true;
+          paginationEl.hidden = true;
           viewAllBtn.hidden = true;
           return;
         }
 
         statusEl.style.display = "none";
-        items.slice(0, 3).forEach((item, index) => {
-          gridEl.append(createWishCard(item, { truncate: true, index }));
-        });
+        carouselEl.hidden = false;
+
+        const pageCount = getWishPageCount(items);
+        if (currentWishPage >= pageCount) currentWishPage = 0;
+
+        for (let page = 0; page < pageCount; page += 1) {
+          const slide = document.createElement("div");
+          slide.className = "wish-carousel-slide";
+          getWishPageItems(items, page).forEach((item, index) => {
+            slide.append(createWishCard(item, { truncate: true, index }));
+          });
+          gridEl.append(slide);
+        }
+
+        renderWishPagination(pageCount);
+        goToWishPage(currentWishPage, { animate: false });
 
         if (items.length > 3) {
           viewAllBtn.hidden = false;
@@ -1295,18 +1592,59 @@
         });
       }
 
+      function isHeartCountOnlyUpdate(previousItems, nextItems) {
+        if (!previousItems.length || previousItems.length !== nextItems.length) return false;
+        return nextItems.every((item, index) => {
+          const previous = previousItems[index];
+          return previous
+            && previous.id === item.id
+            && (previous.name || "") === (item.name || "")
+            && (previous.wish || "") === (item.wish || "")
+            && toMillis(previous.createdAt) === toMillis(item.createdAt)
+            && toMillis(previous.updatedAt) === toMillis(item.updatedAt);
+        });
+      }
+
       onSnapshot(
         wishesRef,
         (snapshot) => {
           const items = snapshot.docs.map((d) => ({ id: d.id, ...d.data() }));
+          items.forEach((item) => {
+            const pendingCount = optimisticHeartCounts[item.id] || 0;
+            if (!pendingCount) return;
+            const baseCount = optimisticHeartBaseCounts[item.id] || 0;
+            if (getPersistedReactionCount(item, "heart") >= baseCount + pendingCount) {
+              optimisticHeartCounts = { ...optimisticHeartCounts };
+              optimisticHeartBaseCounts = { ...optimisticHeartBaseCounts };
+              delete optimisticHeartCounts[item.id];
+              delete optimisticHeartBaseCounts[item.id];
+            }
+          });
           items.sort((a, b) => {
             const bTime = Math.max(toMillis(b.updatedAt), toMillis(b.createdAt));
             const aTime = Math.max(toMillis(a.updatedAt), toMillis(a.createdAt));
             return bTime - aTime;
           });
+          const wasHeartCountOnlyUpdate = isHeartCountOnlyUpdate(allWishes, items);
           allWishes = items;
+          if (selectedWish) {
+            const freshSelectedWish = allWishes.find((item) => item.id === selectedWish.id);
+            if (freshSelectedWish) selectedWish = freshSelectedWish;
+          }
+          if (wasHeartCountOnlyUpdate) {
+            allWishes.forEach((item) => updateWishHeartButtons(item.id));
+            if (!shouldRotateWishes()) pauseWishRotation();
+            resumeWishRotation();
+            return;
+          }
+          if (currentWishPage >= getWishPageCount(allWishes)) currentWishPage = 0;
           renderWishes(allWishes);
           if (allWishesDialog?.classList.contains("is-active")) renderAllWishes();
+          if (selectedWish) {
+            renderWishDetail(selectedWish);
+          }
+          if (!shouldRotateWishes()) pauseWishRotation();
+          resumeWishRotation();
         },
         (err) => {
           console.error("Lỗi tải lời chúc:", err);
@@ -1355,7 +1693,7 @@
           }
           if (!myWishId) {
             const ref = await addDoc(wishesRef, {
-              name, wish, createdAt: serverTimestamp()
+              name, wish, heartCount: 0, createdAt: serverTimestamp()
             });
             myWishId = ref.id;
           }
@@ -1384,12 +1722,42 @@
       allWishesDialog?.querySelectorAll("[data-all-wishes-close]").forEach((el) => {
         el.addEventListener("click", closeAllWishesDialog);
       });
+      wishDetailDialog?.querySelectorAll("[data-wish-detail-close]").forEach((el) => {
+        el.addEventListener("click", closeWishDetailDialog);
+      });
       viewAllBtn?.addEventListener("click", openAllWishesDialog);
+      paginationPrevBtn?.addEventListener("click", () => {
+        pauseWishRotation();
+        goToWishPage(currentWishPage - 1);
+        resumeWishRotation();
+      });
+      paginationNextBtn?.addEventListener("click", () => {
+        pauseWishRotation();
+        goToWishPage(currentWishPage + 1);
+        resumeWishRotation();
+      });
+      window.addEventListener("resize", () => {
+        window.clearTimeout(wishResizeTimer);
+        wishResizeTimer = window.setTimeout(() => {
+          if (!allWishes.length) return;
+          currentWishPage = 0;
+          renderWishes(allWishes);
+          if (!shouldRotateWishes()) pauseWishRotation();
+          resumeWishRotation();
+        }, 150);
+      });
 
       window.addEventListener("keydown", (event) => {
         if (event.key !== "Escape") return;
+        if (wishDetailDialog?.classList.contains("is-active")) {
+          closeWishDetailDialog();
+          return;
+        }
+        if (allWishesDialog?.classList.contains("is-active")) {
+          closeAllWishesDialog();
+          return;
+        }
         if (wishDialog?.classList.contains("is-active")) closeWishDialog();
-        if (allWishesDialog?.classList.contains("is-active")) closeAllWishesDialog();
       });
     </script>
   </body>
