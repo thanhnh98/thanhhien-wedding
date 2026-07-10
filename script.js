@@ -43,25 +43,6 @@ const galleryImages = Array.from({ length: totalImages }, (_, i) => {
   };
 });
 
-// Album ảnh "Trải qua những hành trình" — thứ tự khớp với data-album-index trong markup
-const storyAlbum = [
-  { src: '/assets/hanhtrinh/IMAGE 2026-06-27 12:29:03.jpg', alt: 'Trải qua những hành trình' },
-  { src: '/assets/hanhtrinh/IMAGE 2026-06-27 12:28:54.jpg', alt: 'Ảnh hành trình' },
-  { src: '/assets/hanhtrinh/IMAGE 2026-06-27 12:28:56.jpg', alt: 'Ảnh hành trình' },
-  { src: '/assets/hanhtrinh/IMAGE 2026-06-27 12:28:52.jpg', alt: 'Ảnh hành trình' },
-  { src: '/assets/hanhtrinh/IMAGE 2026-06-27 12:29:01.jpg', alt: 'Ảnh hành trình' },
-  { src: '/assets/hanhtrinh/hanhtrinh-01.jpg', alt: 'Ảnh hành trình' },
-  { src: '/assets/hanhtrinh/hanhtrinh-02.jpg', alt: 'Ảnh hành trình' },
-  { src: '/assets/hanhtrinh/hanhtrinh-03.jpg', alt: 'Ảnh hành trình' },
-  { src: '/assets/hanhtrinh/hanhtrinh-04.jpg', alt: 'Ảnh hành trình' },
-  { src: '/assets/hanhtrinh/hanhtrinh-05.jpg', alt: 'Ảnh hành trình' },
-  { src: '/assets/hanhtrinh/hanhtrinh-06.jpg', alt: 'Ảnh hành trình' },
-  { src: '/assets/hanhtrinh/hanhtrinh-07.jpg', alt: 'Ảnh hành trình' },
-  { src: '/assets/hanhtrinh/hanhtrinh-08.jpg', alt: 'Ảnh hành trình' },
-  { src: '/assets/hanhtrinh/hanhtrinh-09.jpg', alt: 'Ảnh hành trình' },
-  { src: '/assets/hanhtrinh/hanhtrinh-10.jpg', alt: 'Ảnh hành trình' }
-];
-
 // PhotoSwipe module is loaded separately and owns image caching, preload, and swipe gestures.
 
 function syncAppViewportHeight() {

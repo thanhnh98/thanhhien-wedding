@@ -2,6 +2,10 @@ import PhotoSwipeLightbox from './vendor/photoswipe/photoswipe-lightbox.esm.min.
 
 const pswpModule = () => import('./vendor/photoswipe/photoswipe.esm.min.js');
 
+function hanhtrinhSrc(file) {
+  return `/assets/hanhtrinh/${encodeURIComponent(file)}`;
+}
+
 const galleryImages = Array.from({ length: 40 }, (_, index) => {
   const number = String(index + 1).padStart(2, '0');
   const isLandscape = number === '06' || number === '18';
@@ -16,22 +20,27 @@ const galleryImages = Array.from({ length: 40 }, (_, index) => {
 });
 
 const storyAlbum = [
-  { src: '/assets/hanhtrinh/IMAGE%202026-06-27%2012:29:03.jpg', width: 960, height: 1280, alt: 'Trải qua những hành trình' },
-  { src: '/assets/hanhtrinh/IMAGE%202026-06-27%2012:28:54.jpg', width: 1280, height: 960, alt: 'Ảnh hành trình' },
-  { src: '/assets/hanhtrinh/IMAGE%202026-06-27%2012:28:56.jpg', width: 960, height: 1280, alt: 'Ảnh hành trình' },
-  { src: '/assets/hanhtrinh/IMAGE%202026-06-27%2012:28:52.jpg', width: 960, height: 1280, alt: 'Ảnh hành trình' },
-  { src: '/assets/hanhtrinh/IMAGE%202026-06-27%2012:29:01.jpg', width: 960, height: 1280, alt: 'Ảnh hành trình' },
-  { src: '/assets/hanhtrinh/hanhtrinh-01.jpg', width: 1280, height: 960, alt: 'Ảnh hành trình' },
-  { src: '/assets/hanhtrinh/hanhtrinh-02.jpg', width: 960, height: 1280, alt: 'Ảnh hành trình' },
-  { src: '/assets/hanhtrinh/hanhtrinh-03.jpg', width: 960, height: 1280, alt: 'Ảnh hành trình' },
-  { src: '/assets/hanhtrinh/hanhtrinh-04.jpg', width: 960, height: 1280, alt: 'Ảnh hành trình' },
-  { src: '/assets/hanhtrinh/hanhtrinh-05.jpg', width: 960, height: 1280, alt: 'Ảnh hành trình' },
-  { src: '/assets/hanhtrinh/hanhtrinh-06.jpg', width: 960, height: 1280, alt: 'Ảnh hành trình' },
-  { src: '/assets/hanhtrinh/hanhtrinh-07.jpg', width: 867, height: 1280, alt: 'Ảnh hành trình' },
-  { src: '/assets/hanhtrinh/hanhtrinh-08.jpg', width: 960, height: 1280, alt: 'Ảnh hành trình' },
-  { src: '/assets/hanhtrinh/hanhtrinh-09.jpg', width: 985, height: 1280, alt: 'Ảnh hành trình' },
-  { src: '/assets/hanhtrinh/hanhtrinh-10.jpg', width: 1280, height: 960, alt: 'Ảnh hành trình' }
-];
+  { file: 'IMAGE 2026-06-27 12:29:03.jpg', width: 960, height: 1280, alt: 'Trải qua những hành trình' },
+  { file: 'IMAGE 2026-06-27 12:28:54.jpg', width: 1280, height: 960, alt: 'Ảnh hành trình' },
+  { file: 'IMAGE 2026-06-27 12:28:56.jpg', width: 960, height: 1280, alt: 'Ảnh hành trình' },
+  { file: 'IMAGE 2026-06-27 12:28:52.jpg', width: 960, height: 1280, alt: 'Ảnh hành trình' },
+  { file: 'IMAGE 2026-06-27 12:29:01.jpg', width: 960, height: 1280, alt: 'Ảnh hành trình' },
+  { file: 'hanhtrinh-01.jpg', width: 1280, height: 960, alt: 'Ảnh hành trình' },
+  { file: 'hanhtrinh-02.jpg', width: 1280, height: 960, alt: 'Ảnh hành trình' },
+  { file: 'hanhtrinh-03.jpg', width: 1280, height: 960, alt: 'Ảnh hành trình' },
+  { file: 'hanhtrinh-04.jpg', width: 1280, height: 960, alt: 'Ảnh hành trình' },
+  { file: 'hanhtrinh-05.jpg', width: 1280, height: 960, alt: 'Ảnh hành trình' },
+  { file: 'hanhtrinh-06.jpg', width: 1280, height: 960, alt: 'Ảnh hành trình' },
+  { file: 'hanhtrinh-07.jpg', width: 867, height: 1280, alt: 'Ảnh hành trình' },
+  { file: 'hanhtrinh-08.jpg', width: 960, height: 1280, alt: 'Ảnh hành trình' },
+  { file: 'hanhtrinh-09.jpg', width: 985, height: 1280, alt: 'Ảnh hành trình' },
+  { file: 'hanhtrinh-10.jpg', width: 1280, height: 960, alt: 'Ảnh hành trình' }
+].map(({ file, width, height, alt }) => ({
+  src: hanhtrinhSrc(file),
+  width,
+  height,
+  alt
+}));
 
 const singleImageSizes = new Map([
   ['/assets/hanhtrinh/congty.png', { width: 1086, height: 1448 }],
@@ -41,33 +50,37 @@ const singleImageSizes = new Map([
 ]);
 
 let activeLightbox = null;
+const naturalSizeCache = new Map();
 
 function getImageSize(src) {
   const url = new URL(src, window.location.origin);
   return singleImageSizes.get(url.pathname) || { width: 1600, height: 2400 };
 }
 
-function enableNaturalImageDimensions(lightbox) {
-  lightbox.on('contentLoad', (e) => {
-    const { content } = e;
-    if (content.type !== 'image' || !content.data?.src) return;
+function getNaturalImageData(item) {
+  if (!item.src) return Promise.resolve(item);
 
-    e.preventDefault();
-    const img = document.createElement('img');
+  if (naturalSizeCache.has(item.src)) {
+    return Promise.resolve({ ...item, ...naturalSizeCache.get(item.src) });
+  }
+
+  return new Promise(resolve => {
+    const img = new Image();
     img.decoding = 'async';
     img.onload = () => {
-      content.width = img.naturalWidth;
-      content.height = img.naturalHeight;
-      content.element = img;
-      content.onLoaded();
+      const size = {
+        width: img.naturalWidth || item.width,
+        height: img.naturalHeight || item.height
+      };
+      naturalSizeCache.set(item.src, size);
+      resolve({ ...item, ...size });
     };
-    img.onerror = () => content.onError();
-    img.src = content.data.src;
-    img.alt = content.data.alt || '';
+    img.onerror = () => resolve(item);
+    img.src = item.src;
   });
 }
 
-function createLightbox(dataSource, { useNaturalDimensions = false } = {}) {
+function createLightbox(dataSource) {
   activeLightbox?.destroy();
 
   activeLightbox = new PhotoSwipeLightbox({
@@ -85,10 +98,6 @@ function createLightbox(dataSource, { useNaturalDimensions = false } = {}) {
       return { top, bottom, left: horizontal, right: horizontal };
     }
   });
-
-  if (useNaturalDimensions) {
-    enableNaturalImageDimensions(activeLightbox);
-  }
 
   activeLightbox.on('uiRegister', () => {
     activeLightbox.pswp.ui.registerElement({
@@ -114,7 +123,14 @@ function createLightbox(dataSource, { useNaturalDimensions = false } = {}) {
 }
 
 function openImages(dataSource, index, options = {}) {
-  createLightbox(dataSource, options).loadAndOpen(Math.max(index - 1, 0));
+  const open = source => createLightbox(source).loadAndOpen(Math.max(index - 1, 0));
+
+  if (!options.useNaturalDimensions) {
+    open(dataSource);
+    return;
+  }
+
+  Promise.all(dataSource.map(getNaturalImageData)).then(open);
 }
 
 function openGalleryIndex(index) {
@@ -137,16 +153,6 @@ function bindGalleryTriggers() {
       if (!Number.isNaN(index)) {
         event.preventDefault();
         openGalleryIndex(index);
-      }
-    });
-  });
-
-  document.querySelectorAll('.collage-main, .thumb-item').forEach(button => {
-    button.addEventListener('click', event => {
-      const index = Number(button.dataset.albumIndex);
-      if (!Number.isNaN(index)) {
-        event.preventDefault();
-        openStoryAlbumIndex(index);
       }
     });
   });
